@@ -1,0 +1,15 @@
+<package>
+  <description brief="position_tracker">
+
+     position_tracker
+
+  </description>
+  <author>Joshua Lurz</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/position_tracker</url>
+  <depend package="roscpp"/>
+  <depend package="bayes_filter"/>
+</package>
+
+
