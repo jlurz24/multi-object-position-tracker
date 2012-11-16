@@ -1,13 +1,14 @@
 #ifndef KALMAN_SIMPLE_H
 #define KALMAN_SIMPLE_H
+
 #include <kalman/kfilter.hpp>
 #include <kalman/kvector.hpp>
 #include <kalman/kmatrix.hpp>
 
-class KalmanSimple: public Kalman::KFilter<double,1,1> {
+class KalmanSimple: public Kalman::KFilter<double,1, false, true, true> {
 public:
 	KalmanSimple();
-
+	void setDT(const double aDT);
 protected:
 
 	void makeA();
