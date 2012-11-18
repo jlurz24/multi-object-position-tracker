@@ -21,10 +21,6 @@ const double OBS_NOISE = 0.001;
 const double V_GAMMA = 1.;
 const double SIGMA = 0.0001; // Regularization constant
 
-// Filter's Initial state uncertainty: System state is unknown
-const double i_P_NOISE = 1000.;
-const double i_V_NOISE = 10.;
-
 KalmanSimple::KalmanSimple() 
 {
 	setDim(6, 0, 6, 3, 3);
@@ -131,62 +127,3 @@ void KalmanSimple::makeR()
 	R(3,3) = square(OBS_NOISE);
 }
 
-int main(){
-	const int n = 6;
-	const int m = 3;
-
-	KalmanSimple filter;
-
-	Vector x(n);
-	
-	static const double _P0[] = {square(i_P_NOISE), 0., 0., 0., 0., 0.,
-			             0., square(i_P_NOISE), 0., 0., 0., 0.,
-				     0., 0., square(i_P_NOISE), 0., 0., 0.,
-                                     0., 0., 0., square(i_V_NOISE), 0., 0.,
-				     0., 0., 0., 0., square(i_V_NOISE), 0.,
-				     0., 0., 0., 0., 0., square(i_V_NOISE)};
-	Matrix P0(n, n, _P0);
-
-	// Initial Estimate
-	x(1) = 100;
-	x(2) = 200;
-	x(3) = 300;
-        x(4) = 1;
-	x(5) = 1;
-	x(6) = 1;
-	
-	Vector x_true(n);
-	x_true(1) = x(1);
-	x_true(2) = x(2);
-	x_true(3) = x(3);
-	x_true(4) = x(4);
-	x_true(5) = x(5);
-	x_true(6) = x(6);
-
-	Vector u(0);
-
-	Vector z(m);
-	z(1) = x_true(1);
-	z(2) = x_true(2);
-	z(3) = x_true(3);
-
-	filter.init(x, P0);
-	for(int i = 0; i < 10; ++i){
-		x_true(1) += 1 * i;
-		x_true(2) += 10 * i;
-		x_true(3) += 100 * i;
-		x_true(4) = i;
-		x_true(5) = 10 * i;
-		x_true(6) = 100 * i;
-
-		z(1) = x_true(1);
-		z(2) = x_true(2);
-		z(3) = x_true(3);
-		filter.step(u, z);
-		cout << "Step " << filter.getX() << endl;
-	}
-	cout << "True: " << x_true << endl;
-	cout << "Estimated: " << filter.getX() << endl;
-	
-	return 0;
-}

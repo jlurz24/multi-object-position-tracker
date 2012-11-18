@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="position_tracker" type="init" name="init" output="screen">
+  </node>
+</launch>

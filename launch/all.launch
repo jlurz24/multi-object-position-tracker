@@ -1,0 +1,7 @@
+<launch>
+  <!-- Manually start the pr2 simulator due to timing issues -->
+  <!-- <include file="$(find pr2_gazebo)/pr2_empty_world.launch"/> -->
+  <include file="$(find position_tracker)/launch/arm_navigation.launch" />
+  <include file="$(find position_tracker)/launch/action_nodes.launch" />
+  <include file="$(find position_tracker)/launch/sensor_nodes.launch" />
+</launch>

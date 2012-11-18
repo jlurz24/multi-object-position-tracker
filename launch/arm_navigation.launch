@@ -1,0 +1,17 @@
+<launch>
+  <include file="$(find pr2_machine)/$(env ROBOT).machine" />
+  
+  <!-- Arm navigation -->
+  <include file="$(find pr2_3dnav)/right_arm_navigation.launch" />
+
+  <!-- Move left arm away -->
+  <node name="move_left_arm_away" pkg="litterbox" type="move_left_arm_away" respawn="false" output="screen" />
+  
+  <!-- Move right arm away -->
+  <node name="move_right_arm_away" pkg="litterbox" type="move_right_arm_away" respawn="false" output="screen" />
+  
+  <param name="cmvision/color_file" type="string" value="$(find position_tracker)/colors.txt"/>
+
+  <include file="$(find cmvision)/cmvision.launch"/>
+
+</launch>
