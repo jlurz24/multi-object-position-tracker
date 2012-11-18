@@ -11,6 +11,18 @@
   <depend package="roscpp"/>
   <depend package="bayes_filter"/>
   <depend package="kalman"/>
+  <depend package="geometry_msgs"/>
+  <depend package="tf"/>
+  <depend package="pcl"/>
+  <depend package="cmvision"/>
+  <depend package="pcl_ros"/>
+  <depend package="arm_navigation_msgs"/>
+  <depend package="actionlib"/>
+  <depend package="actionlib_msgs"/>
+  <depend package="rospy"/>
+  <depend package="roslib"/>
+  <depend package="std_msgs"/>
+  <depend package="pr2_controllers_msgs"/>
 </package>
 
 
