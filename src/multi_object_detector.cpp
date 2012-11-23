@@ -11,12 +11,21 @@
 #include <pcl/features/feature.h>
 #include <cmath>
 #include <boost/math/constants/constants.hpp>
+#include <pcl/segmentation/extract_clusters.h>
+#include <pcl/filters/voxel_grid.h>
 
 using namespace std;
+
+#define MOD_VOXEL 0
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
+
+static const double CLUSTER_DISTANCE_TOLERANCE_M = 0.02;
+static const int MIN_CLUSTER_SIZE = 50;
+static const int MAX_CLUSTER_SIZE = 25000;
+static const double VOXEL_LEAF_SIZE_M = 0.01;
 
 class MultiObjectDetector {
   private:
@@ -105,7 +114,9 @@ class MultiObjectDetector {
       pcl::PointCloud<pcl::PointXYZ> depthCloud;
       pcl::fromROSMsg(*depthPointsMsg, depthCloud);
 
-      const vector<PointCloudConstPtr> blobClouds = splitBlobs(depthCloud, blobsMsg);
+      PointCloudPtr allBlobs;
+      const vector<pcl::PointIndices> blobClouds = splitBlobs(depthCloud, blobsMsg, allBlobs);
+
       if(blobClouds.size() == 0){
         ROS_INFO("No blobs to use for centroid detection");
         return;
@@ -115,7 +126,7 @@ class MultiObjectDetector {
       position_tracker::DetectedObjects objects;
       for(unsigned int i = 0; i < blobClouds.size(); ++i){
         Eigen::Vector4f centroid;
-        pcl::compute3DCentroid(*blobClouds[i], centroid);
+        pcl::compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
 
         // Convert the centroid to a point stamped
         geometry_msgs::PointStamped resultPoint;
@@ -128,41 +139,66 @@ class MultiObjectDetector {
         resultPoint.point.z = centroid[2];
 
         geometry_msgs::PointStamped resultPointMap;
-        resultPointMap.header.frame_id = "/map";
+        resultPointMap.header.frame_id = "/base_footprint";
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
-        tf.transformPoint("/map", resultPoint, resultPointMap);
+        tf.waitForTransform(resultPointMap.header.frame_id, resultPoint.header.frame_id, resultPoint.header.stamp, ros::Duration(5.0));
+        tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
         objects.positions.push_back(resultPointMap);
+ 
+        ROS_INFO("Detected object with center %f %f %f", centroid[0], centroid[1], centroid[2]);
      }
+     
+     ROS_INFO("Detected %lu objects", objects.positions.size());     
+     // Broadcast the result
+     pub.publish(objects);
+   }
 
-      // Broadcast the result
-      pub.publish(objects);
-    }
-
-    const vector<PointCloudConstPtr> splitBlobs(const pcl::PointCloud<pcl::PointXYZ>& depthCloud, const cmvision::BlobsConstPtr& blobsMsg){
-         
-       vector<PointCloudConstPtr> results;
-
-       // Iterate over all the blobs and create depth point clouds for any matching objects.
+    const vector<pcl::PointIndices> splitBlobs(const pcl::PointCloud<pcl::PointXYZ>& depthCloud, const cmvision::BlobsConstPtr& blobsMsg, PointCloudPtr& allBlobsOut){
+       // Iterate over all the blobs and create a single cloud of all points.
+       // We will subdivide this blob again later.
+       PointCloudPtr allBlobs(new PointCloud);
+       allBlobs->header = depthCloud.header;
+       allBlobs->is_dense = false;
+       allBlobs->height = 1;
+       
        for(unsigned int k = 0; k < blobsMsg->blobs.size(); ++k){
           const cmvision::Blob blob = blobsMsg->blobs[k];
           if(objectName.size() > 0 && objectName != blob.colorName){
             continue;
           }
 
-          PointCloudPtr splitBlob(new PointCloud);
-          splitBlob->header = depthCloud.header;
-          splitBlob->is_dense = false;
-          splitBlob->height = 1;
           for(unsigned int i = blob.left; i <= blob.right; ++i){
             for(unsigned int j = blob.top; j <= blob.bottom; ++j){
               pcl::PointXYZ point = depthCloud.points.at(j * blobsMsg->image_width + i);
-              splitBlob->push_back(point);
+              allBlobs->points.push_back(point);
             }
           }
-          results.push_back(splitBlob);
       }
-    
-      return results;
+   
+#if MOD_VOXEL
+      // Use a voxel grid to downsample the input to a 1cm grid.
+      ROS_INFO("PointCloud before filtering has %lu datapoints.", allBlobs->points.size());
+      pcl::VoxelGrid<pcl::PointXYZ> vg;
+      pcl::PointCloud<pcl::PointXYZ>::Ptr allBlobsFiltered(new pcl::PointCloud<pcl::PointXYZ>);
+      vg.setInputCloud(allBlobs);
+      vg.setLeafSize(VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M);
+      vg.filter(*allBlobsFiltered);
+      ROS_INFO("PointCloud after filtering has %lu datapoints.", allBlobsFiltered->points.size());
+      allBlobs = allBlobsFiltered;
+ #endif
+
+      ROS_INFO("Starting cluster extraction on cloud of size %lu @ %f", allBlobs->points.size(), ros::Time::now().toSec());
+      std::vector<pcl::PointIndices> clusterIndices;
+      pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+      ec.setClusterTolerance(CLUSTER_DISTANCE_TOLERANCE_M);
+      ec.setMinClusterSize(MIN_CLUSTER_SIZE);
+      ec.setMaxClusterSize(MAX_CLUSTER_SIZE);
+      ec.setInputCloud(allBlobs);
+      ec.extract(clusterIndices);
+      ROS_INFO("Ending cluster extraction @ %f", ros::Time::now().toSec());
+      
+      allBlobsOut = allBlobs;
+      return clusterIndices;
     }
 };
 

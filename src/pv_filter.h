@@ -14,6 +14,9 @@ public:
   void init(const std::vector<double>& positions, const std::vector<double>& velocities);  
   void measure(const std::vector<double>& positions);
   const PVPair predict();
+  void setDT(const double DT);
+  const PVPair getX() const;
+  static const PVPair toPVPair(const Vector& x);
 private:
   KalmanSimple filter;
 };

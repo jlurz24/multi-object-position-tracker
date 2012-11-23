@@ -9,6 +9,10 @@ static inline double square(const double x){
 PVFilter::PVFilter(){
 }
 
+void PVFilter::setDT(const double dt){
+  filter.setDT(dt);
+}
+
 void PVFilter::init(const vector<double>& positions, const vector<double>& velocities){
         // Number of variables
         const int n = 6;
@@ -46,12 +50,7 @@ void PVFilter::measure(const vector<double>& positions){
   filter.measureUpdateStep(z);
 }
 
-const PVPair PVFilter::predict(){
-  Vector u(0);
-  filter.timeUpdateStep(u);
-  const Vector x = filter.getX();
-   
-  // Now convert the results to a simple format.
+/* static */ const PVPair PVFilter::toPVPair(const Vector& x){
   PVPair results;
   results.first.resize(3);
   results.first[0] = x(1);
@@ -63,4 +62,14 @@ const PVPair PVFilter::predict(){
   results.second[1] = x(5);
   results.second[2] = x(6);
   return results;
+}
+
+const PVPair PVFilter::predict(){
+  Vector u(0);
+  filter.timeUpdateStep(u);
+  return toPVPair(filter.getX());
+}
+
+const PVPair PVFilter::getX() const {
+  return toPVPair(filter.getX());  
 }

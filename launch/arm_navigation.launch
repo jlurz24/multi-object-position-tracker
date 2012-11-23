@@ -11,7 +11,8 @@
   <node name="move_right_arm_away" pkg="litterbox" type="move_right_arm_away" respawn="false" output="screen" />
   
   <param name="cmvision/color_file" type="string" value="$(find position_tracker)/colors.txt"/>
-
+  <param name="cmvision/debug_on" type="bool" value="false"/>
   <include file="$(find cmvision)/cmvision.launch"/>
+  
 
 </launch>
