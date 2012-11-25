@@ -13,6 +13,7 @@
 #include <boost/math/constants/constants.hpp>
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/filters/voxel_grid.h>
+#include <visualization_msgs/MarkerArray.h>
 
 using namespace std;
 
@@ -41,6 +42,9 @@ class MultiObjectDetector {
  
     // Publisher for the resulting position event.
     ros::Publisher pub; 
+
+    // Publish for visualization
+    ros::Publisher markerPub;
     
     auto_ptr<message_filters::TimeSynchronizer<cmvision::Blobs, sensor_msgs::PointCloud2> > sync;
 
@@ -51,33 +55,30 @@ class MultiObjectDetector {
       ROS_INFO("Detecting blobs with object name %s", objectName.c_str());
 
       // Publish the object location
-      ros::SubscriberStatusCallback cb = boost::bind(&MultiObjectDetector::connectCB, this);
-      pub = nh.advertise<position_tracker::DetectedObjects>("object_locations/" + objectName, 1, cb, cb);
+      ros::SubscriberStatusCallback connectCB = boost::bind(&MultiObjectDetector::startListening, this);
+      ros::SubscriberStatusCallback disconnectCB = boost::bind(&MultiObjectDetector::stopListening, this);
+
+      pub = nh.advertise<position_tracker::DetectedObjects>("object_locations/" + objectName, 1, connectCB, disconnectCB);
+      markerPub = nh.advertise<visualization_msgs::MarkerArray>("object_locations/markers", 1, connectCB, disconnectCB);
       ROS_INFO("Initialization of object detector complete");
     }
     
-    ~MultiObjectDetector(){
-    }
-
  private:
-    void connectCB(){
-      if(pub.getNumSubscribers() == 1){
-        startListening();
-      }
-      else if(pub.getNumSubscribers() == 0) {
-        stopListening();
-      }
-    }
-
     void stopListening(){
-      ROS_INFO("Stopping listeners for multi object detector");
-      blobsSub->unsubscribe(); 
-      depthPointsSub->unsubscribe();
+      if(pub.getNumSubscribers() == 0 && markerPub.getNumSubscribers() == 0){
+        ROS_INFO("Stopping listeners for multi object detector");
+        blobsSub->unsubscribe(); 
+        depthPointsSub->unsubscribe();
+      }
     }
 
     void startListening(){
-      ROS_INFO("Starting to listen for blob messages");
+      if(pub.getNumSubscribers() + markerPub.getNumSubscribers() != 1){
+        return;
+      }
 
+      ROS_INFO("Starting to listen for blob messages");
+ 
       if(blobsSub.get() == NULL){
         // Listen for message from cm vision when it sees an object.
         blobsSub.reset(new message_filters::Subscriber<cmvision::Blobs>(nh, "/blobs", 1));
@@ -123,7 +124,9 @@ class MultiObjectDetector {
       }
 
       // Iterate over each detected blob and determine it's centroid.
-      position_tracker::DetectedObjects objects;
+      position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);;
+      visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
+
       for(unsigned int i = 0; i < blobClouds.size(); ++i){
         Eigen::Vector4f centroid;
         pcl::compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
@@ -143,12 +146,36 @@ class MultiObjectDetector {
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
         tf.waitForTransform(resultPointMap.header.frame_id, resultPoint.header.frame_id, resultPoint.header.stamp, ros::Duration(5.0));
         tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
-        objects.positions.push_back(resultPointMap);
- 
-        ROS_INFO("Detected object with center %f %f %f", centroid[0], centroid[1], centroid[2]);
+        objects->positions.push_back(resultPointMap);
+
+        // TODO: Move to separate function 
+        if(markerPub.getNumSubscribers() > 0){
+          visualization_msgs::Marker marker;
+          marker.id = i;
+          marker.ns = "position_tracker";
+          marker.action = visualization_msgs::Marker::ADD;
+          marker.type = visualization_msgs::Marker::SPHERE;
+          marker.header = resultPointMap.header;
+          marker.action = visualization_msgs::Marker::ADD;
+          marker.pose.position = resultPointMap.point;
+          marker.pose.orientation.x = 0;
+          marker.pose.orientation.y = 0;
+          marker.pose.orientation.z = 0;
+          marker.pose.orientation.w = 1;
+          marker.color.a = 1;
+          marker.color.r = 0;
+          marker.color.g = 1;
+          marker.color.b = 0;
+          marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
+          markers->markers.push_back(marker);
+        }
      }
-     
-     ROS_INFO("Detected %lu objects", objects.positions.size());     
+   
+     // Publish the markers message  
+     if(markerPub.getNumSubscribers() > 0){
+       markerPub.publish(markers);
+     }
+
      // Broadcast the result
      pub.publish(objects);
    }
@@ -177,17 +204,14 @@ class MultiObjectDetector {
    
 #if MOD_VOXEL
       // Use a voxel grid to downsample the input to a 1cm grid.
-      ROS_INFO("PointCloud before filtering has %lu datapoints.", allBlobs->points.size());
       pcl::VoxelGrid<pcl::PointXYZ> vg;
       pcl::PointCloud<pcl::PointXYZ>::Ptr allBlobsFiltered(new pcl::PointCloud<pcl::PointXYZ>);
       vg.setInputCloud(allBlobs);
       vg.setLeafSize(VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M);
       vg.filter(*allBlobsFiltered);
-      ROS_INFO("PointCloud after filtering has %lu datapoints.", allBlobsFiltered->points.size());
       allBlobs = allBlobsFiltered;
  #endif
 
-      ROS_INFO("Starting cluster extraction on cloud of size %lu @ %f", allBlobs->points.size(), ros::Time::now().toSec());
       std::vector<pcl::PointIndices> clusterIndices;
       pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
       ec.setClusterTolerance(CLUSTER_DISTANCE_TOLERANCE_M);
@@ -195,7 +219,6 @@ class MultiObjectDetector {
       ec.setMaxClusterSize(MAX_CLUSTER_SIZE);
       ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
-      ROS_INFO("Ending cluster extraction @ %f", ros::Time::now().toSec());
       
       allBlobsOut = allBlobs;
       return clusterIndices;

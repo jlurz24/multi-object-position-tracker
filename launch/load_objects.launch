@@ -3,7 +3,9 @@
  <param name="ball" textfile="$(find position_tracker)/objects/ball.model" />
 
  <!-- push urdf to factory and spawn robot in gazebo -->
- <node name="spawn_ball1" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball1 -x 1.5 -y 0 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball1" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball1 -x 1.5 -y 0.25 -z 1" respawn="false" output="screen" />
 
  <node name="spawn_ball2" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball2 -x 1.5 -y 0.75 -z 1" respawn="false" output="screen" />
+
+ <node name="spawn_ball3" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball3 -x 1.5 -y 0 -z 1" respawn="false" output="screen" />
 </launch>

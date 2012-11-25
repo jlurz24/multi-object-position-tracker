@@ -13,10 +13,9 @@ public:
   PVFilter();
   void init(const std::vector<double>& positions, const std::vector<double>& velocities);  
   void measure(const std::vector<double>& positions);
-  const PVPair predict();
+  void predict(std::vector<double>& positions);
   void setDT(const double DT);
-  const PVPair getX() const;
-  static const PVPair toPVPair(const Vector& x);
+  void getX(std::vector<double>& positions, std::vector<double>& velocities) const;
 private:
   KalmanSimple filter;
 };

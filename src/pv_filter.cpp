@@ -50,26 +50,26 @@ void PVFilter::measure(const vector<double>& positions){
   filter.measureUpdateStep(z);
 }
 
-/* static */ const PVPair PVFilter::toPVPair(const Vector& x){
-  PVPair results;
-  results.first.resize(3);
-  results.first[0] = x(1);
-  results.first[1] = x(2);
-  results.first[2] = x(3);
-
-  results.second.resize(3);
-  results.second[0] = x(4);
-  results.second[1] = x(5);
-  results.second[2] = x(6);
-  return results;
-}
-
-const PVPair PVFilter::predict(){
+void PVFilter::predict(vector<double>& positions){
   Vector u(0);
   filter.timeUpdateStep(u);
-  return toPVPair(filter.getX());
+
+  const Vector x = filter.getX();
+  positions.resize(3);
+  positions[0] = x(1);
+  positions[1] = x(2);
+  positions[2] = x(3);
 }
 
-const PVPair PVFilter::getX() const {
-  return toPVPair(filter.getX());  
+void PVFilter::getX(vector<double>& positions, vector<double>& velocities) const {
+  const Vector x = filter.getX();
+  positions.resize(3);
+  positions[0] = x(1);
+  positions[1] = x(2);
+  positions[2] = x(3);
+
+  velocities.resize(3);
+  velocities[0] = x(4);
+  velocities[1] = x(5);
+  velocities[2] = x(6); 
 }
