@@ -7,6 +7,8 @@
 #include <pcl/point_types.h>
 #include <pcl_ros/point_cloud.h>
 #include <message_filters/time_synchronizer.h>
+#include <message_filters/sync_policies/approximate_time.h>
+#include <message_filters/synchronizer.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/features/feature.h>
 #include <cmath>
@@ -22,6 +24,8 @@ using namespace std;
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
+typedef message_filters::sync_policies::ApproximateTime<cmvision::Blobs, sensor_msgs::PointCloud2> BlobCloudSyncPolicy;
+typedef message_filters::Synchronizer<BlobCloudSyncPolicy> BlobCloudSync;
 
 static const double CLUSTER_DISTANCE_TOLERANCE_M = 0.02;
 static const int MIN_CLUSTER_SIZE = 50;
@@ -46,13 +50,13 @@ class MultiObjectDetector {
     // Publish for visualization
     ros::Publisher markerPub;
     
-    auto_ptr<message_filters::TimeSynchronizer<cmvision::Blobs, sensor_msgs::PointCloud2> > sync;
+    auto_ptr<BlobCloudSync> sync;
 
  public:
     MultiObjectDetector() : privateHandle("~"){
       
       privateHandle.getParam("object_name", objectName);
-      ROS_INFO("Detecting blobs with object name %s", objectName.c_str());
+      ROS_DEBUG("Detecting blobs with object name %s", objectName.c_str());
 
       // Publish the object location
       ros::SubscriberStatusCallback connectCB = boost::bind(&MultiObjectDetector::startListening, this);
@@ -60,13 +64,13 @@ class MultiObjectDetector {
 
       pub = nh.advertise<position_tracker::DetectedObjects>("object_locations/" + objectName, 1, connectCB, disconnectCB);
       markerPub = nh.advertise<visualization_msgs::MarkerArray>("object_locations/markers", 1, connectCB, disconnectCB);
-      ROS_INFO("Initialization of object detector complete");
+      ROS_DEBUG("Initialization of object detector complete");
     }
     
  private:
     void stopListening(){
       if(pub.getNumSubscribers() == 0 && markerPub.getNumSubscribers() == 0){
-        ROS_INFO("Stopping listeners for multi object detector");
+        ROS_DEBUG("Stopping listeners for multi object detector");
         blobsSub->unsubscribe(); 
         depthPointsSub->unsubscribe();
       }
@@ -77,7 +81,7 @@ class MultiObjectDetector {
         return;
       }
 
-      ROS_INFO("Starting to listen for blob messages");
+      ROS_DEBUG("Starting to listen for blob messages");
  
       if(blobsSub.get() == NULL){
         // Listen for message from cm vision when it sees an object.
@@ -97,18 +101,19 @@ class MultiObjectDetector {
   
       if(sync.get() == NULL){
         // Sync the two messages
-        sync.reset(new message_filters::TimeSynchronizer<cmvision::Blobs, sensor_msgs::PointCloud2>(*blobsSub, *depthPointsSub, 3));
+        sync.reset(new BlobCloudSync(BlobCloudSyncPolicy(10), *blobsSub, *depthPointsSub));
       
         sync->registerCallback(boost::bind(&MultiObjectDetector::finalBlobCallback, this, _1, _2));
       }
-      ROS_INFO("Registration for blob events complete.");
+      ROS_DEBUG("Registration for blob events complete.");
     }
 
     void finalBlobCallback(const cmvision::BlobsConstPtr& blobsMsg, const sensor_msgs::PointCloud2ConstPtr& depthPointsMsg){
+      ROS_DEBUG("Received a blobs message @ %f", ros::Time::now().toSec());
 
       // Check if there are detected blobs.
       if(blobsMsg->blobs.size() == 0){
-        ROS_INFO("No blobs detected");
+        ROS_DEBUG("No blobs detected");
         return;
       }
       

@@ -8,12 +8,15 @@
 #include <pcl/registration/icp.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <boost/lexical_cast.hpp>
+#include <pcl/registration/icp_nl.h>
 
 using namespace std;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
+typedef pcl::IterativeClosestPointNonLinear<pcl::PointXYZ, pcl::PointXYZ> ICP;
+typedef boost::shared_ptr<ICP> ICPPtr;
 
 class DynamicObjectDetector {
   private:
@@ -31,6 +34,8 @@ class DynamicObjectDetector {
     double icpTransformEpsilon;
     double icpEuclideanFitness;
     double icpRansacRejectionThreshold;
+    double kalmanObservationNoise;
+    double kalmanVelocityNoise;
 
     ros::Time lastUpdate;
     ros::Publisher pub;
@@ -50,7 +55,11 @@ class DynamicObjectDetector {
         privateHandle.param<double>("icp_euclidian_fitness", icpEuclideanFitness, 1.0);
         privateHandle.param<double>("icp_ransac_rejection_threshold", icpRansacRejectionThreshold, 0.05);
 
-        ROS_INFO("Tracking objects with object name %s", objectName.c_str());
+        // Kalman filter parameters
+        privateHandle.param<double>("kalman_observation_noise", kalmanObservationNoise, 0.001);
+        privateHandle.param<double>("kalman_velocity_noise", kalmanVelocityNoise, 0.1);
+
+        ROS_DEBUG("Tracking objects with object name %s", objectName.c_str());
         
         ros::SubscriberStatusCallback connectCB = boost::bind(&DynamicObjectDetector::startListening, this);
         ros::SubscriberStatusCallback disconnectCB = boost::bind(&DynamicObjectDetector::stopListening, this);
@@ -63,13 +72,13 @@ class DynamicObjectDetector {
 
         idPub = nh.advertise<visualization_msgs::MarkerArray>("object_tracks/" + objectName + "/identities", 1, connectCB, disconnectCB);
 
-	ROS_INFO("Initialization of the dynamic object detector complete");
+	ROS_DEBUG("Initialization of the dynamic object detector complete");
     }
 
   private:
     void stopListening(){
       if(pub.getNumSubscribers() == 0 && markerPub.getNumSubscribers() == 0 && predictedPub.getNumSubscribers() == 0 && idPub.getNumSubscribers() == 0) {
-        ROS_INFO("Stopping listeners for multi object detector");
+        ROS_DEBUG("Stopping listeners for multi object detector");
         subscribed = false;
         objectsSub->unsubscribe();
       }
@@ -80,7 +89,7 @@ class DynamicObjectDetector {
         return;
       }
 
-      ROS_INFO("Starting to listen for detected object messages");
+      ROS_DEBUG("Starting to listen for detected object messages");
       subscribed = true;
       if(objectsSub.get() == NULL){
         objectsSub.reset(new message_filters::Subscriber<position_tracker::DetectedObjects>(nh, "/object_locations/" + objectName, 5));
@@ -89,35 +98,41 @@ class DynamicObjectDetector {
       else {
         objectsSub->subscribe();
       }
-      ROS_INFO("Registration for detected objects event complete.");
+      ROS_DEBUG("Registration for detected objects event complete.");
     }
 
     void detectedObjectsCallback(const position_tracker::DetectedObjectsConstPtr objects){
-      ROS_INFO("Received detected objects message with %lu objects", objects->positions.size());
+      ROS_DEBUG("Received detected objects message with %lu objects", objects->positions.size());
       // Check for any data.
       if(objects->positions.size() == 0){
-        ROS_INFO("No objects to track");
+        ROS_DEBUG("No objects to track");
         return;
       }
 
       // Confirm frames are correct.
       for(unsigned int i = 0; i < objects->positions.size(); ++i){
         if(objects->positions[i].header.frame_id != frame){
-          ROS_INFO("Frame does not match: %s", objects->positions[i].header.frame_id.c_str());
+          ROS_ERROR("Frame does not match: %s", objects->positions[i].header.frame_id.c_str());
           return;
         }
       }
 
       // Check if the kalman filters have been initialized.
+      // TODO: Move this to the end and make it initialize any unknown points
+      //       with filters.
       PointCloudPtr predictedPositions;
       double dt = 1;
-      if(pvFilters.size() == 0){
+      if(objects->positions.size() != pvFilters.size()){
+        // TODO: Be smarter when detected number of objects changes.
+        //       For now, perform a full reset.
+
         // Step 0: Initialize the kalman filters with the current positions and initial estimates of velocity.
-        ROS_INFO("Initializing Kalman filters");
+        ROS_DEBUG("Initializing Kalman filters");
         lastUpdate = ros::Time::now();
+        pvFilters.clear();
         pvFilters.resize(objects->positions.size());
         for(unsigned int i = 0; i < objects->positions.size(); ++i){
-          pvFilters[i] = boost::shared_ptr<PVFilter>(new PVFilter);
+          pvFilters[i] = boost::shared_ptr<PVFilter>(new PVFilter(kalmanObservationNoise, kalmanVelocityNoise));
           vector<double> positions(3);
           positions[0] = objects->positions[i].point.x;
           positions[1] = objects->positions[i].point.y;
@@ -133,10 +148,6 @@ class DynamicObjectDetector {
       }
       else {
         // Perform an update of the filters.
-        if(objects->positions.size() != pvFilters.size()){
-          ROS_INFO("Do not currently handle changing numbers of objects");
-          return;
-        }
 
         // Step 1: Calculate delta-t
         ros::Time nextUpdate = ros::Time::now();
@@ -144,9 +155,14 @@ class DynamicObjectDetector {
 
         // Step 2: Predict the new positions
         predictedPositions.reset(new PointCloud);
+        PointCloudPtr currentPositions(new PointCloud);
         for(unsigned int i = 0; i < pvFilters.size(); ++i){
           pvFilters[i]->setDT(dt);
           vector<double> positions;
+          vector<double> velocities;
+          pvFilters[i]->getX(positions, velocities);
+          currentPositions->push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
+         
           pvFilters[i]->predict(positions);
           predictedPositions->points.push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
         }
@@ -159,8 +175,9 @@ class DynamicObjectDetector {
         }
 
         // Step 4: Associate the predicted points with the measurements.
-        const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions);
+        const PointCloudConstPtr final = alignClouds(predictedPositions, currentPositions, measuredPositions);
         if(final.get() == NULL){
+          ROS_INFO("Failed to align clouds");
           return;
         }
         
@@ -181,6 +198,7 @@ class DynamicObjectDetector {
         vector<double> positions;
         vector<double> velocities;
         pvFilters[i]->getX(positions, velocities);
+        ROS_DEBUG("Estimated velocities x:%f y:%f z:%f", velocities[0], velocities[1], velocities[2]);
         geometry_msgs::PointStamped position;
         position.point.x = positions[0];
         position.point.y = positions[1];
@@ -207,7 +225,7 @@ class DynamicObjectDetector {
       pub.publish(trackedObjects);
  
       if(markerPub.getNumSubscribers() > 0){
-        publishPVArrows(trackedObjects, dt);
+        publishPVArrows(trackedObjects);
       }
 
       if(idPub.getNumSubscribers() > 0){
@@ -215,29 +233,49 @@ class DynamicObjectDetector {
       }
     }
 
-   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions) const {
-     pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
-     icp.setInputCloud(predictedPositions);
-     icp.setInputTarget(measuredPositions);
+   ICPPtr createICP(const PointCloudConstPtr inputCloud, const PointCloudConstPtr targetCloud) const {
+     ICPPtr icp(new ICP);
+     icp->setInputCloud(inputCloud);
+     icp->setInputTarget(targetCloud);
 
-     icp.setMaxCorrespondenceDistance(icpMaxCorrespondenceDistance);
-     icp.setMaximumIterations(icpMaxIterations);
-     icp.setTransformationEpsilon(icpTransformEpsilon);
-     icp.setEuclideanFitnessEpsilon(icpEuclideanFitness);
-     icp.setRANSACOutlierRejectionThreshold(icpRansacRejectionThreshold);
-
-     PointCloudPtr final(new PointCloud);
-     icp.align(*final);
-
-     if(!icp.hasConverged()){
-       ROS_INFO("ICP did not converge. Score: %f", icp.getFitnessScore());
-       cout << icp.getFinalTransformation() << endl;
-       return PointCloudConstPtr();
-     }
-     return final;
+     icp->setMaxCorrespondenceDistance(icpMaxCorrespondenceDistance);
+     icp->setMaximumIterations(icpMaxIterations);
+     icp->setTransformationEpsilon(icpTransformEpsilon);
+     icp->setEuclideanFitnessEpsilon(icpEuclideanFitness);
+     icp->setRANSACOutlierRejectionThreshold(icpRansacRejectionThreshold);
+     return icp;
    }
 
-   void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects, const double dt) const {
+   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr currentPositions, const PointCloudConstPtr measuredPositions) const {
+     ICPPtr icpPredicted = createICP(measuredPositions, predictedPositions);
+     PointCloudPtr finalPredicted(new PointCloud);
+     icpPredicted->align(*finalPredicted);
+     
+     if(!icpPredicted->hasConverged()){
+       ROS_DEBUG("Predicted ICP did not converge. Score: %f", icpPredicted->getFitnessScore());
+     }
+
+     // Try again with the current positions.
+     ICPPtr icpCurrent = createICP(measuredPositions, currentPositions);
+     PointCloudPtr finalCurrent(new PointCloud);
+     icpCurrent->align(*finalCurrent);
+     if(!icpCurrent->hasConverged()){
+       ROS_DEBUG("Current ICP did not converge. Score: %f", icpCurrent->getFitnessScore());
+     }
+     
+     ROS_DEBUG("Fitness score with current positions %f and predicted positions %f", icpCurrent->getFitnessScore(), icpPredicted->getFitnessScore());
+
+     if(!icpPredicted->hasConverged() && !icpCurrent->hasConverged()){
+       ROS_DEBUG("Neither predicted nor current ICPs converged");
+       return PointCloudPtr();
+     }
+     return icpPredicted->getFitnessScore() < icpCurrent->getFitnessScore() ? finalPredicted : finalCurrent;
+   }
+
+   void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
+
+     double DT_FOR_VIZ = 1;
+
      visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
      for(unsigned int i = 0; i < objects->positions.size(); ++i){
         visualization_msgs::Marker marker;
@@ -256,9 +294,9 @@ class DynamicObjectDetector {
 
         // Calculate the next point
         marker.points[1] = objects->positions[i].point;
-        marker.points[1].x += objects->velocities[i].twist.linear.x * dt;
-        marker.points[1].y += objects->velocities[i].twist.linear.y * dt;
-        marker.points[1].z += objects->velocities[i].twist.linear.z * dt;
+        marker.points[1].x += objects->velocities[i].twist.linear.x * DT_FOR_VIZ;
+        marker.points[1].y += objects->velocities[i].twist.linear.y * DT_FOR_VIZ;
+        marker.points[1].z += objects->velocities[i].twist.linear.z * DT_FOR_VIZ;
         markers->markers.push_back(marker);
      }
      markerPub.publish(markers);

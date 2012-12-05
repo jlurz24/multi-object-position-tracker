@@ -6,10 +6,12 @@
     <param name="object_name" value="balls" />
     <param name="frame" value="/base_footprint" />
     <param name="initial_velocity" value="0.0" />
-    <param name="icp_max_correspondence_distance" value="0.5" />
+    <param name="icp_max_correspondence_distance" value="0.1" />
     <param name="icp_max_iterations" value="50" />
-    <param name="icp_transform_epsilon" value="0.01" />
+    <param name="icp_transform_epsilon" value="1e-6" />
     <param name="icp_euclidian_fitness" value="1.0" />
-    <param name="icp_ransac_rejection_threshold" value="0.1" />
+    <param name="icp_ransac_rejection_threshold" value="0.05" />
+    <param name="kalman_observation_noise" value="0.05" />
+    <param name="kalman_velocity_noise" value="0.1" />
   </node>
 </launch>

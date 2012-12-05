@@ -6,7 +6,7 @@ static inline double square(const double x){
   return x * x;
 }
 
-PVFilter::PVFilter(){
+PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise): filter(aObservationNoise, aVelocityNoise) {
 }
 
 void PVFilter::setDT(const double dt){
