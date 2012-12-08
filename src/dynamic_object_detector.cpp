@@ -9,14 +9,23 @@
 #include <visualization_msgs/MarkerArray.h>
 #include <boost/lexical_cast.hpp>
 #include <pcl/registration/icp_nl.h>
+#include <algorithm>
+#include <pcl/common/geometry.h>
 
 using namespace std;
+
+#define USE_ICP false
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
 typedef pcl::IterativeClosestPointNonLinear<pcl::PointXYZ, pcl::PointXYZ> ICP;
 typedef boost::shared_ptr<ICP> ICPPtr;
+
+inline Eigen::Vector3f operator-(const pcl::PointXYZ& p1, const pcl::PointXYZ& p2) {
+  return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
+}
+
 
 class DynamicObjectDetector {
   private:
@@ -127,7 +136,7 @@ class DynamicObjectDetector {
         //       For now, perform a full reset.
 
         // Step 0: Initialize the kalman filters with the current positions and initial estimates of velocity.
-        ROS_DEBUG("Initializing Kalman filters");
+        ROS_INFO("Initializing Kalman filters");
         lastUpdate = ros::Time::now();
         pvFilters.clear();
         pvFilters.resize(objects->positions.size());
@@ -155,13 +164,10 @@ class DynamicObjectDetector {
 
         // Step 2: Predict the new positions
         predictedPositions.reset(new PointCloud);
-        PointCloudPtr currentPositions(new PointCloud);
         for(unsigned int i = 0; i < pvFilters.size(); ++i){
           pvFilters[i]->setDT(dt);
           vector<double> positions;
           vector<double> velocities;
-          pvFilters[i]->getX(positions, velocities);
-          currentPositions->push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
          
           pvFilters[i]->predict(positions);
           predictedPositions->points.push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
@@ -175,7 +181,7 @@ class DynamicObjectDetector {
         }
 
         // Step 4: Associate the predicted points with the measurements.
-        const PointCloudConstPtr final = alignClouds(predictedPositions, currentPositions, measuredPositions);
+        const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions);
         if(final.get() == NULL){
           ROS_INFO("Failed to align clouds");
           return;
@@ -233,6 +239,7 @@ class DynamicObjectDetector {
       }
     }
 
+#if USE_ICP
    ICPPtr createICP(const PointCloudConstPtr inputCloud, const PointCloudConstPtr targetCloud) const {
      ICPPtr icp(new ICP);
      icp->setInputCloud(inputCloud);
@@ -246,7 +253,7 @@ class DynamicObjectDetector {
      return icp;
    }
 
-   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr currentPositions, const PointCloudConstPtr measuredPositions) const {
+   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions) const {
      ICPPtr icpPredicted = createICP(measuredPositions, predictedPositions);
      PointCloudPtr finalPredicted(new PointCloud);
      icpPredicted->align(*finalPredicted);
@@ -271,6 +278,48 @@ class DynamicObjectDetector {
      }
      return icpPredicted->getFitnessScore() < icpCurrent->getFitnessScore() ? finalPredicted : finalCurrent;
    }
+#else
+  
+   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions) const {
+
+   ROS_DEBUG("Aligning %lu points", predictedPositions->points.size());
+
+   // Create a vector that will represent the ordering. Start with the lowest lexographic ordering.
+  vector<unsigned int> currentOrder;
+  for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
+    currentOrder.push_back(i);
+  }
+
+  // Set the initial order as the best.
+  vector<unsigned int> closestOrder = currentOrder;
+  double lowestDistance = numeric_limits<double>::max();
+
+  // Now search all permutations.
+  while(next_permutation(currentOrder.begin(), currentOrder.end())){
+    // Sum the distances.
+    double distanceSum = 0;
+    for(unsigned int i = 0; i < currentOrder.size(); ++i){
+      distanceSum += pcl::geometry::squaredDistance(predictedPositions->points[i], measuredPositions->points[currentOrder[i]]);
+    }
+
+    if(distanceSum < lowestDistance){
+      // TODO: Early exit criteria based on minimum here?
+      lowestDistance = distanceSum;
+      closestOrder = currentOrder;
+    }
+  }
+
+  ROS_DEBUG("Lowest total distance was %f", lowestDistance);
+
+  // Excercised all perumutations.
+  // TODO: Maximum success criteria here?
+  PointCloudPtr alignedPositions(new PointCloud);
+  for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
+    alignedPositions->points.push_back(measuredPositions->points[closestOrder[i]]);
+  }
+  return alignedPositions;
+}
+#endif
 
    void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
 
@@ -288,9 +337,9 @@ class DynamicObjectDetector {
         marker.points[0] = objects->positions[i].point;
         marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
         marker.color.a = 1;
-        marker.color.r = 0;
-        marker.color.g = 0;
-        marker.color.b = 1;
+        marker.color.r = 1;
+        marker.color.g = 1;
+        marker.color.b = 0;
 
         // Calculate the next point
         marker.points[1] = objects->positions[i].point;

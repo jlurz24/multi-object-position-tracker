@@ -1,0 +1,34 @@
+<gazebo version='1.0'>
+  <model name='wall_horizontal' static='1'>
+    <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+    <link name='wall' gravity='1' self_collide='0' kinematic='0'>
+      <origin pose='0.00000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+      <inertial mass='10.000000' density='1.000000'>
+        <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <inertia ixx='1.000000' ixy='0.000000' ixz='0.000000' iyy='1.000000' iyz='0.000000' izz='1.000000'/>
+      </inertial>
+      <collision name='wall_horizontal_geom' laser_retro='0.000000'>
+        <origin pose='-0.00000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.100000 10.0000 0.1000'/>
+        </geometry>
+        <surface>
+          <friction>
+            <ode mu='-1.000000' mu2='-1.000000' fdir1='0.000000 0.000000 0.000000' slip1='0.000000' slip2='0.000000'/>
+          </friction>
+          <bounce restitution_coefficient='0.000000' threshold='100000.000000'/>
+          <contact>
+            <ode soft_cfm='0.000000' soft_erp='0.200000' kp='100000000.000000' kd='1.000000' max_vel='100.000000' min_depth='0.001000'/>
+          </contact>
+        </surface>
+      </collision>
+      <visual name='wall_horizontal_visual' cast_shadows='1' laser_retro='0.000000' transparency='0.000000'>
+        <origin pose='-0.00000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
+        <geometry>
+          <box size='0.100000 10.0000 0.10000'/>
+        </geometry>
+        <material script='Gazebo/White'/>
+      </visual>
+    </link>
+  </model>
+</gazebo>

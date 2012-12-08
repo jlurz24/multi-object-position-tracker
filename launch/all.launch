@@ -4,6 +4,6 @@
   <include file="$(find position_tracker)/launch/arm_navigation.launch" />
   <include file="$(find position_tracker)/launch/action_nodes.launch" />
   <include file="$(find position_tracker)/launch/sensor_nodes.launch" />
-  <include file="$(find position_tracker)/launch/load_objects.launch"/>
   <include file="$(find position_tracker)/launch/position_body.launch" />
+  <include file="$(find position_tracker)/launch/load_objects.launch"/>
 </launch>

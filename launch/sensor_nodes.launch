@@ -2,7 +2,7 @@
   <node pkg="position_tracker" type="multi_object_detector" name="multi_object_detector" output="screen">
     <param name="object_name" value="balls" />
 </node>
-  <node pkg="position_tracker" type="dynamic_object_detector" name="dynamic_object_detector" output="screen">
+<node pkg="position_tracker" type="dynamic_object_detector" name="dynamic_object_detector" output="screen">
     <param name="object_name" value="balls" />
     <param name="frame" value="/base_footprint" />
     <param name="initial_velocity" value="0.0" />
