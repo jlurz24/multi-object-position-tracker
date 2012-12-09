@@ -45,6 +45,8 @@ class DynamicObjectDetector {
     double icpRansacRejectionThreshold;
     double kalmanObservationNoise;
     double kalmanVelocityNoise;
+    double associationEpsilon;
+    double associationMaxSuccessScore;
 
     ros::Time lastUpdate;
     ros::Publisher pub;
@@ -67,6 +69,8 @@ class DynamicObjectDetector {
         // Kalman filter parameters
         privateHandle.param<double>("kalman_observation_noise", kalmanObservationNoise, 0.001);
         privateHandle.param<double>("kalman_velocity_noise", kalmanVelocityNoise, 0.1);
+        privateHandle.param<double>("association_epsilon", associationEpsilon, 1e-6);
+        privateHandle.param<double>("association_max_success_score", associationMaxSuccessScore, 0.5);
 
         ROS_DEBUG("Tracking objects with object name %s", objectName.c_str());
         
@@ -183,7 +187,6 @@ class DynamicObjectDetector {
         // Step 4: Associate the predicted points with the measurements.
         const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions);
         if(final.get() == NULL){
-          ROS_INFO("Failed to align clouds");
           return;
         }
         
@@ -204,7 +207,6 @@ class DynamicObjectDetector {
         vector<double> positions;
         vector<double> velocities;
         pvFilters[i]->getX(positions, velocities);
-        ROS_DEBUG("Estimated velocities x:%f y:%f z:%f", velocities[0], velocities[1], velocities[2]);
         geometry_msgs::PointStamped position;
         position.point.x = positions[0];
         position.point.y = positions[1];
@@ -303,19 +305,25 @@ class DynamicObjectDetector {
     }
 
     if(distanceSum < lowestDistance){
-      // TODO: Early exit criteria based on minimum here?
       lowestDistance = distanceSum;
       closestOrder = currentOrder;
+      if(lowestDistance < associationEpsilon){
+        ROS_DEBUG("Existing early from association search");
+      }
     }
   }
 
   ROS_DEBUG("Lowest total distance was %f", lowestDistance);
 
   // Excercised all perumutations.
-  // TODO: Maximum success criteria here?
   PointCloudPtr alignedPositions(new PointCloud);
-  for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
-    alignedPositions->points.push_back(measuredPositions->points[closestOrder[i]]);
+  if(lowestDistance <= associationMaxSuccessScore){
+    for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
+      alignedPositions->points.push_back(measuredPositions->points[closestOrder[i]]);
+    }
+  }
+  else {
+    ROS_INFO("Failed to associate measurements. Score was %f.", lowestDistance);
   }
   return alignedPositions;
 }
@@ -323,7 +331,7 @@ class DynamicObjectDetector {
 
    void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
 
-     double DT_FOR_VIZ = 1;
+     double DT_FOR_VIZ = 2;
 
      visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
      for(unsigned int i = 0; i < objects->positions.size(); ++i){
