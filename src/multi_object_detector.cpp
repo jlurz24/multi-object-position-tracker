@@ -19,18 +19,11 @@
 
 using namespace std;
 
-#define MOD_VOXEL 0
-
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
 typedef message_filters::sync_policies::ApproximateTime<cmvision::Blobs, sensor_msgs::PointCloud2> BlobCloudSyncPolicy;
 typedef message_filters::Synchronizer<BlobCloudSyncPolicy> BlobCloudSync;
-
-static const double CLUSTER_DISTANCE_TOLERANCE_M = 0.04;
-static const int MIN_CLUSTER_SIZE = 50;
-static const int MAX_CLUSTER_SIZE = 25000;
-static const double VOXEL_LEAF_SIZE_M = 0.01;
 
 class MultiObjectDetector {
   private:
@@ -43,6 +36,9 @@ class MultiObjectDetector {
     auto_ptr<message_filters::Subscriber<sensor_msgs::PointCloud2> > depthPointsSub;
     
     double clusterDistanceTolerance;
+    double voxelLeafSize;
+    int minClusterSize;
+    int maxClusterSize;
     
     // Publisher for the resulting position event.
     ros::Publisher pub; 
@@ -56,6 +52,11 @@ class MultiObjectDetector {
     MultiObjectDetector() : privateHandle("~"){
       privateHandle.param<string>("object_name", objectName, "balls");
       ROS_DEBUG("Detecting blobs with object name %s", objectName.c_str());
+
+      privateHandle.param<double>("cluster_distance_tolerance", clusterDistanceTolerance, 0.04);
+      privateHandle.param<double>("voxel_leaf_size", voxelLeafSize, 0.0);
+      privateHandle.param<int>("min_cluster_size", minClusterSize, 50);
+      privateHandle.param<int>("max_cluster_size", maxClusterSize, 25000);
 
       // Publish the object location
       ros::SubscriberStatusCallback connectCB = boost::bind(&MultiObjectDetector::startListening, this);
@@ -213,22 +214,22 @@ class MultiObjectDetector {
             }
           }
       }
-   
-#if MOD_VOXEL
-      // Use a voxel grid to downsample the input to a 1cm grid.
-      pcl::VoxelGrid<pcl::PointXYZ> vg;
-      pcl::PointCloud<pcl::PointXYZ>::Ptr allBlobsFiltered(new pcl::PointCloud<pcl::PointXYZ>);
-      vg.setInputCloud(allBlobs);
-      vg.setLeafSize(VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M, VOXEL_LEAF_SIZE_M);
-      vg.filter(*allBlobsFiltered);
-      allBlobs = allBlobsFiltered;
- #endif
+  
+      if(voxelLeafSize > 0){
+        // Use a voxel grid to downsample the input to a 1cm grid.
+        pcl::VoxelGrid<pcl::PointXYZ> vg;
+        pcl::PointCloud<pcl::PointXYZ>::Ptr allBlobsFiltered(new pcl::PointCloud<pcl::PointXYZ>);
+        vg.setInputCloud(allBlobs);
+        vg.setLeafSize(voxelLeafSize, voxelLeafSize, voxelLeafSize);
+        vg.filter(*allBlobsFiltered);
+        allBlobs = allBlobsFiltered;
+      }
 
       std::vector<pcl::PointIndices> clusterIndices;
       pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-      ec.setClusterTolerance(CLUSTER_DISTANCE_TOLERANCE_M);
-      ec.setMinClusterSize(MIN_CLUSTER_SIZE);
-      ec.setMaxClusterSize(MAX_CLUSTER_SIZE);
+      ec.setClusterTolerance(clusterDistanceTolerance);
+      ec.setMinClusterSize(minClusterSize);
+      ec.setMaxClusterSize(maxClusterSize);
       ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
       

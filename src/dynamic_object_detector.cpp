@@ -111,7 +111,7 @@ class DynamicObjectDetector {
 
     void detectedObjectsCallback(const position_tracker::DetectedObjectsConstPtr objects){
 
-      ROS_INFO("Received detected objects message with %lu objects", objects->positions.size());
+      ROS_DEBUG("Received detected objects message with %lu objects", objects->positions.size());
 
       // Check for any data.
       if(objects->positions.size() == 0){
@@ -160,7 +160,7 @@ class DynamicObjectDetector {
           pvFilters[i]->measure(point, measurementTime);
         }
         else {
-          ROS_INFO("Ignoring a null measurement");
+          ROS_DEBUG("Ignoring a null measurement");
         }
       }
 
@@ -200,7 +200,7 @@ class DynamicObjectDetector {
       // Step 6: Initialize filters with any remaining positions and default
       //         velocities..
       for(unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i){
-        ROS_INFO("Initializing Kalman filter for measurement %i", i);
+        ROS_DEBUG("Initializing Kalman filter for measurement %i", i);
         boost::shared_ptr<PVFilter> filter(new PVFilter(kalmanObservationNoise, kalmanVelocityNoise));
 
         const pcl::PointXYZ currMeasurement = unalignedMeasurements->points[i];
@@ -238,7 +238,7 @@ class DynamicObjectDetector {
 
     PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions, const PointCloudPtr unalignedMeasurements) const {
   
-    ROS_INFO("Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
+    ROS_DEBUG("Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
   
     const pcl::PointXYZ nullPoint(numeric_limits<double>::infinity(), numeric_limits<double>::infinity(), numeric_limits<double>::infinity());
   
@@ -248,7 +248,7 @@ class DynamicObjectDetector {
     measuredPositionsWithNulls->points = measuredPositions->points;
     for(unsigned int i = measuredPositions->points.size(); i < predictedPositions->points.size(); ++i){
       measuredPositionsWithNulls->points.push_back(nullPoint);
-      ROS_INFO("Adding a null measured point");
+      ROS_DEBUG("Adding a null measured point");
     }
   
     // If the reverse is true, create null predictions.
@@ -256,7 +256,7 @@ class DynamicObjectDetector {
     predictedPositionsWithNulls->points = predictedPositions->points;
     for(unsigned int i = predictedPositions->points.size(); i < measuredPositions->points.size(); ++i){
       predictedPositionsWithNulls->points.push_back(nullPoint);
-      ROS_INFO("Adding a null predicted point");
+      ROS_DEBUG("Adding a null predicted point");
     }
   
     // Create a vector that will represent the ordering of the measured positions.  // Start with the lowest lexographic ordering.
@@ -293,7 +293,7 @@ class DynamicObjectDetector {
         closestOrder = currentOrder;
         nullsFoundForLowestDistance = nullsFound;
         if(distanceSum < associationEpsilon){
-          ROS_INFO("Existing early from association search");
+          ROS_DEBUG("Existing early from association search");
           break;
         }
       }
@@ -301,7 +301,7 @@ class DynamicObjectDetector {
   
     // Remove the lambda distances from the score.
     lowestDistance -= (nullsFoundForLowestDistance * LAMBDA);
-    ROS_INFO("Lowest total distance was %f", lowestDistance);
+    ROS_DEBUG("Lowest total distance was %f", lowestDistance);
   
     // Excercised all perumutations.
     PointCloudPtr alignedPositions(new PointCloud);
@@ -309,11 +309,11 @@ class DynamicObjectDetector {
       for(unsigned int i = 0; i < measuredPositionsWithNulls->points.size(); ++i){
         const pcl::PointXYZ& currMeasurement = measuredPositionsWithNulls->points[closestOrder[i]];
         if(i >= predictedPositions->points.size()){
-          ROS_INFO("Adding an unaligned point to the end %i %lu %lu", i, measuredPositionsWithNulls->points.size(), predictedPositions->points.size());
+          ROS_DEBUG("Adding an unaligned point to the end of associated points %i %lu %lu", i, measuredPositionsWithNulls->points.size(), predictedPositions->points.size());
           unalignedMeasurements->points.push_back(currMeasurement);
         }
         else if(currMeasurement != nullPoint && pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement) > maxCorrelationDistance){
-          ROS_INFO("Over the max distance %f", pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement));
+          ROS_DEBUG("Associated points were over the maximum distance %f", pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement));
           alignedPositions->points.push_back(nullPoint);
           unalignedMeasurements->points.push_back(currMeasurement);
         }
