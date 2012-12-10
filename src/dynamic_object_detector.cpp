@@ -5,50 +5,48 @@
 #include <position_tracker/DetectedDynamicObjects.h>
 #include <pcl/point_types.h>
 #include <pcl_ros/point_cloud.h>
-#include <pcl/registration/icp.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <boost/lexical_cast.hpp>
-#include <pcl/registration/icp_nl.h>
 #include <algorithm>
 #include <pcl/common/geometry.h>
 
 using namespace std;
 
-#define USE_ICP false
-
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
-typedef pcl::IterativeClosestPointNonLinear<pcl::PointXYZ, pcl::PointXYZ> ICP;
-typedef boost::shared_ptr<ICP> ICPPtr;
+typedef vector<boost::shared_ptr<PVFilter> > PVFilterVector;
 
 inline Eigen::Vector3f operator-(const pcl::PointXYZ& p1, const pcl::PointXYZ& p2) {
   return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
 }
 
+inline bool operator==(const pcl::PointXYZ& p1, const pcl::PointXYZ& p2){
+  return p1.x == p2.x && p1.y == p2.y && p1.z == p2.z;
+}
+
+inline bool operator!=(const pcl::PointXYZ& p1, const pcl::PointXYZ&p2){
+  return !(p1 == p2);
+}
 
 class DynamicObjectDetector {
   private:
     ros::NodeHandle nh;
     ros::NodeHandle privateHandle;
-    std::vector<boost::shared_ptr<PVFilter> > pvFilters;
+    PVFilterVector pvFilters;
     auto_ptr<message_filters::Subscriber<position_tracker::DetectedObjects> > objectsSub;
-    
+
     // Parameters
     std::string objectName;
     std::string frame;
     double initialVelocity;
-    double icpMaxCorrespondenceDistance;
-    int icpMaxIterations;
-    double icpTransformEpsilon;
-    double icpEuclideanFitness;
-    double icpRansacRejectionThreshold;
     double kalmanObservationNoise;
     double kalmanVelocityNoise;
     double associationEpsilon;
     double associationMaxSuccessScore;
+    double filterStaleThreshold;
+    double maxCorrelationDistance;
 
-    ros::Time lastUpdate;
     ros::Publisher pub;
     ros::Publisher markerPub;
     ros::Publisher predictedPub;
@@ -60,20 +58,17 @@ class DynamicObjectDetector {
         privateHandle.param<string>("object_name", objectName, "balls");
         privateHandle.param<string>("frame", frame, "/base_footprint");
         privateHandle.param<double>("initial_velocity", initialVelocity, 0.0);
-        privateHandle.param<double>("icp_max_correspondence_distance", icpMaxCorrespondenceDistance, 0.05);
-        privateHandle.param<int>("icp_max_iterations", icpMaxIterations, 50);
-        privateHandle.param<double>("icp_transform_epsilon", icpTransformEpsilon, 1e-6);
-        privateHandle.param<double>("icp_euclidian_fitness", icpEuclideanFitness, 1.0);
-        privateHandle.param<double>("icp_ransac_rejection_threshold", icpRansacRejectionThreshold, 0.05);
 
         // Kalman filter parameters
         privateHandle.param<double>("kalman_observation_noise", kalmanObservationNoise, 0.001);
         privateHandle.param<double>("kalman_velocity_noise", kalmanVelocityNoise, 0.1);
         privateHandle.param<double>("association_epsilon", associationEpsilon, 1e-6);
         privateHandle.param<double>("association_max_success_score", associationMaxSuccessScore, 0.5);
+        privateHandle.param<double>("filter_stale_threshold", filterStaleThreshold, 15);
+        privateHandle.param<double>("max_correlation_distance", maxCorrelationDistance, 5.0);
 
         ROS_DEBUG("Tracking objects with object name %s", objectName.c_str());
-        
+
         ros::SubscriberStatusCallback connectCB = boost::bind(&DynamicObjectDetector::startListening, this);
         ros::SubscriberStatusCallback disconnectCB = boost::bind(&DynamicObjectDetector::stopListening, this);
 
@@ -85,7 +80,7 @@ class DynamicObjectDetector {
 
         idPub = nh.advertise<visualization_msgs::MarkerArray>("object_tracks/" + objectName + "/identities", 1, connectCB, disconnectCB);
 
-	ROS_DEBUG("Initialization of the dynamic object detector complete");
+  ROS_DEBUG("Initialization of the dynamic object detector complete");
     }
 
   private:
@@ -115,7 +110,9 @@ class DynamicObjectDetector {
     }
 
     void detectedObjectsCallback(const position_tracker::DetectedObjectsConstPtr objects){
-      ROS_DEBUG("Received detected objects message with %lu objects", objects->positions.size());
+
+      ROS_INFO("Received detected objects message with %lu objects", objects->positions.size());
+
       // Check for any data.
       if(objects->positions.size() == 0){
         ROS_DEBUG("No objects to track");
@@ -130,78 +127,53 @@ class DynamicObjectDetector {
         }
       }
 
-      // Check if the kalman filters have been initialized.
-      // TODO: Move this to the end and make it initialize any unknown points
-      //       with filters.
-      PointCloudPtr predictedPositions;
-      double dt = 1;
-      if(objects->positions.size() != pvFilters.size()){
-        // TODO: Be smarter when detected number of objects changes.
-        //       For now, perform a full reset.
+      // Step 1: Predict the new positions
+      ros::Time measurementTime = objects->positions[0].header.stamp;
+      PointCloudPtr predictedPositions(new PointCloud);
+      for(unsigned int i = 0; i < pvFilters.size(); ++i){
+        vector<double> positions;
+        vector<double> velocities;
 
-        // Step 0: Initialize the kalman filters with the current positions and initial estimates of velocity.
-        ROS_INFO("Initializing Kalman filters");
-        lastUpdate = ros::Time::now();
-        pvFilters.clear();
-        pvFilters.resize(objects->positions.size());
-        for(unsigned int i = 0; i < objects->positions.size(); ++i){
-          pvFilters[i] = boost::shared_ptr<PVFilter>(new PVFilter(kalmanObservationNoise, kalmanVelocityNoise));
-          vector<double> positions(3);
-          positions[0] = objects->positions[i].point.x;
-          positions[1] = objects->positions[i].point.y;
-          positions[2] = objects->positions[i].point.z;
-
-          vector<double> velocities(3);
-          velocities[0] = initialVelocity;
-          velocities[1] = initialVelocity;
-          velocities[2] = 0; // Z velocity is always 0.
-
-          pvFilters[i]->init(positions, velocities);
-        }
+        pvFilters[i]->predict(positions, measurementTime);
+        predictedPositions->points.push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
       }
-      else {
-        // Perform an update of the filters.
 
-        // Step 1: Calculate delta-t
-        ros::Time nextUpdate = ros::Time::now();
-        dt = nextUpdate.toSec() - lastUpdate.toSec();
+      // Step 2: Create a point cloud from the detected object centers.
+      PointCloudPtr measuredPositions(new PointCloud);
+      for(unsigned int i = 0; i < objects->positions.size(); ++i){
+        pcl::PointXYZ point(objects->positions[i].point.x, objects->positions[i].point.y, objects->positions[i].point.z);
+        measuredPositions->points.push_back(point);
+      }
 
-        // Step 2: Predict the new positions
-        predictedPositions.reset(new PointCloud);
-        for(unsigned int i = 0; i < pvFilters.size(); ++i){
-          pvFilters[i]->setDT(dt);
-          vector<double> positions;
-          vector<double> velocities;
-         
-          pvFilters[i]->predict(positions);
-          predictedPositions->points.push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
-        }
+      // Step 3: Associate the predicted points with the measurements.
+      const PointCloudPtr unalignedMeasurements(new PointCloud);
+      const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions, unalignedMeasurements);
 
-        // Step 3: Create a point cloud from the detected object centers.
-        PointCloudPtr measuredPositions(new PointCloud);
-        for(unsigned int i = 0; i < objects->positions.size(); ++i){
-          pcl::PointXYZ point(objects->positions[i].point.x, objects->positions[i].point.y, objects->positions[i].point.z);
-          measuredPositions->points.push_back(point);
-        }
-
-        // Step 4: Associate the predicted points with the measurements.
-        const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions);
-        if(final.get() == NULL){
-          return;
-        }
-        
-        // Step 5: Update the filters with the new measurements.
-        lastUpdate = nextUpdate;
-        for(unsigned int i = 0; i < pvFilters.size() && i < final->points.size(); ++i){
+      // Step 4: Update the associated filters with the new measurements.
+      for(unsigned int i = 0; i < final->points.size(); ++i){
+        // Ignore null measurements.
+        if(final->points[i].x != numeric_limits<double>::infinity()){
           vector<double> point(3);
           point[0] = final->points[i].x;
           point[1] = final->points[i].y;
           point[2] = final->points[i].z;
-          pvFilters[i]->measure(point);
+          pvFilters[i]->measure(point, measurementTime);
         }
-      }      
+        else {
+          ROS_INFO("Ignoring a null measurement");
+        }
+      }
 
-      // Step 6: Get the current estimates for the state variables
+      // Step 4a: Prune any filters that have not been updated
+      //          recently.
+      for(PVFilterVector::iterator i = pvFilters.begin(); i != pvFilters.end(); ++i){
+        if((*i)->getLastUpdate().toSec() - measurementTime.toSec() > filterStaleThreshold){
+           ROS_INFO("Pruning a filter that has not been updated since %f", (*i)->getLastUpdate().toSec());
+           pvFilters.erase(i);
+         }
+      }
+
+      // Step 5: Get the current estimates for the state variables
       position_tracker::DetectedDynamicObjectsPtr trackedObjects(new position_tracker::DetectedDynamicObjects);
       for(unsigned int i = 0; i < pvFilters.size(); ++i){
         vector<double> positions;
@@ -213,121 +185,149 @@ class DynamicObjectDetector {
         position.point.z = positions[2];
 
         position.header.frame_id = frame;
-        position.header.stamp = lastUpdate;
+        position.header.stamp = measurementTime;
         trackedObjects->positions.push_back(position);
-      
+
         geometry_msgs::TwistStamped velocity;
         velocity.twist.linear.x = velocities[0];
         velocity.twist.linear.y = velocities[1];
         velocity.twist.linear.z = velocities[2];
         velocity.header.frame_id = frame;
-        velocity.header.stamp = lastUpdate;
+        velocity.header.stamp = measurementTime;
         trackedObjects->velocities.push_back(velocity);
       }
 
-      // Step 8: Publish the results
-      if(predictedPub.getNumSubscribers() > 0 && predictedPositions != NULL){
-        publishPredictedPositions(predictedPositions, lastUpdate);
+      // Step 6: Initialize filters with any remaining positions and default
+      //         velocities..
+      for(unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i){
+        ROS_INFO("Initializing Kalman filter for measurement %i", i);
+        boost::shared_ptr<PVFilter> filter(new PVFilter(kalmanObservationNoise, kalmanVelocityNoise));
+
+        const pcl::PointXYZ currMeasurement = unalignedMeasurements->points[i];
+        vector<double> positions(3);
+        positions[0] = currMeasurement.x;
+        positions[1] = currMeasurement.y;
+        positions[2] = currMeasurement.z;
+
+        vector<double> velocities(3);
+        velocities[0] = initialVelocity;
+        velocities[1] = initialVelocity;
+        velocities[2] = 0; // Z velocity is always 0.
+
+        filter->init(positions, velocities, measurementTime);
+        pvFilters.push_back(filter);
       }
 
-      pub.publish(trackedObjects);
- 
-      if(markerPub.getNumSubscribers() > 0){
-        publishPVArrows(trackedObjects);
+      // Step 7: Publish the results
+      if(predictedPub.getNumSubscribers() > 0 && predictedPositions->points.size() > 0){
+        publishPredictedPositions(predictedPositions, measurementTime);
       }
 
-      if(idPub.getNumSubscribers() > 0){
-        publishIDs(trackedObjects);
+      if(trackedObjects->positions.size() > 0){
+        pub.publish(trackedObjects);
+
+        if(markerPub.getNumSubscribers() > 0){
+          publishPVArrows(trackedObjects);
+        }
+
+        if(idPub.getNumSubscribers() > 0){
+          publishIDs(trackedObjects);
+        }
       }
     }
 
-#if USE_ICP
-   ICPPtr createICP(const PointCloudConstPtr inputCloud, const PointCloudConstPtr targetCloud) const {
-     ICPPtr icp(new ICP);
-     icp->setInputCloud(inputCloud);
-     icp->setInputTarget(targetCloud);
-
-     icp->setMaxCorrespondenceDistance(icpMaxCorrespondenceDistance);
-     icp->setMaximumIterations(icpMaxIterations);
-     icp->setTransformationEpsilon(icpTransformEpsilon);
-     icp->setEuclideanFitnessEpsilon(icpEuclideanFitness);
-     icp->setRANSACOutlierRejectionThreshold(icpRansacRejectionThreshold);
-     return icp;
-   }
-
-   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions) const {
-     ICPPtr icpPredicted = createICP(measuredPositions, predictedPositions);
-     PointCloudPtr finalPredicted(new PointCloud);
-     icpPredicted->align(*finalPredicted);
-     
-     if(!icpPredicted->hasConverged()){
-       ROS_DEBUG("Predicted ICP did not converge. Score: %f", icpPredicted->getFitnessScore());
-     }
-
-     // Try again with the current positions.
-     ICPPtr icpCurrent = createICP(measuredPositions, currentPositions);
-     PointCloudPtr finalCurrent(new PointCloud);
-     icpCurrent->align(*finalCurrent);
-     if(!icpCurrent->hasConverged()){
-       ROS_DEBUG("Current ICP did not converge. Score: %f", icpCurrent->getFitnessScore());
-     }
-     
-     ROS_DEBUG("Fitness score with current positions %f and predicted positions %f", icpCurrent->getFitnessScore(), icpPredicted->getFitnessScore());
-
-     if(!icpPredicted->hasConverged() && !icpCurrent->hasConverged()){
-       ROS_DEBUG("Neither predicted nor current ICPs converged");
-       return PointCloudPtr();
-     }
-     return icpPredicted->getFitnessScore() < icpCurrent->getFitnessScore() ? finalPredicted : finalCurrent;
-   }
-#else
+    PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions, const PointCloudPtr unalignedMeasurements) const {
   
-   PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions) const {
-
-   ROS_DEBUG("Aligning %lu points", predictedPositions->points.size());
-
-   // Create a vector that will represent the ordering. Start with the lowest lexographic ordering.
-  vector<unsigned int> currentOrder;
-  for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
-    currentOrder.push_back(i);
-  }
-
-  // Set the initial order as the best.
-  vector<unsigned int> closestOrder = currentOrder;
-  double lowestDistance = numeric_limits<double>::max();
-
-  // Now search all permutations.
-  while(next_permutation(currentOrder.begin(), currentOrder.end())){
-    // Sum the distances.
-    double distanceSum = 0;
-    for(unsigned int i = 0; i < currentOrder.size(); ++i){
-      distanceSum += pcl::geometry::squaredDistance(predictedPositions->points[i], measuredPositions->points[currentOrder[i]]);
+    ROS_INFO("Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
+  
+    const pcl::PointXYZ nullPoint(numeric_limits<double>::infinity(), numeric_limits<double>::infinity(), numeric_limits<double>::infinity());
+  
+    // If there are more measured points than predicted points, then
+    // create null measurements to represent unknown objects,
+    PointCloudPtr measuredPositionsWithNulls(new PointCloud);
+    measuredPositionsWithNulls->points = measuredPositions->points;
+    for(unsigned int i = measuredPositions->points.size(); i < predictedPositions->points.size(); ++i){
+      measuredPositionsWithNulls->points.push_back(nullPoint);
+      ROS_INFO("Adding a null measured point");
     }
-
-    if(distanceSum < lowestDistance){
-      lowestDistance = distanceSum;
-      closestOrder = currentOrder;
-      if(lowestDistance < associationEpsilon){
-        ROS_DEBUG("Existing early from association search");
+  
+    // If the reverse is true, create null predictions.
+    PointCloudPtr predictedPositionsWithNulls(new PointCloud);
+    predictedPositionsWithNulls->points = predictedPositions->points;
+    for(unsigned int i = predictedPositions->points.size(); i < measuredPositions->points.size(); ++i){
+      predictedPositionsWithNulls->points.push_back(nullPoint);
+      ROS_INFO("Adding a null predicted point");
+    }
+  
+    // Create a vector that will represent the ordering of the measured positions.  // Start with the lowest lexographic ordering.
+    vector<unsigned int> currentOrder;
+    for(unsigned int i = 0; i < measuredPositionsWithNulls->points.size(); ++i){
+      currentOrder.push_back(i);
+    }
+  
+    // Set the initial order as the best.
+    vector<unsigned int> closestOrder = currentOrder;
+    double lowestDistance = numeric_limits<double>::max();
+    unsigned int nullsFoundForLowestDistance = 0;
+  
+    const double LAMBDA = 1e6;
+  
+    // Now search all permutations.
+    while(next_permutation(currentOrder.begin(), currentOrder.end())){
+      // Sum the distances.
+      double distanceSum = 0;
+      unsigned int nullsFound = 0;
+      for(unsigned int i = 0; i < currentOrder.size(); ++i){
+        // Check if this is a null point and add lambda.
+        if(measuredPositionsWithNulls->points[currentOrder[i]] == nullPoint || predictedPositionsWithNulls->points[i] == nullPoint){
+          distanceSum += LAMBDA;
+          nullsFound++;
+        }
+        else {
+          distanceSum += pcl::geometry::squaredDistance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]);
+        }
+      }
+  
+      if(distanceSum < lowestDistance){
+        lowestDistance = distanceSum;
+        closestOrder = currentOrder;
+        nullsFoundForLowestDistance = nullsFound;
+        if(distanceSum < associationEpsilon){
+          ROS_INFO("Existing early from association search");
+          break;
+        }
       }
     }
-  }
-
-  ROS_DEBUG("Lowest total distance was %f", lowestDistance);
-
-  // Excercised all perumutations.
-  PointCloudPtr alignedPositions(new PointCloud);
-  if(lowestDistance <= associationMaxSuccessScore){
-    for(unsigned int i = 0; i < measuredPositions->points.size(); ++i){
-      alignedPositions->points.push_back(measuredPositions->points[closestOrder[i]]);
+  
+    // Remove the lambda distances from the score.
+    lowestDistance -= (nullsFoundForLowestDistance * LAMBDA);
+    ROS_INFO("Lowest total distance was %f", lowestDistance);
+  
+    // Excercised all perumutations.
+    PointCloudPtr alignedPositions(new PointCloud);
+    if(lowestDistance <= associationMaxSuccessScore){
+      for(unsigned int i = 0; i < measuredPositionsWithNulls->points.size(); ++i){
+        const pcl::PointXYZ& currMeasurement = measuredPositionsWithNulls->points[closestOrder[i]];
+        if(i >= predictedPositions->points.size()){
+          ROS_INFO("Adding an unaligned point to the end %i %lu %lu", i, measuredPositionsWithNulls->points.size(), predictedPositions->points.size());
+          unalignedMeasurements->points.push_back(currMeasurement);
+        }
+        else if(currMeasurement != nullPoint && pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement) > maxCorrelationDistance){
+          ROS_INFO("Over the max distance %f", pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement));
+          alignedPositions->points.push_back(nullPoint);
+          unalignedMeasurements->points.push_back(currMeasurement);
+        }
+        else {
+          alignedPositions->points.push_back(currMeasurement);
+        }
+      }
     }
-  }
-  else {
-    ROS_INFO("Failed to associate measurements. Score was %f.", lowestDistance);
-  }
-  return alignedPositions;
+    else {
+      ROS_INFO("Failed to associate measurements. Score was %f.", lowestDistance);
+      unalignedMeasurements->points = measuredPositions->points;
+    }
+    return alignedPositions;
 }
-#endif
 
    void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
 
@@ -339,7 +339,7 @@ class DynamicObjectDetector {
         marker.id = i;
         marker.action = visualization_msgs::Marker::ADD;
         marker.type = visualization_msgs::Marker::ARROW;
-        marker.header.stamp = lastUpdate;
+        marker.header.stamp = ros::Time::now();
         marker.header.frame_id = frame;
         marker.points.resize(2);
         marker.points[0] = objects->positions[i].point;
@@ -367,7 +367,7 @@ class DynamicObjectDetector {
         marker.text = boost::lexical_cast<string>(i + 1);
         marker.action = visualization_msgs::Marker::ADD;
         marker.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-        marker.header.stamp = lastUpdate;
+        marker.header.stamp = ros::Time::now();
         marker.header.frame_id = frame;
         marker.color.a = 1;
         marker.color.r = 0;

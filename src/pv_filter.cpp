@@ -9,11 +9,10 @@ static inline double square(const double x){
 PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise): filter(aObservationNoise, aVelocityNoise) {
 }
 
-void PVFilter::setDT(const double dt){
-  filter.setDT(dt);
-}
+void PVFilter::init(const vector<double>& positions, const vector<double>& velocities, ros::Time time){
 
-void PVFilter::init(const vector<double>& positions, const vector<double>& velocities){
+        updateTime = time;
+
         // Number of variables
         const int n = 6;
 
@@ -42,16 +41,19 @@ void PVFilter::init(const vector<double>& positions, const vector<double>& veloc
         filter.init(x, P0);
 }
 
-void PVFilter::measure(const vector<double>& positions){
+void PVFilter::measure(const vector<double>& positions, ros::Time time){
   Vector z(3);
   z(1) = positions[0];
   z(2) = positions[1];
   z(3) = positions[2];
+  filter.setDT(time.toSec() - updateTime.toSec());
   filter.measureUpdateStep(z);
+  updateTime = time;
 }
 
-void PVFilter::predict(vector<double>& positions){
+void PVFilter::predict(vector<double>& positions, ros::Time time){
   Vector u(0);
+  filter.setDT(time.toSec() - updateTime.toSec());
   filter.timeUpdateStep(u);
 
   const Vector x = filter.getX();

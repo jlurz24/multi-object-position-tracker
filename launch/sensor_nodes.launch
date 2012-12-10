@@ -1,19 +1,17 @@
 <launch>
-  <node pkg="position_tracker" type="multi_object_detector" name="multi_object_detector" output="screen">
-    <param name="object_name" value="balls" />
-</node>
 <node pkg="position_tracker" type="dynamic_object_detector" name="dynamic_object_detector" output="screen">
     <param name="object_name" value="balls" />
     <param name="frame" value="/base_footprint" />
     <param name="initial_velocity" value="0.0" />
-    <param name="icp_max_correspondence_distance" value="0.1" />
-    <param name="icp_max_iterations" value="50" />
-    <param name="icp_transform_epsilon" value="1e-6" />
-    <param name="icp_euclidian_fitness" value="1.0" />
-    <param name="icp_ransac_rejection_threshold" value="0.05" />
     <param name="kalman_observation_noise" value="0.05" />
     <param name="kalman_velocity_noise" value="0.1" />
     <param name="association_epsilon" value="1e-6" />
     <param name="association_max_success_score" value="0.5" />
+    <param name="filter_stale_threshold" value="15" />
+    <param name="max_correlation_distance" value="5" />
+  </node>
+
+  <node pkg="position_tracker" type="multi_object_detector" name="multi_object_detector" output="screen">
+    <param name="object_name" value="balls" />
   </node>
 </launch>

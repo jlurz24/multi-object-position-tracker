@@ -27,7 +27,7 @@ typedef PointCloud::Ptr PointCloudPtr;
 typedef message_filters::sync_policies::ApproximateTime<cmvision::Blobs, sensor_msgs::PointCloud2> BlobCloudSyncPolicy;
 typedef message_filters::Synchronizer<BlobCloudSyncPolicy> BlobCloudSync;
 
-static const double CLUSTER_DISTANCE_TOLERANCE_M = 0.02;
+static const double CLUSTER_DISTANCE_TOLERANCE_M = 0.04;
 static const int MIN_CLUSTER_SIZE = 50;
 static const int MAX_CLUSTER_SIZE = 25000;
 static const double VOXEL_LEAF_SIZE_M = 0.01;
@@ -42,8 +42,8 @@ class MultiObjectDetector {
     auto_ptr<message_filters::Subscriber<cmvision::Blobs> > blobsSub;
     auto_ptr<message_filters::Subscriber<sensor_msgs::PointCloud2> > depthPointsSub;
     
-    double lastUpdate;
- 
+    double clusterDistanceTolerance;
+    
     // Publisher for the resulting position event.
     ros::Publisher pub; 
 
@@ -54,8 +54,7 @@ class MultiObjectDetector {
 
  public:
     MultiObjectDetector() : privateHandle("~"){
-      
-      privateHandle.getParam("object_name", objectName);
+      privateHandle.param<string>("object_name", objectName, "balls");
       ROS_DEBUG("Detecting blobs with object name %s", objectName.c_str());
 
       // Publish the object location
@@ -71,8 +70,12 @@ class MultiObjectDetector {
     void stopListening(){
       if(pub.getNumSubscribers() == 0 && markerPub.getNumSubscribers() == 0){
         ROS_DEBUG("Stopping listeners for multi object detector");
-        blobsSub->unsubscribe(); 
-        depthPointsSub->unsubscribe();
+        if(blobsSub.get()){
+          blobsSub->unsubscribe();
+        }
+        if(depthPointsSub.get()){
+          depthPointsSub->unsubscribe();
+        }
       }
     }
 
@@ -132,6 +135,11 @@ class MultiObjectDetector {
       position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);;
       visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
 
+      if(!tf.waitForTransform("/base_footprint", "/wide_stereo_optical_frame", depthPointsMsg->header.stamp, ros::Duration(5.0))){
+        ROS_INFO("Transform from wide_stereo_optical_frame to base_footprint is not yet available");
+        return;
+      }
+
       for(unsigned int i = 0; i < blobClouds.size(); ++i){
         Eigen::Vector4f centroid;
         pcl::compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
@@ -149,7 +157,6 @@ class MultiObjectDetector {
         geometry_msgs::PointStamped resultPointMap;
         resultPointMap.header.frame_id = "/base_footprint";
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
-        tf.waitForTransform(resultPointMap.header.frame_id, resultPoint.header.frame_id, resultPoint.header.stamp, ros::Duration(5.0));
         tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
         objects->positions.push_back(resultPointMap);
 
