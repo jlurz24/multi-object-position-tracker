@@ -1,0 +1,14 @@
+<launch>
+ <!-- send urdf to param server -->
+ <param name="horiz_wall" textfile="$(find position_tracker)/objects/horiz_wall.model"/>
+ <param name="perp_wall" textfile="$(find position_tracker)/objects/perp_wall.model"/>
+ 
+  <node name="spawn_back_wall" pkg="gazebo" type="spawn_model" args="-param horiz_wall -gazebo -model back_wall -x 2.25 -y 0 -z 0" respawn="false" output="screen" />
+
+  <node name="spawn_front_wall" pkg="gazebo" type="spawn_model" args="-param horiz_wall -gazebo -model front_wall -x 0.75 -y 0 -z 0" respawn="false" output="screen" />
+
+ <node name="spawn_left_wall" pkg="gazebo" type="spawn_model" args="-param perp_wall -gazebo -model left_wall -x 0 -y 1.5 -z 0 -Y 1.62" respawn="false" output="screen" />
+
+ <node name="spawn_right_wall" pkg="gazebo" type="spawn_model" args="-param perp_wall -gazebo -model right_wall -x 0 -y -1.5 -z 0 -Y 1.62" respawn="false" output="screen" />
+
+</launch>

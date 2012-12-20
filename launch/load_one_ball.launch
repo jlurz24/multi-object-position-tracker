@@ -1,0 +1,5 @@
+<launch>
+ <!-- send urdf to param server -->
+ <param name="ball" textfile="$(find position_tracker)/objects/ball.model" />
+ <node name="spawn_ball1" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball1 -x 1 -y 0.25 -z 1" respawn="false" output="screen" />
+</launch>
