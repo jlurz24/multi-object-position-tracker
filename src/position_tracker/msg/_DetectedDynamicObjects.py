@@ -8,17 +8,12 @@ import geometry_msgs.msg
 import std_msgs.msg
 
 class DetectedDynamicObjects(genpy.Message):
-  _md5sum = "90437e427b016a12735896dac4745a66"
+  _md5sum = "fc8d3749521811af1f565b28978272ba"
   _type = "position_tracker/DetectedDynamicObjects"
-  _has_header = False #flag to mark the presence of a Header object
-  _full_text = """geometry_msgs/PointStamped[] positions
+  _has_header = True #flag to mark the presence of a Header object
+  _full_text = """Header header
+geometry_msgs/PointStamped[] positions
 geometry_msgs/TwistStamped[] velocities
-
-================================================================================
-MSG: geometry_msgs/PointStamped
-# This represents a Point with reference coordinate frame and timestamp
-Header header
-Point point
 
 ================================================================================
 MSG: std_msgs/Header
@@ -37,6 +32,12 @@ time stamp
 # 0: no frame
 # 1: global frame
 string frame_id
+
+================================================================================
+MSG: geometry_msgs/PointStamped
+# This represents a Point with reference coordinate frame and timestamp
+Header header
+Point point
 
 ================================================================================
 MSG: geometry_msgs/Point
@@ -65,8 +66,8 @@ float64 x
 float64 y
 float64 z
 """
-  __slots__ = ['positions','velocities']
-  _slot_types = ['geometry_msgs/PointStamped[]','geometry_msgs/TwistStamped[]']
+  __slots__ = ['header','positions','velocities']
+  _slot_types = ['std_msgs/Header','geometry_msgs/PointStamped[]','geometry_msgs/TwistStamped[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -76,7 +77,7 @@ float64 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       positions,velocities
+       header,positions,velocities
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -85,11 +86,14 @@ float64 z
     if args or kwds:
       super(DetectedDynamicObjects, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = []
       if self.velocities is None:
         self.velocities = []
     else:
+      self.header = std_msgs.msg.Header()
       self.positions = []
       self.velocities = []
 
@@ -105,6 +109,14 @@ float64 z
     :param buff: buffer, ``StringIO``
     """
     try:
+      _x = self
+      buff.write(_struct_3I.pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
+      _x = self.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.pack('<I%ss'%length, length, _x))
       length = len(self.positions)
       buff.write(_struct_I.pack(length))
       for val1 in self.positions:
@@ -152,11 +164,26 @@ float64 z
     :param str: byte array of serialized message, ``str``
     """
     try:
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = None
       if self.velocities is None:
         self.velocities = None
       end = 0
+      _x = self
+      start = end
+      end += 12
+      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _struct_3I.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.header.frame_id = str[start:end].decode('utf-8')
+      else:
+        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -235,6 +262,14 @@ float64 z
     :param numpy: numpy python module
     """
     try:
+      _x = self
+      buff.write(_struct_3I.pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
+      _x = self.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.pack('<I%ss'%length, length, _x))
       length = len(self.positions)
       buff.write(_struct_I.pack(length))
       for val1 in self.positions:
@@ -283,11 +318,26 @@ float64 z
     :param numpy: numpy python module
     """
     try:
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = None
       if self.velocities is None:
         self.velocities = None
       end = 0
+      _x = self
+      start = end
+      end += 12
+      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _struct_3I.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.header.frame_id = str[start:end].decode('utf-8')
+      else:
+        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -359,5 +409,6 @@ float64 z
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
+_struct_3I = struct.Struct("<3I")
 _struct_2I = struct.Struct("<2I")
 _struct_3d = struct.Struct("<3d")

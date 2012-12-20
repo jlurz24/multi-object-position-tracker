@@ -8,16 +8,11 @@ import geometry_msgs.msg
 import std_msgs.msg
 
 class DetectedObjects(genpy.Message):
-  _md5sum = "684111356ffe6f0a81bbb3255424b2c4"
+  _md5sum = "bbaf1971ea77c5603fda385897f1712c"
   _type = "position_tracker/DetectedObjects"
-  _has_header = False #flag to mark the presence of a Header object
-  _full_text = """geometry_msgs/PointStamped[] positions
-
-================================================================================
-MSG: geometry_msgs/PointStamped
-# This represents a Point with reference coordinate frame and timestamp
-Header header
-Point point
+  _has_header = True #flag to mark the presence of a Header object
+  _full_text = """Header header
+geometry_msgs/PointStamped[] positions
 
 ================================================================================
 MSG: std_msgs/Header
@@ -38,6 +33,12 @@ time stamp
 string frame_id
 
 ================================================================================
+MSG: geometry_msgs/PointStamped
+# This represents a Point with reference coordinate frame and timestamp
+Header header
+Point point
+
+================================================================================
 MSG: geometry_msgs/Point
 # This contains the position of a point in free space
 float64 x
@@ -45,8 +46,8 @@ float64 y
 float64 z
 
 """
-  __slots__ = ['positions']
-  _slot_types = ['geometry_msgs/PointStamped[]']
+  __slots__ = ['header','positions']
+  _slot_types = ['std_msgs/Header','geometry_msgs/PointStamped[]']
 
   def __init__(self, *args, **kwds):
     """
@@ -56,7 +57,7 @@ float64 z
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       positions
+       header,positions
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -65,9 +66,12 @@ float64 z
     if args or kwds:
       super(DetectedObjects, self).__init__(*args, **kwds)
       #message fields cannot be None, assign default values for those that are
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = []
     else:
+      self.header = std_msgs.msg.Header()
       self.positions = []
 
   def _get_types(self):
@@ -82,6 +86,14 @@ float64 z
     :param buff: buffer, ``StringIO``
     """
     try:
+      _x = self
+      buff.write(_struct_3I.pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
+      _x = self.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.pack('<I%ss'%length, length, _x))
       length = len(self.positions)
       buff.write(_struct_I.pack(length))
       for val1 in self.positions:
@@ -108,9 +120,24 @@ float64 z
     :param str: byte array of serialized message, ``str``
     """
     try:
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = None
       end = 0
+      _x = self
+      start = end
+      end += 12
+      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _struct_3I.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.header.frame_id = str[start:end].decode('utf-8')
+      else:
+        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -153,6 +180,14 @@ float64 z
     :param numpy: numpy python module
     """
     try:
+      _x = self
+      buff.write(_struct_3I.pack(_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs))
+      _x = self.header.frame_id
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.pack('<I%ss'%length, length, _x))
       length = len(self.positions)
       buff.write(_struct_I.pack(length))
       for val1 in self.positions:
@@ -180,9 +215,24 @@ float64 z
     :param numpy: numpy python module
     """
     try:
+      if self.header is None:
+        self.header = std_msgs.msg.Header()
       if self.positions is None:
         self.positions = None
       end = 0
+      _x = self
+      start = end
+      end += 12
+      (_x.header.seq, _x.header.stamp.secs, _x.header.stamp.nsecs,) = _struct_3I.unpack(str[start:end])
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.header.frame_id = str[start:end].decode('utf-8')
+      else:
+        self.header.frame_id = str[start:end]
       start = end
       end += 4
       (length,) = _struct_I.unpack(str[start:end])
@@ -218,5 +268,6 @@ float64 z
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
+_struct_3I = struct.Struct("<3I")
 _struct_2I = struct.Struct("<2I")
 _struct_3d = struct.Struct("<3d")

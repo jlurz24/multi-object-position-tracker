@@ -23,6 +23,7 @@
   <depend package="roslib"/>
   <depend package="std_msgs"/>
   <depend package="pr2_controllers_msgs"/>
+  <depend package="gazebo_msgs" />
 </package>
 
 

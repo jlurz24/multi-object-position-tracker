@@ -7,7 +7,7 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 #  Release        : w/o debug symbols, w/ optimization
 #  RelWithDebInfo : w/ debug symbols, w/ optimization
 #  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-set(ROS_BUILD_TYPE ReleaseWithDebInfo)
+set(ROS_BUILD_TYPE RelWithDebInfo)
 
 # For action lib
 rosbuild_find_ros_package(actionlib_msgs)
@@ -32,8 +32,9 @@ rosbuild_genmsg()
 #target_link_libraries(${PROJECT_NAME} another_library)
 rosbuild_add_boost_directories()
 rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp src/kalman_simple.cpp src/pv_filter.cpp)
-rosbuild_add_executable(init src/init_action.cpp)
 rosbuild_add_executable(multi_object_detector src/multi_object_detector.cpp)
+rosbuild_add_executable(position_velocity_measurer src/position_velocity_measurer.cpp)
 rosbuild_link_boost(multi_object_detector signals)
 rosbuild_link_boost(dynamic_object_detector signals)
+rosbuild_link_boost(position_velocity_measurer signals)
 #target_link_libraries(example ${PROJECT_NAME})

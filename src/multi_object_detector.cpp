@@ -16,10 +16,16 @@
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl/filters/voxel_grid.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <pcl/common/geometry.h>
 
 using namespace std;
+using namespace pcl;
 
-typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
+inline Eigen::Vector3f operator-(const PointXYZ& p1, const PointXYZ& p2) {
+  return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
+}
+
+typedef PointCloud<PointXYZ> PointCloud;
 typedef PointCloud::ConstPtr PointCloudConstPtr;
 typedef PointCloud::Ptr PointCloudPtr;
 typedef message_filters::sync_policies::ApproximateTime<cmvision::Blobs, sensor_msgs::PointCloud2> BlobCloudSyncPolicy;
@@ -95,7 +101,7 @@ class MultiObjectDetector {
         blobsSub->subscribe();
       }
       
-      // List for the depth messages
+      // Listen for the depth messages
       if(depthPointsSub.get() == NULL){
         depthPointsSub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh, "/wide_stereo/left/points", 3));
       }
@@ -121,11 +127,11 @@ class MultiObjectDetector {
         return;
       }
       
-      pcl::PointCloud<pcl::PointXYZ> depthCloud;
-      pcl::fromROSMsg(*depthPointsMsg, depthCloud);
+      PointCloud<PointXYZ> depthCloud;
+      fromROSMsg(*depthPointsMsg, depthCloud);
 
       PointCloudPtr allBlobs;
-      const vector<pcl::PointIndices> blobClouds = splitBlobs(depthCloud, blobsMsg, allBlobs);
+      const vector<PointIndices> blobClouds = splitBlobs(depthCloud, blobsMsg, allBlobs);
 
       if(blobClouds.size() == 0){
         ROS_INFO("No blobs to use for centroid detection");
@@ -133,7 +139,8 @@ class MultiObjectDetector {
       }
 
       // Iterate over each detected blob and determine it's centroid.
-      position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);;
+      position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
+      objects->header.stamp = depthPointsMsg->header.stamp;
       visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
 
       if(!tf.waitForTransform("/base_footprint", "/wide_stereo_optical_frame", depthPointsMsg->header.stamp, ros::Duration(5.0))){
@@ -141,9 +148,10 @@ class MultiObjectDetector {
         return;
       }
 
+      PointCloudPtr pclObjects = PointCloudPtr(new PointCloud);
       for(unsigned int i = 0; i < blobClouds.size(); ++i){
         Eigen::Vector4f centroid;
-        pcl::compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
+        compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
 
         // Convert the centroid to a point stamped
         geometry_msgs::PointStamped resultPoint;
@@ -155,6 +163,22 @@ class MultiObjectDetector {
         resultPoint.point.y = centroid[1];
         resultPoint.point.z = centroid[2];
 
+        // Check for neighbors
+        // TODO: Fix algorithm so this isn't needed
+        PointXYZ pclPoint(centroid[0], centroid[1], centroid[2]);
+        bool foundNeighbor = false;
+        for(unsigned int j = 0; j < pclObjects->points.size(); ++j){
+          if(geometry::distance(pclPoint, pclObjects->points[i]) < clusterDistanceTolerance){
+            foundNeighbor = true;
+          }
+        }
+        
+        if(foundNeighbor){
+          ROS_INFO("Detected two neighbor centroids");
+          continue;
+        }
+        pclObjects->points.push_back(pclPoint); 
+       
         geometry_msgs::PointStamped resultPointMap;
         resultPointMap.header.frame_id = "/base_footprint";
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
@@ -193,13 +217,10 @@ class MultiObjectDetector {
      pub.publish(objects);
    }
 
-    const vector<pcl::PointIndices> splitBlobs(const pcl::PointCloud<pcl::PointXYZ>& depthCloud, const cmvision::BlobsConstPtr& blobsMsg, PointCloudPtr& allBlobsOut){
+    const vector<PointIndices> splitBlobs(const PointCloud<PointXYZ> depthCloud, const cmvision::BlobsConstPtr blobsMsg, PointCloudPtr& allBlobsOut){
        // Iterate over all the blobs and create a single cloud of all points.
        // We will subdivide this blob again later.
        PointCloudPtr allBlobs(new PointCloud);
-       allBlobs->header = depthCloud.header;
-       allBlobs->is_dense = false;
-       allBlobs->height = 1;
        
        for(unsigned int k = 0; k < blobsMsg->blobs.size(); ++k){
           const cmvision::Blob blob = blobsMsg->blobs[k];
@@ -209,30 +230,35 @@ class MultiObjectDetector {
 
           for(unsigned int i = blob.left; i <= blob.right; ++i){
             for(unsigned int j = blob.top; j <= blob.bottom; ++j){
-              pcl::PointXYZ point = depthCloud.points.at(j * blobsMsg->image_width + i);
+              PointXYZ point = depthCloud.points.at(j * blobsMsg->image_width + i);
               allBlobs->points.push_back(point);
             }
           }
       }
+
+      allBlobs->width = allBlobs->points.size();
+      allBlobs->height = 1;
   
       if(voxelLeafSize > 0){
         // Use a voxel grid to downsample the input to a 1cm grid.
-        pcl::VoxelGrid<pcl::PointXYZ> vg;
-        pcl::PointCloud<pcl::PointXYZ>::Ptr allBlobsFiltered(new pcl::PointCloud<pcl::PointXYZ>);
+        VoxelGrid<PointXYZ> vg;
+        PointCloud<PointXYZ>::Ptr allBlobsFiltered(new PointCloud<PointXYZ>);
         vg.setInputCloud(allBlobs);
         vg.setLeafSize(voxelLeafSize, voxelLeafSize, voxelLeafSize);
         vg.filter(*allBlobsFiltered);
         allBlobs = allBlobsFiltered;
       }
 
-      std::vector<pcl::PointIndices> clusterIndices;
-      pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
+      // Creating the KdTree object for the search method of the extraction
+      cout << "All blobs size " << allBlobs->points.size() << endl;
+      std::vector<PointIndices> clusterIndices;
+      EuclideanClusterExtraction<PointXYZ> ec;
       ec.setClusterTolerance(clusterDistanceTolerance);
       ec.setMinClusterSize(minClusterSize);
       ec.setMaxClusterSize(maxClusterSize);
       ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
-      
+      cout << "Done" << endl;
       allBlobsOut = allBlobs;
       return clusterIndices;
     }

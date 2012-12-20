@@ -7,7 +7,7 @@
 
 class KalmanSimple: public Kalman::KFilter<double,1, false, true, true> {
 public:
-	KalmanSimple(const double aObservationNoise, const double aVelocityNoise);
+	KalmanSimple(const double aObservationNoise, const double aAccDist);
 	void setDT(const double aDT);
 protected:
 
@@ -21,7 +21,7 @@ protected:
 	
 	double dt;
         double observationNoise;
-        double velocityNoise;
+        double accDist;
 };
 
 typedef Kalman::KVector<double, 1, 1> Vector;

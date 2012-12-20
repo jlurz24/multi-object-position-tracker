@@ -16,10 +16,9 @@ inline double quad(double x){
 	return x * x * x * x;
 }
 
-const double V_GAMMA = 1.;
-const double SIGMA = 0.0001; // Regularization constant
+const double EPSILON = 0.0001; // Regularization constant
 
-KalmanSimple::KalmanSimple(double aObservationNoise, const double aVelocityNoise): observationNoise(aObservationNoise), velocityNoise(aVelocityNoise) 
+KalmanSimple::KalmanSimple(double aObservationNoise, const double aAccDist): observationNoise(aObservationNoise), accDist(aAccDist) 
 {
 	setDim(6, 0, 6, 3, 3);
 	dt = 1;
@@ -61,47 +60,47 @@ void KalmanSimple::makeB(){
 }
 void KalmanSimple::makeQ()
 {
-	Q(1,1) = quad(dt) / 4.0 * square(velocityNoise) + SIGMA;
+	Q(1,1) = quad(dt) / 4.0 * square(accDist) + EPSILON;
 	Q(1,2) = 0.;
 	Q(1,3) = 0.;
-	Q(1,4) = cube(dt) / 2 * square(velocityNoise);
+	Q(1,4) = cube(dt) / 2 * square(accDist);
 	Q(1,5) = 0.;
 	Q(1,6) = 0.;
 
 	Q(2,1) = 0.;
-	Q(2,2) = quad(dt) / 4.0 * square(velocityNoise) + SIGMA;
+	Q(2,2) = quad(dt) / 4.0 * square(accDist) + EPSILON;
         Q(2,3) = 0.;
         Q(2,4) = 0.;
-        Q(2,5) = cube(dt) / 2 * square(velocityNoise);
+        Q(2,5) = cube(dt) / 2 * square(accDist);
         Q(2,6) = 0.;
 
 	Q(3,1) = 0.;
 	Q(3,2) = 0.;
-        Q(3,3) = quad(dt) / 4.0 * square(velocityNoise) + SIGMA;
+        Q(3,3) = quad(dt) / 4.0 * square(accDist) + EPSILON;
         Q(3,4) = 0.;
         Q(3,5) = 0.;
-        Q(3,6) = cube(dt) / 2 * square(velocityNoise);
+        Q(3,6) = cube(dt) / 2 * square(accDist);
 	
-	Q(4,1) = cube(dt) / 2 * square(velocityNoise);
+	Q(4,1) = cube(dt) / 2 * square(accDist);
 	Q(4,2) = 0.;
 	Q(4,3) = 0.;
-	Q(4,4) = square(dt) * square(velocityNoise) + SIGMA;
+	Q(4,4) = square(dt) * square(accDist) + EPSILON;
 	Q(4,5) = 0.;
 	Q(4,6) = 0.;
 
 	Q(5,1) = 0.;
-	Q(5,2) = cube(dt) / 2 * square(velocityNoise);
+	Q(5,2) = cube(dt) / 2 * square(accDist);
         Q(5,3) = 0.;
         Q(5,4) = 0.;
-        Q(5,5) = square(dt) * square(velocityNoise) + SIGMA;
+        Q(5,5) = square(dt) * square(accDist) + EPSILON;
         Q(5,6) = 0.;
 
 	Q(6,1) = 0.;
 	Q(6,2) = 0.;
-        Q(6,3) = cube(dt) / 2 * square(velocityNoise);
+        Q(6,3) = cube(dt) / 2 * square(accDist);
         Q(6,4) = 0.;
         Q(6,5) = 0.;
-        Q(6,6) = square(dt) * square(velocityNoise) + SIGMA;
+        Q(6,6) = square(dt) * square(accDist) + EPSILON;
 }
 
 void KalmanSimple::makeH()
@@ -113,9 +112,11 @@ void KalmanSimple::makeH()
 
 void KalmanSimple::makeV()
 {
-	V(1,1) = V_GAMMA;
-	V(2,2) = V_GAMMA;
-	V(3,3) = V_GAMMA;
+        // TODO: Determine difference between V and R matrices
+        // and why V should not be the observation noice.
+	V(1,1) = 1;
+	V(2,2) = 1;
+	V(3,3) = 1;
 }
 
 void KalmanSimple::makeR()

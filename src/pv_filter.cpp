@@ -16,8 +16,9 @@ void PVFilter::init(const vector<double>& positions, const vector<double>& veloc
         // Number of variables
         const int n = 6;
 
-	// Filter's Initial state uncertainty: System state is unknown
-	const double i_P_NOISE = 1000.;
+	// Filter's Initial state uncertainty: Position is approximately
+        // known but velocity is unknown.
+	const double i_P_NOISE = 1.;
 	const double i_V_NOISE = 10.;
 
         // Initial covariance matrix
