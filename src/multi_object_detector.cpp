@@ -4,30 +4,30 @@
 #include <cmvision/Blobs.h>
 #include <position_tracker/DetectedObjects.h>
 #include <sensor_msgs/PointCloud2.h>
-#include <pcl/point_types.h>
-#include <pcl_ros/point_cloud.h>
+#include <pcl16/point_types.h>
+#include <pcl16_ros/point_cloud.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <message_filters/synchronizer.h>
-#include <pcl/io/pcd_io.h>
-#include <pcl/features/feature.h>
+#include <pcl16/io/pcd_io.h>
+#include <pcl16/features/feature.h>
 #include <cmath>
 #include <boost/math/constants/constants.hpp>
-#include <pcl/segmentation/extract_clusters.h>
-#include <pcl/filters/voxel_grid.h>
+#include <pcl16/segmentation/extract_clusters.h>
+#include <pcl16/filters/voxel_grid.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <pcl/common/geometry.h>
+#include <pcl16/common/geometry.h>
 
 using namespace std;
-using namespace pcl;
+using namespace pcl16;
 
 inline Eigen::Vector3f operator-(const PointXYZ& p1, const PointXYZ& p2) {
   return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
 }
 
-typedef PointCloud<PointXYZ> PointCloud;
-typedef PointCloud::ConstPtr PointCloudConstPtr;
-typedef PointCloud::Ptr PointCloudPtr;
+typedef PointCloud<PointXYZ> PointCloudXYZ;
+typedef PointCloudXYZ::ConstPtr PointCloudXYZConstPtr;
+typedef PointCloudXYZ::Ptr PointCloudXYZPtr;
 typedef message_filters::sync_policies::ApproximateTime<cmvision::Blobs, sensor_msgs::PointCloud2> BlobCloudSyncPolicy;
 typedef message_filters::Synchronizer<BlobCloudSyncPolicy> BlobCloudSync;
 
@@ -127,10 +127,10 @@ class MultiObjectDetector {
         return;
       }
       
-      PointCloud<PointXYZ> depthCloud;
+      PointCloudXYZ depthCloud;
       fromROSMsg(*depthPointsMsg, depthCloud);
 
-      PointCloudPtr allBlobs;
+      PointCloudXYZPtr allBlobs;
       const vector<PointIndices> blobClouds = splitBlobs(depthCloud, blobsMsg, allBlobs);
 
       if(blobClouds.size() == 0){
@@ -141,14 +141,12 @@ class MultiObjectDetector {
       // Iterate over each detected blob and determine it's centroid.
       position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
       objects->header.stamp = depthPointsMsg->header.stamp;
-      visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
 
       if(!tf.waitForTransform("/base_footprint", "/wide_stereo_optical_frame", depthPointsMsg->header.stamp, ros::Duration(5.0))){
         ROS_INFO("Transform from wide_stereo_optical_frame to base_footprint is not yet available");
         return;
       }
 
-      PointCloudPtr pclObjects = PointCloudPtr(new PointCloud);
       for(unsigned int i = 0; i < blobClouds.size(); ++i){
         Eigen::Vector4f centroid;
         compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
@@ -162,65 +160,54 @@ class MultiObjectDetector {
         resultPoint.point.x = centroid[0];
         resultPoint.point.y = centroid[1];
         resultPoint.point.z = centroid[2];
-
-        // Check for neighbors
-        // TODO: Fix algorithm so this isn't needed
-        PointXYZ pclPoint(centroid[0], centroid[1], centroid[2]);
-        bool foundNeighbor = false;
-        for(unsigned int j = 0; j < pclObjects->points.size(); ++j){
-          if(geometry::distance(pclPoint, pclObjects->points[i]) < clusterDistanceTolerance){
-            foundNeighbor = true;
-          }
-        }
-        
-        if(foundNeighbor){
-          ROS_INFO("Detected two neighbor centroids");
-          continue;
-        }
-        pclObjects->points.push_back(pclPoint); 
        
         geometry_msgs::PointStamped resultPointMap;
         resultPointMap.header.frame_id = "/base_footprint";
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
         tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
         objects->positions.push_back(resultPointMap);
-
-        // TODO: Move to separate function 
-        if(markerPub.getNumSubscribers() > 0){
-          visualization_msgs::Marker marker;
-          marker.id = i;
-          marker.ns = "position_tracker";
-          marker.action = visualization_msgs::Marker::ADD;
-          marker.type = visualization_msgs::Marker::SPHERE;
-          marker.header = resultPointMap.header;
-          marker.action = visualization_msgs::Marker::ADD;
-          marker.pose.position = resultPointMap.point;
-          marker.pose.orientation.x = 0;
-          marker.pose.orientation.y = 0;
-          marker.pose.orientation.z = 0;
-          marker.pose.orientation.w = 1;
-          marker.color.a = 1;
-          marker.color.r = 0;
-          marker.color.g = 1;
-          marker.color.b = 0;
-          marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
-          markers->markers.push_back(marker);
-        }
      }
    
      // Publish the markers message  
      if(markerPub.getNumSubscribers() > 0){
-       markerPub.publish(markers);
+       publishMarkers(objects);
      }
 
      // Broadcast the result
      pub.publish(objects);
    }
 
-    const vector<PointIndices> splitBlobs(const PointCloud<PointXYZ> depthCloud, const cmvision::BlobsConstPtr blobsMsg, PointCloudPtr& allBlobsOut){
+   void publishMarkers(position_tracker::DetectedObjectsConstPtr objects){
+     visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
+     for(unsigned int i = 0; i < objects->positions.size(); ++i){
+       visualization_msgs::Marker marker;
+       marker.id = i;
+       marker.ns = "multi_object_detector";
+       marker.action = visualization_msgs::Marker::ADD;
+       marker.type = visualization_msgs::Marker::SPHERE;
+       marker.header = objects->positions[i].header;
+       marker.lifetime = ros::Duration(1);
+       marker.action = visualization_msgs::Marker::ADD;
+       marker.pose.position = objects->positions[i].point;
+       marker.pose.orientation.x = 0;
+       marker.pose.orientation.y = 0;
+       marker.pose.orientation.z = 0;
+       marker.pose.orientation.w = 1;
+       marker.color.a = 1;
+       marker.color.r = 0;
+       marker.color.g = 1;
+       marker.color.b = 0;
+       marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
+       markers->markers.push_back(marker);
+     }
+
+     markerPub.publish(markers);
+   }
+
+   const vector<PointIndices> splitBlobs(const PointCloudXYZ depthCloud, const cmvision::BlobsConstPtr blobsMsg, PointCloudXYZPtr& allBlobsOut){
        // Iterate over all the blobs and create a single cloud of all points.
        // We will subdivide this blob again later.
-       PointCloudPtr allBlobs(new PointCloud);
+       PointCloudXYZPtr allBlobs(new PointCloudXYZ);
        
        for(unsigned int k = 0; k < blobsMsg->blobs.size(); ++k){
           const cmvision::Blob blob = blobsMsg->blobs[k];
@@ -242,7 +229,7 @@ class MultiObjectDetector {
       if(voxelLeafSize > 0){
         // Use a voxel grid to downsample the input to a 1cm grid.
         VoxelGrid<PointXYZ> vg;
-        PointCloud<PointXYZ>::Ptr allBlobsFiltered(new PointCloud<PointXYZ>);
+        PointCloudXYZPtr allBlobsFiltered(new PointCloudXYZ);
         vg.setInputCloud(allBlobs);
         vg.setLeafSize(voxelLeafSize, voxelLeafSize, voxelLeafSize);
         vg.filter(*allBlobsFiltered);
@@ -250,7 +237,6 @@ class MultiObjectDetector {
       }
 
       // Creating the KdTree object for the search method of the extraction
-      cout << "All blobs size " << allBlobs->points.size() << endl;
       std::vector<PointIndices> clusterIndices;
       EuclideanClusterExtraction<PointXYZ> ec;
       ec.setClusterTolerance(clusterDistanceTolerance);
@@ -258,7 +244,6 @@ class MultiObjectDetector {
       ec.setMaxClusterSize(maxClusterSize);
       ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
-      cout << "Done" << endl;
       allBlobsOut = allBlobs;
       return clusterIndices;
     }

@@ -13,9 +13,9 @@
   <depend package="kalman"/>
   <depend package="geometry_msgs"/>
   <depend package="tf"/>
-  <depend package="pcl"/>
+  <depend package="pcl16"/>
   <depend package="cmvision"/>
-  <depend package="pcl_ros"/>
+  <depend package="pcl16_ros"/>
   <depend package="arm_navigation_msgs"/>
   <depend package="actionlib"/>
   <depend package="actionlib_msgs"/>

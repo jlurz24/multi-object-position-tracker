@@ -3,29 +3,30 @@
 #include <message_filters/subscriber.h>
 #include <position_tracker/DetectedObjects.h>
 #include <position_tracker/DetectedDynamicObjects.h>
-#include <pcl/point_types.h>
-#include <pcl_ros/point_cloud.h>
+#include <pcl16/point_types.h>
+#include <pcl16_ros/point_cloud.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
-#include <pcl/common/geometry.h>
+#include <pcl16/common/geometry.h>
 
 using namespace std;
+using namespace pcl16;
 
-typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
-typedef PointCloud::ConstPtr PointCloudConstPtr;
-typedef PointCloud::Ptr PointCloudPtr;
+typedef PointCloud<PointXYZ> PointCloudXYZ;
+typedef PointCloudXYZ::ConstPtr PointCloudXYZConstPtr;
+typedef PointCloudXYZ::Ptr PointCloudXYZPtr;
 typedef vector<boost::shared_ptr<PVFilter> > PVFilterVector;
 
-inline Eigen::Vector3f operator-(const pcl::PointXYZ& p1, const pcl::PointXYZ& p2) {
+inline Eigen::Vector3f operator-(const PointXYZ& p1, const PointXYZ& p2) {
   return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
 }
 
-inline bool operator==(const pcl::PointXYZ& p1, const pcl::PointXYZ& p2){
+inline bool operator==(const PointXYZ& p1, const PointXYZ& p2){
   return p1.x == p2.x && p1.y == p2.y && p1.z == p2.z;
 }
 
-inline bool operator!=(const pcl::PointXYZ& p1, const pcl::PointXYZ&p2){
+inline bool operator!=(const PointXYZ& p1, const PointXYZ&p2){
   return !(p1 == p2);
 }
 
@@ -134,25 +135,25 @@ class DynamicObjectDetector {
 
       // Step 1: Predict the new positions
       ros::Time measurementTime = objects->positions[0].header.stamp;
-      PointCloudPtr predictedPositions(new PointCloud);
+      PointCloudXYZPtr predictedPositions(new PointCloudXYZ);
       for(unsigned int i = 0; i < pvFilters.size(); ++i){
         vector<double> positions;
         vector<double> velocities;
 
         pvFilters[i]->predict(positions, measurementTime);
-        predictedPositions->points.push_back(pcl::PointXYZ(positions[0], positions[1], positions[2]));
+        predictedPositions->points.push_back(PointXYZ(positions[0], positions[1], positions[2]));
       }
 
       // Step 2: Create a point cloud from the detected object centers.
-      PointCloudPtr measuredPositions(new PointCloud);
+      PointCloudXYZPtr measuredPositions(new PointCloudXYZ);
       for(unsigned int i = 0; i < objects->positions.size(); ++i){
-        pcl::PointXYZ point(objects->positions[i].point.x, objects->positions[i].point.y, objects->positions[i].point.z);
+        PointXYZ point(objects->positions[i].point.x, objects->positions[i].point.y, objects->positions[i].point.z);
         measuredPositions->points.push_back(point);
       }
 
       // Step 3: Associate the predicted points with the measurements.
-      const PointCloudPtr unalignedMeasurements(new PointCloud);
-      const PointCloudConstPtr final = alignClouds(predictedPositions, measuredPositions, unalignedMeasurements);
+      const PointCloudXYZPtr unalignedMeasurements(new PointCloudXYZ);
+      const PointCloudXYZConstPtr final = alignClouds(predictedPositions, measuredPositions, unalignedMeasurements);
 
       // Step 4: Update the associated filters with the new measurements.
       for(unsigned int i = 0; i < final->points.size(); ++i){
@@ -206,12 +207,12 @@ class DynamicObjectDetector {
       }
 
       // Step 6: Initialize filters with any remaining positions and default
-      //         velocities..
+      //         velocities
       for(unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i){
         ROS_INFO("Initializing Kalman filter for measurement %i", i);
         boost::shared_ptr<PVFilter> filter(new PVFilter(kalmanObservationNoise, kalmanAccelerationDist));
 
-        const pcl::PointXYZ currMeasurement = unalignedMeasurements->points[i];
+        const PointXYZ currMeasurement = unalignedMeasurements->points[i];
         vector<double> positions(3);
         positions[0] = currMeasurement.x;
         positions[1] = currMeasurement.y;
@@ -245,21 +246,21 @@ class DynamicObjectDetector {
       ROS_DEBUG("Iteration end: %lu known objects", pvFilters.size());
     }
 
-    PointCloudConstPtr alignClouds(const PointCloudConstPtr predictedPositions, const PointCloudConstPtr measuredPositions, const PointCloudPtr unalignedMeasurements) const {
+    PointCloudXYZConstPtr alignClouds(const PointCloudXYZConstPtr predictedPositions, const PointCloudXYZConstPtr measuredPositions, const PointCloudXYZPtr unalignedMeasurements) const {
   
     ROS_DEBUG("Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
     
     if(predictedPositions->points.size() == 0){
       ROS_INFO("No current predicted positions");
       unalignedMeasurements->points = measuredPositions->points;
-      return PointCloudPtr(new PointCloud);
+      return PointCloudXYZPtr(new PointCloudXYZ);
     }
  
-    const pcl::PointXYZ nullPoint(numeric_limits<double>::infinity(), numeric_limits<double>::infinity(), numeric_limits<double>::infinity());
+    const PointXYZ nullPoint(numeric_limits<double>::infinity(), numeric_limits<double>::infinity(), numeric_limits<double>::infinity());
   
     // If there are more measured points than predicted points, then
     // create null measurements to represent unknown objects,
-    PointCloudPtr measuredPositionsWithNulls(new PointCloud);
+    PointCloudXYZPtr measuredPositionsWithNulls(new PointCloudXYZ);
     measuredPositionsWithNulls->points = measuredPositions->points;
     for(unsigned int i = measuredPositions->points.size(); i < predictedPositions->points.size(); ++i){
       measuredPositionsWithNulls->points.push_back(nullPoint);
@@ -267,7 +268,7 @@ class DynamicObjectDetector {
     }
   
     // If the reverse is true, create null predictions.
-    PointCloudPtr predictedPositionsWithNulls(new PointCloud);
+    PointCloudXYZPtr predictedPositionsWithNulls(new PointCloudXYZ);
     predictedPositionsWithNulls->points = predictedPositions->points;
     for(unsigned int i = predictedPositions->points.size(); i < measuredPositions->points.size(); ++i){
       predictedPositionsWithNulls->points.push_back(nullPoint);
@@ -300,13 +301,13 @@ class DynamicObjectDetector {
           nullsFound++;
         }
         // Assume distances over the max correlation distance are not a match.
-        else if(pcl::geometry::distance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]) > maxCorrelationDistance){
-          ROS_DEBUG("Associated points were over the maximum distance %f", pcl::geometry::distance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]));
+        else if(geometry::distance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]) > maxCorrelationDistance){
+          ROS_DEBUG("Associated points were over the maximum distance %f", geometry::distance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]));
           distanceSum += LAMBDA;
           nullsFound++;
         }
         else {
-          distanceSum += pcl::geometry::squaredDistance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]);
+          distanceSum += geometry::squaredDistance(predictedPositionsWithNulls->points[i], measuredPositionsWithNulls->points[currentOrder[i]]);
         }
       }
   
@@ -326,16 +327,16 @@ class DynamicObjectDetector {
     ROS_DEBUG("Lowest total distance was %f", lowestDistance);
   
     // Excercised all perumutations.
-    PointCloudPtr alignedPositions(new PointCloud);
+    PointCloudXYZPtr alignedPositions(new PointCloudXYZ);
     if(lowestDistance <= associationMaxSuccessScore){
       for(unsigned int i = 0; i < measuredPositionsWithNulls->points.size(); ++i){
-        const pcl::PointXYZ& currMeasurement = measuredPositionsWithNulls->points[closestOrder[i]];
+        const PointXYZ& currMeasurement = measuredPositionsWithNulls->points[closestOrder[i]];
         if(i >= predictedPositions->points.size()){
           ROS_DEBUG("Adding an unaligned point to the end of associated points %i %lu %lu", i, measuredPositionsWithNulls->points.size(), predictedPositions->points.size());
           unalignedMeasurements->points.push_back(currMeasurement);
         }
-        else if(currMeasurement != nullPoint && pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement) > maxCorrelationDistance){
-          ROS_DEBUG("Points were over the maximum distance %f", pcl::geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement));
+        else if(currMeasurement != nullPoint && geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement) > maxCorrelationDistance){
+          ROS_DEBUG("Points were over the maximum distance %f", geometry::distance(predictedPositionsWithNulls->points[i], currMeasurement));
           alignedPositions->points.push_back(nullPoint);
           unalignedMeasurements->points.push_back(currMeasurement);
         }
@@ -359,10 +360,11 @@ class DynamicObjectDetector {
      for(unsigned int i = 0; i < objects->positions.size(); ++i){
         visualization_msgs::Marker marker;
         marker.id = i;
+        marker.ns = "dod_pv_arrows";
         marker.action = visualization_msgs::Marker::ADD;
         marker.type = visualization_msgs::Marker::ARROW;
-        marker.header.stamp = ros::Time::now();
-        marker.header.frame_id = frame;
+        marker.header = objects->positions[i].header;
+        marker.lifetime = ros::Duration(1);
         marker.points.resize(2);
         marker.points[0] = objects->positions[i].point;
         marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
@@ -387,11 +389,12 @@ class DynamicObjectDetector {
      for(unsigned int i = 0; i < objects->positions.size(); ++i){
         visualization_msgs::Marker marker;
         marker.id = i;
+        marker.ns = "dod_ids";
         marker.text = boost::lexical_cast<string>(i + 1);
         marker.action = visualization_msgs::Marker::ADD;
         marker.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-        marker.header.stamp = ros::Time::now();
-        marker.header.frame_id = frame;
+        marker.header = objects->positions[i].header;
+        marker.lifetime = ros::Duration(1);
         marker.color.a = 1;
         marker.color.r = 0;
         marker.color.g = 0;
@@ -407,16 +410,18 @@ class DynamicObjectDetector {
      idPub.publish(markers);
    }
 
-   void publishPredictedPositions(const PointCloudConstPtr predictedPositions, ros::Time stamp) const {
+   void publishPredictedPositions(const PointCloudXYZConstPtr predictedPositions, ros::Time stamp) const {
      visualization_msgs::MarkerArrayPtr predictedMarkers(new visualization_msgs::MarkerArray);
 
      for(unsigned int i = 0; i < predictedPositions->points.size(); ++i){
        visualization_msgs::Marker marker;
        marker.id = i;
+       marker.ns = "dod_predicted";
        marker.action = visualization_msgs::Marker::ADD;
        marker.type = visualization_msgs::Marker::SPHERE;
-       marker.header.stamp = stamp;
        marker.header.frame_id = frame;
+       marker.header.stamp = stamp;
+       marker.lifetime = ros::Duration(1);
        marker.pose.position.x = predictedPositions->points[i].x;
        marker.pose.position.y = predictedPositions->points[i].y;
        marker.pose.position.z = predictedPositions->points[i].z;
