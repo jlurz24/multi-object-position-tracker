@@ -1,4 +1,5 @@
 #include "pv_filter.h"
+#include <iostream>
 
 using namespace std;
 
@@ -6,7 +7,7 @@ static inline double square(const double x){
   return x * x;
 }
 
-PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise): filter(aObservationNoise, aVelocityNoise) {
+PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise): filter(new KalmanSimple(aObservationNoise, aVelocityNoise)) {
 }
 
 void PVFilter::init(const vector<double>& positions, const vector<double>& velocities, ros::Time time){
@@ -39,7 +40,7 @@ void PVFilter::init(const vector<double>& positions, const vector<double>& veloc
         x(5) = velocities[1];
         x(6) = velocities[2];
 
-        filter.init(x, P0);
+        filter->init(x, P0);
 }
 
 void PVFilter::measure(const vector<double>& positions, ros::Time time){
@@ -47,17 +48,17 @@ void PVFilter::measure(const vector<double>& positions, ros::Time time){
   z(1) = positions[0];
   z(2) = positions[1];
   z(3) = positions[2];
-  filter.setDT(time.toSec() - updateTime.toSec());
-  filter.measureUpdateStep(z);
+  filter->setDT(time.toSec() - updateTime.toSec());
+  filter->measureUpdateStep(z);
   updateTime = time;
 }
 
 void PVFilter::predict(vector<double>& positions, ros::Time time){
   Vector u(0);
-  filter.setDT(time.toSec() - updateTime.toSec());
-  filter.timeUpdateStep(u);
+  filter->setDT(time.toSec() - updateTime.toSec());
+  filter->timeUpdateStep(u);
 
-  const Vector x = filter.getX();
+  const Vector x = filter->getX();
   positions.resize(3);
   positions[0] = x(1);
   positions[1] = x(2);
@@ -65,7 +66,7 @@ void PVFilter::predict(vector<double>& positions, ros::Time time){
 }
 
 void PVFilter::getX(vector<double>& positions, vector<double>& velocities) const {
-  const Vector x = filter.getX();
+  const Vector x = filter->getX();
   positions.resize(3);
   positions[0] = x(1);
   positions[1] = x(2);

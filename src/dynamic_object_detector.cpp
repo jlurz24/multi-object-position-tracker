@@ -30,6 +30,22 @@ inline bool operator!=(const PointXYZ& p1, const PointXYZ&p2){
   return !(p1 == p2);
 }
 
+struct EraseStale {
+
+  double filterStaleThreshold;
+  ros::Time measurementTime;
+
+  EraseStale(const double aFilterStaleThreshold, const ros::Time& aMeasurementTime):filterStaleThreshold(aFilterStaleThreshold), measurementTime(aMeasurementTime){}
+
+  bool operator()(const boost::shared_ptr<PVFilter>& filter){
+    if(measurementTime.toSec() - filter->getLastUpdate().toSec() > filterStaleThreshold){
+      ROS_INFO("Pruning a filter that has not been updated since %f", filter->getLastUpdate().toSec());
+      return true;
+    }
+    return false;
+  }   
+};
+
 class DynamicObjectDetector {
   private:
     ros::NodeHandle nh;
@@ -172,13 +188,7 @@ class DynamicObjectDetector {
 
       // Step 4a: Prune any filters that have not been updated
       //          recently.
-      for(PVFilterVector::iterator i = pvFilters.begin(); i != pvFilters.end(); ++i){
-        ROS_DEBUG("Last update time for filter: %f, measurement time: %f, threshold: %f", (*i)->getLastUpdate().toSec(), measurementTime.toSec(), filterStaleThreshold);
-        if(measurementTime.toSec() - (*i)->getLastUpdate().toSec() > filterStaleThreshold){
-           ROS_INFO("Pruning a filter that has not been updated since %f", (*i)->getLastUpdate().toSec());
-           pvFilters.erase(i);
-         }
-      }
+      pvFilters.erase(std::remove_if(pvFilters.begin(), pvFilters.end(), EraseStale(filterStaleThreshold, measurementTime)), pvFilters.end());
 
       // Step 5: Get the current estimates for the state variables
       position_tracker::DetectedDynamicObjectsPtr trackedObjects(new position_tracker::DetectedDynamicObjects);

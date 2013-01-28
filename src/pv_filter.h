@@ -18,7 +18,7 @@ public:
   void getX(std::vector<double>& positions, std::vector<double>& velocities) const;
   ros::Time getLastUpdate() const { return updateTime; }
 private:
-  KalmanSimple filter;
+  std::auto_ptr<KalmanSimple> filter;
   ros::Time updateTime;
 };
 #endif
