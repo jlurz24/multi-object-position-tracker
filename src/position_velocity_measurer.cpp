@@ -120,7 +120,8 @@ class PositionVelocityMeasurer {
    averageVelocityDeviation = (currVelocityDeviation + iterations * averageVelocityDeviation) / (iterations + 1);
    iterations++;
 
-   ROS_INFO("Average Position Deviation: %f, Average Velocity Deviation: %f, iterations %u, Duration: %f", averagePositionDeviation, averageVelocityDeviation, iterations, ros::Time::now().toSec() - startTime.toSec());
+   double duration = std::max(ros::Time::now().toSec() - startTime.toSec(), 0.1);
+   ROS_INFO("Average Position Deviation: %f, Average Velocity Deviation: %f, iterations %u, Duration: %f, F/s: %f", averagePositionDeviation, averageVelocityDeviation, iterations, duration, iterations / duration);
    }
 };
 

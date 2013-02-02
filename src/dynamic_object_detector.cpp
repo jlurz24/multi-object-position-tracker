@@ -334,6 +334,10 @@ class DynamicObjectDetector {
   
     // Remove the lambda distances from the score.
     lowestDistance -= (nullsFoundForLowestDistance * LAMBDA);
+
+    // Allow the lowest distance to be relative to the number of tracked objects.
+    lowestDistance /= static_cast<double>(measuredPositionsWithNulls->points.size());
+
     ROS_DEBUG("Lowest total distance was %f", lowestDistance);
   
     // Excercised all perumutations.

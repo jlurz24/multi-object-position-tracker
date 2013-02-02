@@ -6,15 +6,15 @@
     <param name="kalman_observation_noise" value="0.05" />
     <param name="kalman_acceleration_dist" value="0.1" />
     <param name="association_epsilon" value="1e-6" />
-    <param name="association_max_success_score" value="2.5" />
+    <param name="association_max_success_score" value="2" />
     <param name="filter_stale_threshold" value="5" />
     <param name="max_correlation_distance" value="5" />
   </node>
   <node pkg="position_tracker" type="multi_object_detector" name="multi_object_detector" output="screen">
     <param name="object_name" value="balls" />
-    <param name="cluster_distance_tolerance" value="0.06" />
+    <param name="cluster_distance_tolerance" value="0.1" />
     <param name="voxel_leaf_size" value="0.0" />
-    <param name="min_cluster_size" value="50" />
+    <param name="min_cluster_size" value="75" />
     <param name="max_cluster_size" value="25000" />
   </node>
 
