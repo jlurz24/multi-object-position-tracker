@@ -7,7 +7,7 @@
     <param name="kalman_acceleration_dist" value="0.1" />
     <param name="association_epsilon" value="1e-6" />
     <param name="association_max_success_score" value="2" />
-    <param name="filter_stale_threshold" value="5" />
+    <param name="filter_stale_threshold" value="1" />
     <param name="max_correlation_distance" value="5" />
   </node>
   <node pkg="position_tracker" type="multi_object_detector" name="multi_object_detector" output="screen">

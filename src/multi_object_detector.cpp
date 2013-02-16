@@ -121,9 +121,14 @@ class MultiObjectDetector {
     void finalBlobCallback(const cmvision::BlobsConstPtr& blobsMsg, const sensor_msgs::PointCloud2ConstPtr& depthPointsMsg){
       ROS_DEBUG("Received a blobs message @ %f", ros::Time::now().toSec());
 
+      // Initialize the result message
+      position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
+      objects->header.stamp = depthPointsMsg->header.stamp;
+      
       // Check if there are detected blobs.
       if(blobsMsg->blobs.size() == 0){
         ROS_DEBUG("No blobs detected");
+        publish(objects);
         return;
       }
       
@@ -135,15 +140,13 @@ class MultiObjectDetector {
 
       if(blobClouds.size() == 0){
         ROS_INFO("No blobs to use for centroid detection");
+        publish(objects);
         return;
       }
 
       // Iterate over each detected blob and determine it's centroid.
-      position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
-      objects->header.stamp = depthPointsMsg->header.stamp;
-
       if(!tf.waitForTransform("/base_footprint", "/wide_stereo_optical_frame", depthPointsMsg->header.stamp, ros::Duration(5.0))){
-        ROS_INFO("Transform from wide_stereo_optical_frame to base_footprint is not yet available");
+        ROS_WARN("Transform from wide_stereo_optical_frame to base_footprint is not yet available");
         return;
       }
 
@@ -167,7 +170,10 @@ class MultiObjectDetector {
         tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
         objects->positions.push_back(resultPointMap);
      }
+     publish(objects);
+   }
    
+   void publish(const position_tracker::DetectedObjects::ConstPtr objects){
      // Publish the markers message  
      if(markerPub.getNumSubscribers() > 0){
        publishMarkers(objects);
@@ -176,7 +182,7 @@ class MultiObjectDetector {
      // Broadcast the result
      pub.publish(objects);
    }
-
+   
    void publishMarkers(position_tracker::DetectedObjectsConstPtr objects){
      visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
      for(unsigned int i = 0; i < objects->positions.size(); ++i){

@@ -135,12 +135,6 @@ class DynamicObjectDetector {
         ROS_INFO("Received %lu measurements and only have %lu filters", objects->positions.size(), pvFilters.size());
       }
 
-      // Check for any data.
-      if(objects->positions.size() == 0){
-        ROS_DEBUG("No objects to track");
-        return;
-      }
-
       // Confirm frames are correct.
       for(unsigned int i = 0; i < objects->positions.size(); ++i){
         if(objects->positions[i].header.frame_id != frame){
@@ -150,7 +144,7 @@ class DynamicObjectDetector {
       }
 
       // Step 1: Predict the new positions
-      ros::Time measurementTime = objects->positions[0].header.stamp;
+      ros::Time measurementTime = objects->header.stamp;
       PointCloudXYZPtr predictedPositions(new PointCloudXYZ);
       for(unsigned int i = 0; i < pvFilters.size(); ++i){
         vector<double> positions;
