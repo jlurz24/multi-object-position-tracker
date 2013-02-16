@@ -9,7 +9,6 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/position_tracker</url>
   <depend package="roscpp"/>
-  <depend package="bayes_filter"/>
   <depend package="kalman"/>
   <depend package="geometry_msgs"/>
   <depend package="tf"/>

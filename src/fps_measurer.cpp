@@ -19,7 +19,7 @@ class FPSMeasurer {
        startTime(0),
        objectSub(nh, "object_tracks/balls/positions_velocities", 1){
       objectSub.registerCallback(boost::bind(&FPSMeasurer::callback, this, _1));
-      ROS_INFO("Measurement initiated @ %f", ros::Time::now());
+      ROS_INFO("Measurement initiated @ %f", ros::Time::now().toSec());
       startTime = ros::Time::now();
     }
   
