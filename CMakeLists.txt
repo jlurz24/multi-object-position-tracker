@@ -40,6 +40,8 @@ rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp 
 rosbuild_add_executable(multi_object_detector src/multi_object_detector.cpp)
 rosbuild_add_executable(position_velocity_measurer src/position_velocity_measurer.cpp)
 rosbuild_add_executable(fps_measurer src/fps_measurer.cpp)
+rosbuild_add_executable(display_track src/display_track.cpp src/find_track.cpp)
+rosbuild_add_executable(canny src/canny.cpp)
 
 rosbuild_link_boost(multi_object_detector signals)
 rosbuild_link_boost(dynamic_object_detector signals)

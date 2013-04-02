@@ -1,0 +1,17 @@
+<gazebo version="1.0">             
+<model name="figure8" static="true">
+    <link name="figure8_link">
+        <origin pose="0 0 0 0 0 0"/>
+        <collision name="figure8_collision">
+            <geometry>
+                <mesh filename="/home/jlurz/ros_workspace/litterbox_project/position_tracker/objects/figure8.dae" scale="0.5 0.5 0.1"/>
+            </geometry>
+        </collision>
+        <visual name="figure8_visual" cast_shadows="false">
+            <geometry>
+                <mesh filename="/home/jlurz/ros_workspace/litterbox_project/position_tracker/objects/figure8.dae" scale="0.5 0.5 0.1"/>
+            </geometry>
+        </visual>
+    </link>
+</model>
+</gazebo>
