@@ -13,36 +13,19 @@ typedef std::vector<cv::Point> Contour;
 
 // returns the track detected on the image.
 const Contour findTrack(const cv::Mat& src){
-
-    cv::Mat tgrayMat;
-    IplImage timgIpl = src;
  
-    // Extract the blue channel
-    cv::extractImageCOI(&timgIpl, tgrayMat, 2 /* B color channel */);
-      
-    // Reduce noise with a kernel 3x3
-    cv::Mat cleanedImage;
-    cv::blur(tgrayMat, cleanedImage, cv::Size(3,3));  
- 
-    cv::Mat grayMat;
-    cv::Canny(cleanedImage, cleanedImage, 100 /* Lower threshold */, 300 /* Upper threshold */, 3 /* Kernel size */);
+    // Convert to HSV which is more stable.
+    cv::Mat hsvImage;
+    cv::cvtColor(src, hsvImage, CV_BGR2HSV);
     
-    // dilate canny output to remove potential holes between edge segments
-    cv::dilate(cleanedImage, cleanedImage, cv::Mat());
+    cv::Mat imgThreshed;
+    cv::inRange(hsvImage, cv::Scalar(90, 40, 0), cv::Scalar(140, 228, 255), imgThreshed);
+    
+    cv::erode(imgThreshed, imgThreshed, cv::Mat());
+    cv::dilate(imgThreshed, imgThreshed, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5,5)));
 
-    // find contours and store them all as a list
     std::vector<Contour> contours;
-    cv::findContours(cleanedImage, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
-
-    // TEMP
-    cv::Mat cpy = src.clone();
-
-    // draw the contour as a closed polyline.
-    cv::drawContours(cpy, contours, -1, CV_RGB(0, 255, 0), 3, CV_AA);
-
-    // show the resultant image
-    cv::imshow("Contours", cpy);
-    cv::waitKey(0);
+    cv::findContours(imgThreshed, contours, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE);
 
     // Find the largest contour and assume it's the outer contour.
     Contour outerContour;
@@ -50,11 +33,12 @@ const Contour findTrack(const cv::Mat& src){
       if(contours[k].size() > outerContour.size()){
         outerContour = contours[k];
       }
-      std::cout << contours[k].size() << std::endl;
     }
-      
+
+
     Contour result;
-    cv::approxPolyDP(cv::Mat(outerContour), result, 0.05, true);
+    cv::approxPolyDP(cv::Mat(outerContour), result, 1.0, true);
+    std::cout << result.size() << std::endl;
     return result;
 }
 
