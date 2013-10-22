@@ -1,9 +1,10 @@
+<?xml version="1.0"?>
 <gazebo version='1.0'>
   <model name='wall_perp' static='1'>
     <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 1.620000'/>
     <link name='wall' gravity='1' self_collide='0' kinematic='0'>
       <origin pose='0.00000 0.00000 0.000000 0.000000 -0.000000 0.000000'/>
-      <inertial mass='10.000000' density='1.000000'>
+      <inertial mass='10.000000'>
         <origin pose='0.000000 0.000000 0.000000 0.000000 -0.000000 0.000000'/>
         <inertia ixx='1.000000' ixy='0.000000' ixz='0.000000' iyy='1.000000' iyz='0.000000' izz='1.000000'/>
       </inertial>

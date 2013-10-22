@@ -3,15 +3,15 @@
 #include <message_filters/subscriber.h>
 #include <position_tracker/DetectedObjects.h>
 #include <position_tracker/DetectedDynamicObjects.h>
-#include <pcl16/point_types.h>
-#include <pcl16_ros/point_cloud.h>
+#include <pcl/point_types.h>
+#include <pcl_ros/point_cloud.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
-#include <pcl16/common/geometry.h>
+#include <pcl/common/geometry.h>
 
 using namespace std;
-using namespace pcl16;
+using namespace pcl;
 
 typedef PointCloud<PointXYZ> PointCloudXYZ;
 typedef PointCloudXYZ::ConstPtr PointCloudXYZConstPtr;

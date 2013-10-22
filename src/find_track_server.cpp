@@ -5,8 +5,8 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <pcl16/point_types.h>
-#include <pcl16_ros/point_cloud.h>
+#include <pcl/point_types.h>
+#include <pcl_ros/point_cloud.h>
 #include <tf/transform_listener.h>
 
 using namespace cv;
@@ -73,10 +73,10 @@ class FindTrackServer {
      }
 
      // Find the points in the 3d point plane.
-     pcl16::PointCloud<pcl16::PointXYZ> depthCloud;
-     pcl16::fromROSMsg(*imagePoints, depthCloud);
+     pcl::PointCloud<pcl::PointXYZ> depthCloud;
+     pcl::fromROSMsg(*imagePoints, depthCloud);
 
-     std::vector<pcl16::PointXYZ> contour3d;
+     std::vector<pcl::PointXYZ> contour3d;
      contour3d.resize(track.size());
      for(unsigned int i = 0; i < contour3d.size(); ++i){
        contour3d[i] = depthCloud.points.at(track[i].y * image->width + track[i].x);

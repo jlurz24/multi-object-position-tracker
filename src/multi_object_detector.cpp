@@ -4,22 +4,22 @@
 #include <cmvision/Blobs.h>
 #include <position_tracker/DetectedObjects.h>
 #include <sensor_msgs/PointCloud2.h>
-#include <pcl16/point_types.h>
-#include <pcl16_ros/point_cloud.h>
+#include <pcl/point_types.h>
+#include <pcl_ros/point_cloud.h>
 #include <message_filters/time_synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <message_filters/synchronizer.h>
-#include <pcl16/io/pcd_io.h>
-#include <pcl16/features/feature.h>
+#include <pcl/io/pcd_io.h>
+#include <pcl/features/feature.h>
 #include <cmath>
 #include <boost/math/constants/constants.hpp>
-#include <pcl16/segmentation/extract_clusters.h>
-#include <pcl16/filters/voxel_grid.h>
+#include <pcl/segmentation/extract_clusters.h>
+#include <pcl/filters/voxel_grid.h>
 #include <visualization_msgs/MarkerArray.h>
-#include <pcl16/common/geometry.h>
+#include <pcl/common/geometry.h>
 
 using namespace std;
-using namespace pcl16;
+using namespace pcl;
 
 inline Eigen::Vector3f operator-(const PointXYZ& p1, const PointXYZ& p2) {
   return Eigen::Vector3f(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
