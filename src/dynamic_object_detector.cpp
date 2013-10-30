@@ -97,7 +97,7 @@ class DynamicObjectDetector {
 
         idPub = nh.advertise<visualization_msgs::MarkerArray>("object_tracks/" + objectName + "/identities", 1, connectCB, disconnectCB);
 
-  ROS_DEBUG("Initialization of the dynamic object detector complete");
+        ROS_DEBUG("Initialization of the dynamic object detector complete");
     }
 
   private:
@@ -236,16 +236,14 @@ class DynamicObjectDetector {
         publishPredictedPositions(predictedPositions, measurementTime);
       }
 
-      if(trackedObjects->positions.size() > 0){
-        pub.publish(trackedObjects);
+      pub.publish(trackedObjects);
 
-        if(markerPub.getNumSubscribers() > 0){
-          publishPVArrows(trackedObjects);
-        }
+      if(markerPub.getNumSubscribers() > 0){
+        publishPVArrows(trackedObjects);
+      }
 
-        if(idPub.getNumSubscribers() > 0){
-          publishIDs(trackedObjects);
-        }
+      if(idPub.getNumSubscribers() > 0){
+        publishIDs(trackedObjects);
       }
       ROS_DEBUG("Iteration end: %lu known objects", pvFilters.size());
     }
@@ -255,7 +253,7 @@ class DynamicObjectDetector {
     ROS_DEBUG("Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
     
     if(predictedPositions->points.size() == 0){
-      ROS_INFO("No current predicted positions");
+      ROS_DEBUG("No current predicted positions");
       unalignedMeasurements->points = measuredPositions->points;
       return PointCloudXYZPtr(new PointCloudXYZ);
     }
@@ -334,7 +332,7 @@ class DynamicObjectDetector {
 
     ROS_DEBUG("Lowest total distance was %f", lowestDistance);
   
-    // Excercised all perumutations.
+    // Exercised all permutations.
     PointCloudXYZPtr alignedPositions(new PointCloudXYZ);
     if(lowestDistance <= associationMaxSuccessScore){
       for(unsigned int i = 0; i < measuredPositionsWithNulls->points.size(); ++i){
