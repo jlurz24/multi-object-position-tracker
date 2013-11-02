@@ -7,23 +7,23 @@
 
 class KalmanSimple: public Kalman::KFilter<double,1, false, true, true> {
 public:
-	KalmanSimple(const double aObservationNoise, const double aAccDist);
-	void setDT(const double aDT);
+    KalmanSimple(const double aObservationNoise, const double aAccDist);
+    void setDT(const double aDT);
 protected:
 
-	void makeA();
-	void makeH();
-	void makeV();
-	void makeR();
-	void makeW();
-	void makeQ();
-	void makeB();
-	
-	double dt;
-        double observationNoise;
-        double accDist;
+    void makeA();
+    void makeH();
+    void makeV();
+    void makeR();
+    void makeW();
+    void makeQ();
+    void makeB();
+
+    double dt;
+    double observationNoise;
+    double accDist;
 };
 
-typedef Kalman::KVector<double, 1, 1> Vector;
-typedef Kalman::KMatrix<double, 1, 1> Matrix;
+typedef Kalman::KVector<double, 1, true> Vector;
+typedef Kalman::KMatrix<double, 1, true> Matrix;
 #endif
