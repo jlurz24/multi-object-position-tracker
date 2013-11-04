@@ -56,12 +56,12 @@ class MultiObjectDetector {
 
  public:
     MultiObjectDetector() : privateHandle("~"){
-      privateHandle.param<string>("object_name", objectName, "balls");
+      privateHandle.param<string>("object_name", objectName, "dog");
       ROS_DEBUG("Detecting blobs with object name %s", objectName.c_str());
 
-      privateHandle.param<double>("cluster_distance_tolerance", clusterDistanceTolerance, 0.04);
+      privateHandle.param<double>("cluster_distance_tolerance", clusterDistanceTolerance, 0.1);
       privateHandle.param<double>("voxel_leaf_size", voxelLeafSize, 0.0);
-      privateHandle.param<int>("min_cluster_size", minClusterSize, 50);
+      privateHandle.param<int>("min_cluster_size", minClusterSize, 75);
       privateHandle.param<int>("max_cluster_size", maxClusterSize, 25000);
 
       // Publish the object location

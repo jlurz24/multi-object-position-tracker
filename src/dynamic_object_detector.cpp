@@ -41,7 +41,7 @@ struct EraseStale {
 
     bool operator()(const boost::shared_ptr<PVFilter>& filter) {
         if (measurementTime.toSec() - filter->getLastUpdate().toSec() > filterStaleThreshold) {
-            ROS_INFO(
+            ROS_DEBUG(
                     "Pruning a filter that has not been updated since %f", filter->getLastUpdate().toSec());
             return true;
         }
@@ -147,7 +147,7 @@ private:
         ROS_DEBUG("Received detected objects message with %lu objects. Currently %lu known objects", objects->positions.size(), pvFilters.size());
 
         if (objects->positions.size() > pvFilters.size()) {
-            ROS_INFO(
+            ROS_DEBUG(
                     "Received %lu measurements and only have %lu filters", objects->positions.size(), pvFilters.size());
         }
 
@@ -255,7 +255,7 @@ private:
         // Step 6: Initialize filters with any remaining positions and default
         //         velocities
         for (unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i) {
-            ROS_INFO("Initializing Kalman filter for measurement %i", i);
+            ROS_DEBUG("Initializing Kalman filter for measurement %i", i);
             boost::shared_ptr<PVFilter> filter(
                     new PVFilter(kalmanObservationNoise, kalmanAccelerationDist));
 

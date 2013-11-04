@@ -5,7 +5,8 @@
 #include <gazebo_msgs/GetWorldProperties.h>
 #include <position_tracker/DetectedDynamicObjects.h>
 #include <boost/algorithm/string/predicate.hpp>
-
+#include <position_tracker/StartMeasurement.h>
+#include <position_tracker/StopMeasurement.h>
 using namespace std;
 
 inline double square(const double a) {
@@ -15,30 +16,78 @@ inline double square(const double a) {
 class PositionVelocityMeasurer {
 private:
     ros::NodeHandle nh;
-    ros::NodeHandle privateHandle;
+    ros::NodeHandle pnh;
     tf::TransformListener tf;
-    double averagePositionDeviation;
-    double averageVelocityDeviation;
-    unsigned int iterations;
+    double totalPositionDeviation;
+    double totalVelocityDeviation;
+
+    ros::Time lastTime;
     ros::Time startTime;
-    message_filters::Subscriber<position_tracker::DetectedDynamicObjects> objectSub;
+    ros::Duration knownTime;
+    ros::Duration unknownTime;
+
+    auto_ptr<message_filters::Subscriber<position_tracker::DetectedDynamicObjects> > objectSub;
+    message_filters::Subscriber<position_tracker::StartMeasurement> startMeasuringSub;
+    message_filters::Subscriber<position_tracker::StopMeasurement> stopMeasuringSub;
+    std::string modelPrefix;
+    std::string groupName;
 
 public:
     PositionVelocityMeasurer() :
-        privateHandle("~"), averagePositionDeviation(0), averageVelocityDeviation(0),
-                iterations(0), startTime(ros::Time::now()),
-                objectSub(nh, "object_tracks/balls/positions_velocities", 1) {
-        objectSub.registerCallback(boost::bind(&PositionVelocityMeasurer::callback, this, _1));
-        ROS_INFO("Measurement initiated");
-    }
+        pnh("~"), totalPositionDeviation(0), totalVelocityDeviation(0),
+        knownTime(0), unknownTime(0), startMeasuringSub(nh, "start_measuring", 1),
+        stopMeasuringSub(nh, "stop_measuring", 1) {
 
-    ~PositionVelocityMeasurer() {
-        ROS_INFO("Measurement ended");
+        pnh.param<string>("model_prefix", modelPrefix, "ball");
+        pnh.param<string>("group_name", groupName, "balls");
+
+        // Setup the subscriber
+        objectSub.reset(new message_filters::Subscriber<position_tracker::DetectedDynamicObjects>(nh,
+                "object_tracks/" + groupName + "/positions_velocities", 1));
+        objectSub->unsubscribe();
+        objectSub->registerCallback(boost::bind(&PositionVelocityMeasurer::callback, this, _1));
+
+        startMeasuringSub.registerCallback(boost::bind(&PositionVelocityMeasurer::startMeasuring, this, _1));
+        stopMeasuringSub.registerCallback(boost::bind(&PositionVelocityMeasurer::stopMeasuring, this, _1));
     }
 
 private:
+    void startMeasuring(const position_tracker::StartMeasurementConstPtr msg){
+        startTime = lastTime = msg->header.stamp;
+        objectSub->subscribe();
+        ROS_INFO("Measurement initiated");
+    }
+
+    void stopMeasuring(const position_tracker::StopMeasurementConstPtr msg){
+        objectSub->unsubscribe();
+        ROS_INFO(
+                  "Measurement ended. Total Position Deviation: %f, Total Velocity Deviation: %f, Duration: %f",
+                  totalPositionDeviation, totalVelocityDeviation, msg->header.stamp.toSec() - startTime.toSec());
+    }
+
     void callback(const position_tracker::DetectedDynamicObjectsConstPtr objects) {
         ROS_DEBUG("Received a message @ %f", ros::Time::now().toSec());
+
+        ros::Duration timePassed = objects->header.stamp - lastTime;
+        lastTime = objects->header.stamp;
+
+        // Check if there are any messages.
+        if (objects->positions.size() == 0) {
+            unknownTime += timePassed;
+        }
+        else {
+            knownTime += timePassed;
+        }
+
+        double totalTime = objects->header.stamp.toSec() - startTime.toSec();
+        ROS_DEBUG("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
+                  knownTime.toSec(), unknownTime.toSec(), totalTime, knownTime.toSec() / totalTime * 100,
+                  unknownTime.toSec() / totalTime * 100);
+
+        // No more work to do if object locations are unknown.
+        if (objects->positions.size() == 0) {
+            return;
+        }
 
         // Fetch all the models.
         ros::service::waitForService("/gazebo/get_world_properties");
@@ -48,12 +97,13 @@ private:
                 "/gazebo/get_world_properties");
         gazebo_msgs::GetWorldProperties worldProperties;
         worldPropsServ.call(worldProperties);
+
         vector<geometry_msgs::Point> knownPositions;
         vector<geometry_msgs::Twist> knownVelocities;
 
         // Iterate over all the models.
         for (unsigned int i = 0; i < worldProperties.response.model_names.size(); ++i) {
-            if (!boost::starts_with(worldProperties.response.model_names[i], "ball")) {
+            if (!boost::starts_with(worldProperties.response.model_names[i], modelPrefix)) {
                 continue;
             }
 
@@ -92,18 +142,16 @@ private:
 
                 const geometry_msgs::Point& knownPosition = knownPositions[currentOrder[i]];
                 const geometry_msgs::Point& estimatedPosition = objects->positions[i].point;
-                positionDeviation += sqrt(
-                        square(knownPosition.x - estimatedPosition.x) + square(
-                                knownPosition.y - estimatedPosition.y));
+                positionDeviation += (square(knownPosition.x - estimatedPosition.x) + square(
+                        knownPosition.y - estimatedPosition.y)) * timePassed.toSec();
 
                 const geometry_msgs::Vector3& knownVelocity =
                         knownVelocities[currentOrder[i]].linear;
                 const geometry_msgs::Vector3& estimatedVelocity =
                         objects->velocities[i].twist.linear;
 
-                velocityDeviation += sqrt(
-                        square(knownVelocity.x - estimatedVelocity.x) + square(
-                                knownVelocity.y - estimatedVelocity.y));
+                velocityDeviation += (square(knownVelocity.x - estimatedVelocity.x) + square(
+                        knownVelocity.y - estimatedVelocity.y)) * timePassed.toSec();
             }
 
             if (positionDeviation + velocityDeviation < currPositionDeviation
@@ -117,22 +165,11 @@ private:
         currPositionDeviation /= knownPositions.size();
         currVelocityDeviation /= knownPositions.size();
 
-        // Probably should divide by the number of points.
-        ROS_INFO("Current Position Deviation: %f, Current Velocity Deviation: %f",
+        ROS_DEBUG("Current Position Deviation: %f, Current Velocity Deviation: %f",
                 currPositionDeviation, currVelocityDeviation);
 
-        // Update the moving averages.
-        averagePositionDeviation = (currPositionDeviation + iterations * averagePositionDeviation)
-                / (iterations + 1);
-        averageVelocityDeviation = (currVelocityDeviation + iterations * averageVelocityDeviation)
-                / (iterations + 1);
-        iterations++;
-
-        double duration = std::max(ros::Time::now().toSec() - startTime.toSec(), 0.1);
-        ROS_INFO(
-                "Average Position Deviation: %f, Average Velocity Deviation: %f, iterations %u, Duration: %f, F/s: %f",
-                averagePositionDeviation, averageVelocityDeviation, iterations, duration,
-                iterations / duration);
+        totalPositionDeviation += currPositionDeviation;
+        totalVelocityDeviation += currVelocityDeviation;
     }
 };
 
