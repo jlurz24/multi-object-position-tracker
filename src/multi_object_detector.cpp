@@ -242,13 +242,17 @@ class MultiObjectDetector {
         allBlobs = allBlobsFiltered;
       }
 
+      vector<int> removedIndices;
+      PointCloudXYZPtr cleanedBlobs(new PointCloudXYZ);
+      pcl::removeNaNFromPointCloud(*allBlobs, *cleanedBlobs, removedIndices);
+
       // Creating the KdTree object for the search method of the extraction
       std::vector<PointIndices> clusterIndices;
       EuclideanClusterExtraction<PointXYZ> ec;
       ec.setClusterTolerance(clusterDistanceTolerance);
       ec.setMinClusterSize(minClusterSize);
       ec.setMaxClusterSize(maxClusterSize);
-      ec.setInputCloud(allBlobs);
+      ec.setInputCloud(cleanedBlobs);
       ec.extract(clusterIndices);
       allBlobsOut = allBlobs;
       return clusterIndices;
