@@ -123,8 +123,7 @@ class MultiObjectDetector {
 
       // Initialize the result message
       position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
-      objects->header.stamp = depthPointsMsg->header.stamp;
-      
+      objects->header = depthPointsMsg->header;
       // Check if there are detected blobs.
       if(blobsMsg->blobs.size() == 0){
         ROS_DEBUG("No blobs detected");
@@ -139,7 +138,7 @@ class MultiObjectDetector {
       const vector<PointIndices> blobClouds = splitBlobs(depthCloud, blobsMsg, allBlobs);
 
       if(blobClouds.size() == 0){
-        ROS_INFO("No blobs to use for centroid detection");
+        ROS_DEBUG("No blobs to use for centroid detection");
         publish(objects);
         return;
       }
