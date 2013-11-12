@@ -228,6 +228,7 @@ class MultiObjectDetector {
           }
       }
 
+      allBlobs->is_dense = false;
       allBlobs->width = allBlobs->points.size();
       allBlobs->height = 1;
   
@@ -242,16 +243,18 @@ class MultiObjectDetector {
       }
 
       vector<int> removedIndices;
-      PointCloudXYZPtr cleanedBlobs(new PointCloudXYZ);
-      pcl::removeNaNFromPointCloud(*allBlobs, *cleanedBlobs, removedIndices);
-
+      pcl::removeNaNFromPointCloud(*allBlobs, *allBlobs, removedIndices);
+      if(allBlobs->size() == 0){
+          ROS_INFO("No remaining blob points after removing NaNs");
+          std::vector<PointIndices>();
+      }
       // Creating the KdTree object for the search method of the extraction
       std::vector<PointIndices> clusterIndices;
       EuclideanClusterExtraction<PointXYZ> ec;
       ec.setClusterTolerance(clusterDistanceTolerance);
       ec.setMinClusterSize(minClusterSize);
       ec.setMaxClusterSize(maxClusterSize);
-      ec.setInputCloud(cleanedBlobs);
+      ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
       allBlobsOut = allBlobs;
       return clusterIndices;

@@ -63,6 +63,11 @@ private:
         ROS_INFO(
                   "Measurement ended. Total Position Deviation: %f, Total Velocity Deviation: %f, Duration: %f",
                   totalPositionDeviation, totalVelocityDeviation, msg->header.stamp.toSec() - startTime.toSec());
+
+        double totalTime = msg->header.stamp.toSec() - startTime.toSec();
+        ROS_DEBUG("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
+                  knownTime.toSec(), unknownTime.toSec(), totalTime, knownTime.toSec() / totalTime * 100,
+                  unknownTime.toSec() / totalTime * 100);
     }
 
     void callback(const position_tracker::DetectedDynamicObjectsConstPtr objects) {
