@@ -6,110 +6,32 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.eclipse.cdt.make.core.makeBuilder</name>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<triggers>clean,full,incremental,</triggers>
 			<arguments>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
-					<value>clean</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.append_environment</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.stopOnError</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.enabledIncrementalBuild</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.command</key>
-					<value>/usr/bin/make</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.contents</key>
-					<value>org.eclipse.cdt.make.core.activeConfigSettings</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.target.inc</key>
-					<value>all</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.arguments</key>
-					<value></value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.buildLocation</key>
-					<value>/home/jlurz/ros_workspace/litterbox_project/position_tracker</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
-					<value>false</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.environment</key>
-					<value>VERBOSE=1|ROS_ROOT=/opt/ros/groovy/share/ros|ROS_PACKAGE_PATH=/home/jlurz/ros_workspace:/opt/ros/groovy/stacks:/opt/ros/groovy/share|PYTHONPATH=/opt/ros/groovy/share/ros/core/roslib/src:/opt/ros/groovy/lib/python2.7/dist-packages|PATH=/home/jlurz/bin:/opt/ros/groovy/share/ros/bin:/opt/ros/groovy/bin:/home/jlurz/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|LD_LIBRARY_PATH=/opt/ros/groovy/lib|PKG_CONFIG_PATH=/opt/ros/groovy/lib/pkgconfig|CMAKE_PREFIX_PATH=/opt/ros/groovy|</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.enableFullBuild</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.target.auto</key>
-					<value>all</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
-					<value>false</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.target.clean</key>
-					<value>clean</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>
-					<value>all</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.buildArguments</key>
-					<value></value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.build.location</key>
-					<value>/home/jlurz/ros_workspace/litterbox_project/position_tracker</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
-					<value>all</value>
-				</dictionary>
-				<dictionary>
-					<key>org.eclipse.cdt.core.errorOutputParser</key>
-					<value>org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;</value>
-				</dictionary>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.cdt.make.core.ScannerConfigBuilder</name>
+			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+			<triggers>full,incremental,</triggers>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.cdt.core.ccnature</nature>
-		<nature>org.eclipse.cdt.make.core.makeNature</nature>
-		<nature>org.eclipse.cdt.make.core.ScannerConfigNature</nature>
 		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
 	<linkedResources>
 		<link>
 			<name>[Subprojects]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -119,22 +41,252 @@
 			<location>/usr/src/gtest</location>
 		</link>
 		<link>
-			<name>[Targets]</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] display_track</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[exe] display_track/</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>[Targets]/[exe] dynamic_object_detector/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_range/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_track_server/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] fps_measurer/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] multi_object_detector/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] position_velocity_measurer/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] total_force_measurer/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] display_track/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] display_track/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] display_track/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>[Targets]/[exe] display_track/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] dynamic_object_detector/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] dynamic_object_detector/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] dynamic_object_detector/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] dynamic_object_detector/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_range/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_range/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_range/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_range/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_track_server/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_track_server/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_track_server/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] find_track_server/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] fps_measurer/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] fps_measurer/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] fps_measurer/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] fps_measurer/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] multi_object_detector/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] multi_object_detector/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] multi_object_detector/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] multi_object_detector/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] position_velocity_measurer/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] position_velocity_measurer/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] position_velocity_measurer/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] position_velocity_measurer/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] total_force_measurer/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] total_force_measurer/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] total_force_measurer/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] total_force_measurer/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] gtest_main/Source Files</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -147,36 +299,6 @@
 			<name>[Targets]/[exe] display_track/Source Files/find_track_impl.cpp</name>
 			<type>1</type>
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/find_track_impl.cpp</location>
-		</link>
-		<link>
-			<name>[Targets]/[exe] display_track/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] display_track/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] display_track/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] dynamic_object_detector</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] dynamic_object_detector/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] dynamic_object_detector/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>[Targets]/[exe] dynamic_object_detector/Source Files/dynamic_object_detector.cpp</name>
@@ -194,74 +316,9 @@
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/pv_filter.cpp</location>
 		</link>
 		<link>
-			<name>[Targets]/[exe] dynamic_object_detector/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] dynamic_object_detector/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] dynamic_object_detector/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[exe] find_range/Source Files/find_range.cpp</name>
 			<type>1</type>
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/find_range.cpp</location>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_range/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server/Source Files/find_track_server.cpp</name>
-			<type>1</type>
-			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/find_track_server.cpp</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] find_track_server/Source Files/find_track_impl.cpp</name>
@@ -269,34 +326,9 @@
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/find_track_impl.cpp</location>
 		</link>
 		<link>
-			<name>[Targets]/[exe] find_track_server/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] find_track_server/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] fps_measurer</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] fps_measurer/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] fps_measurer/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
+			<name>[Targets]/[exe] find_track_server/Source Files/find_track_server.cpp</name>
+			<type>1</type>
+			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/find_track_server.cpp</location>
 		</link>
 		<link>
 			<name>[Targets]/[exe] fps_measurer/Source Files/fps_measurer.cpp</name>
@@ -304,69 +336,9 @@
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/fps_measurer.cpp</location>
 		</link>
 		<link>
-			<name>[Targets]/[exe] fps_measurer/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] fps_measurer/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] fps_measurer/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[exe] multi_object_detector/Source Files/multi_object_detector.cpp</name>
 			<type>1</type>
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/multi_object_detector.cpp</location>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] multi_object_detector/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] position_velocity_measurer</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] position_velocity_measurer/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] position_velocity_measurer/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>[Targets]/[exe] position_velocity_measurer/Source Files/position_velocity_measurer.cpp</name>
@@ -374,69 +346,9 @@
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/position_velocity_measurer.cpp</location>
 		</link>
 		<link>
-			<name>[Targets]/[exe] position_velocity_measurer/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] position_velocity_measurer/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] position_velocity_measurer/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[exe] total_force_measurer/Source Files/total_force_measurer.cpp</name>
 			<type>1</type>
 			<location>/home/jlurz/ros_workspace/litterbox_project/position_tracker/src/total_force_measurer.cpp</location>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[exe] total_force_measurer/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
 			<name>[Targets]/[lib] gtest/Source Files/gtest-all.cc</name>
@@ -444,54 +356,9 @@
 			<location>/usr/src/gtest/src/gtest-all.cc</location>
 		</link>
 		<link>
-			<name>[Targets]/[lib] gtest/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main/</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main/Source Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
 			<name>[Targets]/[lib] gtest_main/Source Files/gtest_main.cc</name>
 			<type>1</type>
 			<location>/usr/src/gtest/src/gtest_main.cc</location>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main/Header Files</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main/CMake Rules</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
-		</link>
-		<link>
-			<name>[Targets]/[lib] gtest_main/Resources</name>
-			<type>2</type>
-			<locationURI>virtual:/virtual</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
