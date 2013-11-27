@@ -65,7 +65,7 @@ private:
                   totalPositionDeviation, totalVelocityDeviation, msg->header.stamp.toSec() - startTime.toSec());
 
         double totalTime = msg->header.stamp.toSec() - startTime.toSec();
-        ROS_DEBUG("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
+        ROS_INFO("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
                   knownTime.toSec(), unknownTime.toSec(), totalTime, knownTime.toSec() / totalTime * 100,
                   unknownTime.toSec() / totalTime * 100);
     }

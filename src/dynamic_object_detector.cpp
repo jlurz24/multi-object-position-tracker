@@ -32,15 +32,15 @@ inline bool operator!=(const PointXYZ& p1, const PointXYZ&p2) {
 
 struct EraseStale {
 
-    double filterStaleThreshold;
+    ros::Duration filterStaleThreshold;
     ros::Time measurementTime;
 
-    EraseStale(const double aFilterStaleThreshold, const ros::Time& aMeasurementTime) :
+    EraseStale(const ros::Duration& aFilterStaleThreshold, const ros::Time& aMeasurementTime) :
             filterStaleThreshold(aFilterStaleThreshold), measurementTime(aMeasurementTime) {
     }
 
     bool operator()(const boost::shared_ptr<PVFilter>& filter) {
-        if (measurementTime.toSec() - filter->getLastUpdate().toSec() > filterStaleThreshold) {
+        if (measurementTime - filter->getLastUpdate() > filterStaleThreshold) {
             ROS_DEBUG(
                     "Pruning a filter that has not been updated since %f", filter->getLastUpdate().toSec());
             return true;
@@ -64,7 +64,7 @@ private:
     double kalmanAccelerationDist;
     double associationEpsilon;
     double associationMaxSuccessScore;
-    double filterStaleThreshold;
+    ros::Duration filterStaleThreshold;
     double maxCorrelationDistance;
 
     ros::Publisher pub;
@@ -86,7 +86,9 @@ public:
         privateHandle.param<double>("association_epsilon", associationEpsilon, 1e-6);
         privateHandle.param<double>("association_max_success_score", associationMaxSuccessScore,
                 2.0);
-        privateHandle.param<double>("filter_stale_threshold", filterStaleThreshold, 1.0);
+        double filterStaleThresholdD;
+        privateHandle.param<double>("filter_stale_threshold", filterStaleThresholdD, 1.0);
+        filterStaleThreshold = ros::Duration(filterStaleThresholdD);
         privateHandle.param<double>("max_correlation_distance", maxCorrelationDistance, 5.0);
 
         ROS_DEBUG("Tracking objects with object name %s", objectName.c_str());
@@ -242,7 +244,7 @@ private:
             position.header.frame_id = frame;
             position.header.stamp = measurementTime;
             trackedObjects->positions.push_back(position);
-
+            trackedObjects->measuredTimes.push_back(pvFilters.at(i)->getLastUpdate());
             geometry_msgs::TwistStamped velocity;
             velocity.twist.linear.x = velocities[0];
             velocity.twist.linear.y = velocities[1];
