@@ -3,14 +3,18 @@
 
 using namespace std;
 
-static inline double square(const double x){
+static unsigned int uniqueId = 0;
+
+static inline double square(const double x) {
     return x * x;
 }
 
-PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise): filter(new KalmanSimple(aObservationNoise, aVelocityNoise)) {
+PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise) :
+        filter(new KalmanSimple(aObservationNoise, aVelocityNoise)), id(uniqueId++) {
 }
 
-void PVFilter::init(const vector<double>& positions, const vector<double>& velocities, ros::Time time){
+void PVFilter::init(const vector<double>& positions, const vector<double>& velocities,
+        ros::Time time) {
 
     updateTime = time;
 
@@ -23,12 +27,9 @@ void PVFilter::init(const vector<double>& positions, const vector<double>& veloc
     const double i_V_NOISE = 10.;
 
     // Initial covariance matrix
-    static const double _P0[] = {square(i_P_NOISE), 0., 0., 0., 0., 0.,
-            0., square(i_P_NOISE), 0., 0., 0., 0.,
-            0., 0., square(i_P_NOISE), 0., 0., 0.,
-            0., 0., 0., square(i_V_NOISE), 0., 0.,
-            0., 0., 0., 0., square(i_V_NOISE), 0.,
-            0., 0., 0., 0., 0., square(i_V_NOISE)};
+    static const double _P0[] = { square(i_P_NOISE), 0., 0., 0., 0., 0., 0., square(i_P_NOISE), 0.,
+            0., 0., 0., 0., 0., square(i_P_NOISE), 0., 0., 0., 0., 0., 0., square(i_V_NOISE), 0.,
+            0., 0., 0., 0., 0., square(i_V_NOISE), 0., 0., 0., 0., 0., 0., square(i_V_NOISE) };
     Matrix P0(n, n, _P0);
 
     // Initial Estimate
@@ -43,7 +44,7 @@ void PVFilter::init(const vector<double>& positions, const vector<double>& veloc
     filter->init(x, P0);
 }
 
-void PVFilter::measure(const vector<double>& positions, ros::Time time){
+void PVFilter::measure(const vector<double>& positions, const ros::Time& time) {
     Vector z(3);
     z(1) = positions[0];
     z(2) = positions[1];
@@ -53,7 +54,7 @@ void PVFilter::measure(const vector<double>& positions, ros::Time time){
     updateTime = time;
 }
 
-void PVFilter::predict(vector<double>& positions, ros::Time time){
+void PVFilter::predict(vector<double>& positions, const ros::Time& time) {
     Vector u(0);
     filter->setDT(time.toSec() - updateTime.toSec());
     filter->timeUpdateStep(u);

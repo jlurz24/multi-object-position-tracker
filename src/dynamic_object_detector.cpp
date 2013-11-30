@@ -3,6 +3,7 @@
 #include <message_filters/subscriber.h>
 #include <position_tracker/DetectedObjects.h>
 #include <position_tracker/DetectedDynamicObjects.h>
+#include <position_tracker/DetectedDynamicObject.h>
 #include <pcl/point_types.h>
 #include <pcl_ros/point_cloud.h>
 #include <visualization_msgs/MarkerArray.h>
@@ -243,15 +244,20 @@ private:
 
             position.header.frame_id = frame;
             position.header.stamp = measurementTime;
-            trackedObjects->positions.push_back(position);
-            trackedObjects->measuredTimes.push_back(pvFilters.at(i)->getLastUpdate());
+
             geometry_msgs::TwistStamped velocity;
             velocity.twist.linear.x = velocities[0];
             velocity.twist.linear.y = velocities[1];
             velocity.twist.linear.z = velocities[2];
             velocity.header.frame_id = frame;
             velocity.header.stamp = measurementTime;
-            trackedObjects->velocities.push_back(velocity);
+
+            position_tracker::DetectedDynamicObject obj;
+            obj.position = position;
+            obj.velocity = velocity;
+            obj.measuredTime = pvFilters.at(i)->getLastUpdate();
+            obj.id = pvFilters.at(i)->getId();
+            trackedObjects->objects.push_back(obj);
         }
 
         // Step 6: Initialize filters with any remaining positions and default
@@ -430,16 +436,16 @@ private:
         double DT_FOR_VIZ = 2;
 
         visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
-        for (unsigned int i = 0; i < objects->positions.size(); ++i) {
+        for (unsigned int i = 0; i < objects->objects.size(); ++i) {
             visualization_msgs::Marker marker;
-            marker.id = i;
+            marker.id = objects->objects[i].id;
             marker.ns = "dod_pv_arrows";
             marker.action = visualization_msgs::Marker::ADD;
             marker.type = visualization_msgs::Marker::ARROW;
-            marker.header = objects->positions[i].header;
+            marker.header = objects->objects[i].position.header;
             marker.lifetime = ros::Duration(1);
             marker.points.resize(2);
-            marker.points[0] = objects->positions[i].point;
+            marker.points[0] = objects->objects[i].position.point;
             marker.scale.x = marker.scale.y = marker.scale.z = 0.04;
             marker.color.a = 1;
             marker.color.r = 1;
@@ -447,10 +453,10 @@ private:
             marker.color.b = 0;
 
             // Calculate the next point
-            marker.points[1] = objects->positions[i].point;
-            marker.points[1].x += objects->velocities[i].twist.linear.x * DT_FOR_VIZ;
-            marker.points[1].y += objects->velocities[i].twist.linear.y * DT_FOR_VIZ;
-            marker.points[1].z += objects->velocities[i].twist.linear.z * DT_FOR_VIZ;
+            marker.points[1] = objects->objects[i].position.point;
+            marker.points[1].x += objects->objects[i].velocity.twist.linear.x * DT_FOR_VIZ;
+            marker.points[1].y += objects->objects[i].velocity.twist.linear.y * DT_FOR_VIZ;
+            marker.points[1].z += objects->objects[i].velocity.twist.linear.z * DT_FOR_VIZ;
             markers->markers.push_back(marker);
         }
         markerPub.publish(markers);
@@ -459,21 +465,21 @@ private:
     void publishIDs(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
         visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
 
-        for (unsigned int i = 0; i < objects->positions.size(); ++i) {
+        for (unsigned int i = 0; i < objects->objects.size(); ++i) {
             visualization_msgs::Marker marker;
-            marker.id = i;
+            marker.id = objects->objects[i].id;
             marker.ns = "dod_ids";
             marker.text = boost::lexical_cast<string>(i + 1);
             marker.action = visualization_msgs::Marker::ADD;
             marker.type = visualization_msgs::Marker::TEXT_VIEW_FACING;
-            marker.header = objects->positions[i].header;
+            marker.header = objects->objects[i].position.header;
             marker.lifetime = ros::Duration(1);
             marker.color.a = 1;
             marker.color.r = 0;
             marker.color.g = 0;
             marker.color.b = 1;
             marker.scale.x = marker.scale.y = marker.scale.z = 0.2;
-            marker.pose.position = objects->positions[i].point;
+            marker.pose.position = objects->objects[i].position.point;
             marker.pose.orientation.x = 0;
             marker.pose.orientation.y = 0;
             marker.pose.orientation.z = 0;

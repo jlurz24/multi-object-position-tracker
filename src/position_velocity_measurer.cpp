@@ -20,6 +20,11 @@ private:
     tf::TransformListener tf;
     double totalPositionDeviation;
     double totalVelocityDeviation;
+    double meanPositionDeviation;
+    double meanVelocityDeviation;
+    double m2PositionDeviation;
+    double m2VelocityDeviation;
+    unsigned int n;
 
     ros::Time lastTime;
     ros::Time startTime;
@@ -35,7 +40,10 @@ private:
 public:
     PositionVelocityMeasurer() :
         pnh("~"), totalPositionDeviation(0), totalVelocityDeviation(0),
-        knownTime(0), unknownTime(0), startMeasuringSub(nh, "start_measuring", 1),
+        meanPositionDeviation(0), meanVelocityDeviation(0),
+        m2PositionDeviation(0), m2VelocityDeviation(0),
+        n(0),
+        startMeasuringSub(nh, "start_measuring", 1),
         stopMeasuringSub(nh, "stop_measuring", 1) {
 
         pnh.param<string>("model_prefix", modelPrefix, "ball");
@@ -68,6 +76,12 @@ private:
         ROS_INFO("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
                   knownTime.toSec(), unknownTime.toSec(), totalTime, knownTime.toSec() / totalTime * 100,
                   unknownTime.toSec() / totalTime * 100);
+
+        double positionDeviationVariance = m2PositionDeviation / (n - 1);
+        double velocityDeviationVariance = m2VelocityDeviation / (n - 1);
+        ROS_INFO("Mean Position Deviation: %f, Position Variance: %f, Mean Velocity Deviation: %f, Velocity Variance: %f",
+                 meanPositionDeviation, positionDeviationVariance,
+                 meanVelocityDeviation, velocityDeviationVariance);
     }
 
     void callback(const position_tracker::DetectedDynamicObjectsConstPtr objects) {
@@ -77,7 +91,7 @@ private:
         lastTime = objects->header.stamp;
 
         // Check if there are any messages.
-        if (objects->positions.size() == 0) {
+        if (objects->objects.size() == 0) {
             unknownTime += timePassed;
         }
         else {
@@ -90,7 +104,7 @@ private:
                   unknownTime.toSec() / totalTime * 100);
 
         // No more work to do if object locations are unknown.
-        if (objects->positions.size() == 0) {
+        if (objects->objects.size() == 0) {
             return;
         }
 
@@ -135,27 +149,30 @@ private:
         double currPositionDeviation = numeric_limits<double>::max();
         double currVelocityDeviation = numeric_limits<double>::max();
 
+        // Increase number of samples
+        n++;
+
         // Now search all permutations.
         do {
             double positionDeviation = 0;
             double velocityDeviation = 0;
             for (unsigned int i = 0; i < currentOrder.size(); ++i) {
-                if (i >= objects->positions.size()) {
+                if (i >= objects->objects.size()) {
                     ROS_INFO("More known objects than estimated");
                     continue;
                 }
 
                 const geometry_msgs::Point& knownPosition = knownPositions[currentOrder[i]];
-                const geometry_msgs::Point& estimatedPosition = objects->positions[i].point;
-                positionDeviation += (square(knownPosition.x - estimatedPosition.x) + square(
+                const geometry_msgs::Point& estimatedPosition = objects->objects[i].position.point;
+                positionDeviation += sqrt(square(knownPosition.x - estimatedPosition.x) + square(
                         knownPosition.y - estimatedPosition.y)) * timePassed.toSec();
 
                 const geometry_msgs::Vector3& knownVelocity =
                         knownVelocities[currentOrder[i]].linear;
                 const geometry_msgs::Vector3& estimatedVelocity =
-                        objects->velocities[i].twist.linear;
+                        objects->objects[i].velocity.twist.linear;
 
-                velocityDeviation += (square(knownVelocity.x - estimatedVelocity.x) + square(
+                velocityDeviation += sqrt(square(knownVelocity.x - estimatedVelocity.x) + square(
                         knownVelocity.y - estimatedVelocity.y)) * timePassed.toSec();
             }
 
@@ -169,6 +186,14 @@ private:
         // Adjust deviations by number of points.
         currPositionDeviation /= knownPositions.size();
         currVelocityDeviation /= knownPositions.size();
+
+        double deltaP = currPositionDeviation - meanPositionDeviation;
+        double deltaV = currVelocityDeviation - meanVelocityDeviation;
+        meanPositionDeviation += deltaP / double(n);
+        meanVelocityDeviation += deltaV / double(n);
+
+        m2PositionDeviation += square(deltaP);
+        m2VelocityDeviation += square(deltaV);
 
         ROS_DEBUG("Current Position Deviation: %f, Current Velocity Deviation: %f",
                 currPositionDeviation, currVelocityDeviation);

@@ -2,1986 +2,1041 @@
 <?fileVersion 4.0.0?>
 
 <cproject>
-	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="org.eclipse.cdt.core.default.config.1">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="org.eclipse.cdt.core.default.config.1" moduleId="org.eclipse.cdt.core.settings" name="Configuration1">
-				<externalSettings/>
-				<extensions>
-					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-					<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-					<extension id="org.eclipse.cdt.core.MakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
-				</extensions>
-			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
-				<project-mappings/>
-			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration buildProperties="" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.core.default.config.1" name="Configuration1" parent="org.eclipse.cdt.build.core.prefbase.cfg">
-					<folderInfo id="org.eclipse.cdt.core.default.config.1." name="/" resourcePath="">
-						<toolChain errorParsers="" id="org.eclipse.cdt.build.core.prefbase.toolchain.1032265256" name="No ToolChain" resourceTypeBasedDiscovery="false" superClass="org.eclipse.cdt.build.core.prefbase.toolchain">
-							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.GNU_ELF" id="org.eclipse.cdt.core.default.config.1..311557194" name=""/>
-							<builder appendEnvironment="true" arguments="" autoBuildTarget="all" buildPath="/home/jlurz/ros_workspace/litterbox_project/position_tracker" cleanBuildTarget="clean" command="/usr/bin/make" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" environment="ROS_ROOT=/opt/ros/groovy/share/ros|VERBOSE=1|PKG_CONFIG_PATH=/opt/ros/groovy/lib/pkgconfig|ROS_PACKAGE_PATH=/home/jlurz/ros_workspace:/opt/ros/groovy/stacks:/opt/ros/groovy/share|CMAKE_PREFIX_PATH=/opt/ros/groovy|PATH=/home/jlurz/bin:/opt/ros/groovy/share/ros/bin:/opt/ros/groovy/bin:/home/jlurz/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games|PYTHONPATH=/opt/ros/groovy/share/ros/core/roslib/src:/opt/ros/groovy/lib/python2.7/dist-packages|LD_LIBRARY_PATH=/opt/ros/groovy/lib|" errorParsers="" id="org.eclipse.cdt.make.core.makeBuilder.1023249492" ignoreErrCmd="" incrementalBuildTarget="all" name="Gnu Make Builder.Configuration1" parallelBuildCmd="" stopOnErr="true" superClass="org.eclipse.cdt.build.core.settings.default.builder">
-								<outputEntries>
-									<entry excluding="**/CMakeFiles/" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name=""/>
-								</outputEntries>
-							</builder>
-							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.71085401" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
-							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.159745394" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.207346253" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/kalman/src"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg/cpp"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/opencv"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/pcl-1.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/eigen3"/>
-									<listOptionValue builtIn="false" value="/usr/include/vtk-5.8"/>
-									<listOptionValue builtIn="false" value="/usr/include/qhull"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include"/>
-									<listOptionValue builtIn="false" value="/usr/local/include"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed"/>
-									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/backward"/>
-								</option>
-								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.947040050" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="BOOST_CB_DISABLE_DEBUG"/>
-									<listOptionValue builtIn="false" value="__STDC__=1"/>
-									<listOptionValue builtIn="false" value="__STDC_HOSTED__=1"/>
-									<listOptionValue builtIn="false" value="__GNUC__=4"/>
-									<listOptionValue builtIn="false" value="__GNUC_MINOR__=6"/>
-									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__=3"/>
-									<listOptionValue builtIn="false" value="__VERSION__=&quot;4.6.3&quot;"/>
-									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__="/>
-									<listOptionValue builtIn="false" value="_LP64=1"/>
-									<listOptionValue builtIn="false" value="__LP64__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__=2"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__=8"/>
-									<listOptionValue builtIn="false" value="__CHAR_BIT__=8"/>
-									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__=16"/>
-									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__=1234"/>
-									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__=4321"/>
-									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__=3412"/>
-									<listOptionValue builtIn="false" value="__BYTE_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__=8"/>
-									<listOptionValue builtIn="false" value="&quot;__SIZE_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__PTRDIFF_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="__WCHAR_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__WINT_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST16_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST32_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST16_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST32_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTPTR_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTPTR_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION=1002"/>
-									<listOptionValue builtIn="false" value="__SCHAR_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__SHRT_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__LONG_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__=9223372036854775807LL"/>
-									<listOptionValue builtIn="false" value="__WCHAR_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__WCHAR_MIN__=(-__WCHAR_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__WINT_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__WINT_MIN__=0U"/>
-									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__SIZE_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTMAX_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINTMAX_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__SIG_ATOMIC_MIN__=(-__SIG_ATOMIC_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__INT8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__UINT64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT32_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_C(c)=c ## U&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTPTR_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINTPTR_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__="/>
-									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_RADIX__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__=24"/>
-									<listOptionValue builtIn="false" value="__FLT_DIG__=6"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__=(-125)"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__=(-37)"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__=128"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__=38"/>
-									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__=9"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX__=3.40282346638528859812e+38F"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN__=1.17549435082228750797e-38F"/>
-									<listOptionValue builtIn="false" value="__FLT_EPSILON__=1.19209289550781250000e-7F"/>
-									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__=1.40129846432481707092e-45F"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__=53"/>
-									<listOptionValue builtIn="false" value="__DBL_DIG__=15"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__=(-1021)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__=(-307)"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__=1024"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__=308"/>
-									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__=17"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX__=((double)1.79769313486231570815e+308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN__=((double)2.22507385850720138309e-308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_EPSILON__=((double)2.22044604925031308085e-16L)"/>
-									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__=((double)4.94065645841246544177e-324L)"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__=64"/>
-									<listOptionValue builtIn="false" value="__LDBL_DIG__=18"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__=(-16381)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__=(-4931)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__=16384"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__=4932"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_DIG__=21"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX__=1.18973149535723176502e+4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN__=3.36210314311209350626e-4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_EPSILON__=1.08420217248550443401e-19L"/>
-									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__=3.64519953188247460253e-4951L"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__=7"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__=(-94)"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__=97"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN__=1E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX__=9.999999E96DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_EPSILON__=1E-6DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__=0.000001E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__=16"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__=(-382)"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__=385"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN__=1E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX__=9.999999999999999E384DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_EPSILON__=1E-15DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__=0.000000000000001E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__=34"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__=(-6142)"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__=6145"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN__=1E-6143DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX__=9.999999999999999999999999999999999E6144DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_EPSILON__=1E-33DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__=0.000000000000000000000000000000001E-6143DL"/>
-									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__="/>
-									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__="/>
-									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
-									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__NO_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM=1"/>
-									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME=1"/>
-									<listOptionValue builtIn="false" value="__SSP__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT128__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__=8"/>
-									<listOptionValue builtIn="false" value="__amd64=1"/>
-									<listOptionValue builtIn="false" value="__amd64__=1"/>
-									<listOptionValue builtIn="false" value="__x86_64=1"/>
-									<listOptionValue builtIn="false" value="__x86_64__=1"/>
-									<listOptionValue builtIn="false" value="__k8=1"/>
-									<listOptionValue builtIn="false" value="__k8__=1"/>
-									<listOptionValue builtIn="false" value="__MMX__=1"/>
-									<listOptionValue builtIn="false" value="__SSE__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2__=1"/>
-									<listOptionValue builtIn="false" value="__SSE_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__gnu_linux__=1"/>
-									<listOptionValue builtIn="false" value="__linux=1"/>
-									<listOptionValue builtIn="false" value="__linux__=1"/>
-									<listOptionValue builtIn="false" value="linux=1"/>
-									<listOptionValue builtIn="false" value="__unix=1"/>
-									<listOptionValue builtIn="false" value="__unix__=1"/>
-									<listOptionValue builtIn="false" value="unix=1"/>
-									<listOptionValue builtIn="false" value="__ELF__=1"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__=1"/>
-									<listOptionValue builtIn="false" value="__cplusplus=1"/>
-									<listOptionValue builtIn="false" value="__GNUG__=4"/>
-									<listOptionValue builtIn="false" value="__GXX_WEAK__=1"/>
-									<listOptionValue builtIn="false" value="__DEPRECATED=1"/>
-									<listOptionValue builtIn="false" value="__GXX_RTTI=1"/>
-									<listOptionValue builtIn="false" value="__EXCEPTIONS=1"/>
-									<listOptionValue builtIn="false" value="_GNU_SOURCE=1"/>
-								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1289884169" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" name="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-							</tool>
-							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.1198031352" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.2129409665" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/kalman/src"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg/cpp"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/opencv"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/pcl-1.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/eigen3"/>
-									<listOptionValue builtIn="false" value="/usr/include/vtk-5.8"/>
-									<listOptionValue builtIn="false" value="/usr/include/qhull"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include"/>
-									<listOptionValue builtIn="false" value="/usr/local/include"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed"/>
-									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/backward"/>
-								</option>
-								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.643505046" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="BOOST_CB_DISABLE_DEBUG"/>
-									<listOptionValue builtIn="false" value="__STDC__=1"/>
-									<listOptionValue builtIn="false" value="__STDC_HOSTED__=1"/>
-									<listOptionValue builtIn="false" value="__GNUC__=4"/>
-									<listOptionValue builtIn="false" value="__GNUC_MINOR__=6"/>
-									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__=3"/>
-									<listOptionValue builtIn="false" value="__VERSION__=&quot;4.6.3&quot;"/>
-									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__="/>
-									<listOptionValue builtIn="false" value="_LP64=1"/>
-									<listOptionValue builtIn="false" value="__LP64__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__=2"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__=8"/>
-									<listOptionValue builtIn="false" value="__CHAR_BIT__=8"/>
-									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__=16"/>
-									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__=1234"/>
-									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__=4321"/>
-									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__=3412"/>
-									<listOptionValue builtIn="false" value="__BYTE_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__=8"/>
-									<listOptionValue builtIn="false" value="&quot;__SIZE_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__PTRDIFF_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="__WCHAR_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__WINT_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST16_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST32_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST16_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST32_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTPTR_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTPTR_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION=1002"/>
-									<listOptionValue builtIn="false" value="__SCHAR_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__SHRT_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__LONG_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__=9223372036854775807LL"/>
-									<listOptionValue builtIn="false" value="__WCHAR_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__WCHAR_MIN__=(-__WCHAR_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__WINT_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__WINT_MIN__=0U"/>
-									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__SIZE_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTMAX_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINTMAX_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__SIG_ATOMIC_MIN__=(-__SIG_ATOMIC_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__INT8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__UINT64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT32_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_C(c)=c ## U&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTPTR_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINTPTR_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__="/>
-									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_RADIX__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__=24"/>
-									<listOptionValue builtIn="false" value="__FLT_DIG__=6"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__=(-125)"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__=(-37)"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__=128"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__=38"/>
-									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__=9"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX__=3.40282346638528859812e+38F"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN__=1.17549435082228750797e-38F"/>
-									<listOptionValue builtIn="false" value="__FLT_EPSILON__=1.19209289550781250000e-7F"/>
-									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__=1.40129846432481707092e-45F"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__=53"/>
-									<listOptionValue builtIn="false" value="__DBL_DIG__=15"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__=(-1021)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__=(-307)"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__=1024"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__=308"/>
-									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__=17"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX__=((double)1.79769313486231570815e+308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN__=((double)2.22507385850720138309e-308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_EPSILON__=((double)2.22044604925031308085e-16L)"/>
-									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__=((double)4.94065645841246544177e-324L)"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__=64"/>
-									<listOptionValue builtIn="false" value="__LDBL_DIG__=18"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__=(-16381)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__=(-4931)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__=16384"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__=4932"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_DIG__=21"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX__=1.18973149535723176502e+4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN__=3.36210314311209350626e-4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_EPSILON__=1.08420217248550443401e-19L"/>
-									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__=3.64519953188247460253e-4951L"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__=7"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__=(-94)"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__=97"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN__=1E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX__=9.999999E96DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_EPSILON__=1E-6DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__=0.000001E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__=16"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__=(-382)"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__=385"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN__=1E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX__=9.999999999999999E384DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_EPSILON__=1E-15DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__=0.000000000000001E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__=34"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__=(-6142)"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__=6145"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN__=1E-6143DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX__=9.999999999999999999999999999999999E6144DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_EPSILON__=1E-33DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__=0.000000000000000000000000000000001E-6143DL"/>
-									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__="/>
-									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__="/>
-									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
-									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__NO_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM=1"/>
-									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME=1"/>
-									<listOptionValue builtIn="false" value="__SSP__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT128__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__=8"/>
-									<listOptionValue builtIn="false" value="__amd64=1"/>
-									<listOptionValue builtIn="false" value="__amd64__=1"/>
-									<listOptionValue builtIn="false" value="__x86_64=1"/>
-									<listOptionValue builtIn="false" value="__x86_64__=1"/>
-									<listOptionValue builtIn="false" value="__k8=1"/>
-									<listOptionValue builtIn="false" value="__k8__=1"/>
-									<listOptionValue builtIn="false" value="__MMX__=1"/>
-									<listOptionValue builtIn="false" value="__SSE__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2__=1"/>
-									<listOptionValue builtIn="false" value="__SSE_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__gnu_linux__=1"/>
-									<listOptionValue builtIn="false" value="__linux=1"/>
-									<listOptionValue builtIn="false" value="__linux__=1"/>
-									<listOptionValue builtIn="false" value="linux=1"/>
-									<listOptionValue builtIn="false" value="__unix=1"/>
-									<listOptionValue builtIn="false" value="__unix__=1"/>
-									<listOptionValue builtIn="false" value="unix=1"/>
-									<listOptionValue builtIn="false" value="__ELF__=1"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__=1"/>
-									<listOptionValue builtIn="false" value="__cplusplus=1"/>
-									<listOptionValue builtIn="false" value="__GNUG__=4"/>
-									<listOptionValue builtIn="false" value="__GXX_WEAK__=1"/>
-									<listOptionValue builtIn="false" value="__DEPRECATED=1"/>
-									<listOptionValue builtIn="false" value="__GXX_RTTI=1"/>
-									<listOptionValue builtIn="false" value="__EXCEPTIONS=1"/>
-									<listOptionValue builtIn="false" value="_GNU_SOURCE=1"/>
-								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.664619456" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" name="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-							</tool>
-							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="org.eclipse.cdt.build.core.settings.holder.1203327049" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
-								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1174089543" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/kalman/src"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg/cpp"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/opencv"/>
-									<listOptionValue builtIn="false" value="/opt/ros/groovy/include/pcl-1.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/eigen3"/>
-									<listOptionValue builtIn="false" value="/usr/include/vtk-5.8"/>
-									<listOptionValue builtIn="false" value="/usr/include/qhull"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/msg_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/home/jlurz/ros_workspace/litterbox_project/position_tracker/srv_gen/cpp/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest/include"/>
-									<listOptionValue builtIn="false" value="/usr/src/gtest"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include"/>
-									<listOptionValue builtIn="false" value="/usr/local/include"/>
-									<listOptionValue builtIn="false" value="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed"/>
-									<listOptionValue builtIn="false" value="/usr/include/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/x86_64-linux-gnu"/>
-									<listOptionValue builtIn="false" value="/usr/include/c++/4.6/backward"/>
-								</option>
-								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1246126604" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="BOOST_CB_DISABLE_DEBUG"/>
-									<listOptionValue builtIn="false" value="__STDC__=1"/>
-									<listOptionValue builtIn="false" value="__STDC_HOSTED__=1"/>
-									<listOptionValue builtIn="false" value="__GNUC__=4"/>
-									<listOptionValue builtIn="false" value="__GNUC_MINOR__=6"/>
-									<listOptionValue builtIn="false" value="__GNUC_PATCHLEVEL__=3"/>
-									<listOptionValue builtIn="false" value="__VERSION__=&quot;4.6.3&quot;"/>
-									<listOptionValue builtIn="false" value="__FINITE_MATH_ONLY__="/>
-									<listOptionValue builtIn="false" value="_LP64=1"/>
-									<listOptionValue builtIn="false" value="__LP64__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_LONG__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SHORT__=2"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_FLOAT__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_DOUBLE__=8"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_LONG_DOUBLE__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_SIZE_T__=8"/>
-									<listOptionValue builtIn="false" value="__CHAR_BIT__=8"/>
-									<listOptionValue builtIn="false" value="__BIGGEST_ALIGNMENT__=16"/>
-									<listOptionValue builtIn="false" value="__ORDER_LITTLE_ENDIAN__=1234"/>
-									<listOptionValue builtIn="false" value="__ORDER_BIG_ENDIAN__=4321"/>
-									<listOptionValue builtIn="false" value="__ORDER_PDP_ENDIAN__=3412"/>
-									<listOptionValue builtIn="false" value="__BYTE_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__FLOAT_WORD_ORDER__=__ORDER_LITTLE_ENDIAN__"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_POINTER__=8"/>
-									<listOptionValue builtIn="false" value="&quot;__SIZE_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__PTRDIFF_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="__WCHAR_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__WINT_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__CHAR32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST16_TYPE__=short int&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_TYPE__=int"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_LEAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST16_TYPE__=short unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST32_TYPE__=unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_LEAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST8_TYPE__=signed char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST16_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST32_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INT_FAST64_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST8_TYPE__=unsigned char&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST16_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST32_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT_FAST64_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__INTPTR_TYPE__=long int&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTPTR_TYPE__=long unsigned int&quot;"/>
-									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION=1002"/>
-									<listOptionValue builtIn="false" value="__SCHAR_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__SHRT_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__LONG_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__LONG_LONG_MAX__=9223372036854775807LL"/>
-									<listOptionValue builtIn="false" value="__WCHAR_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__WCHAR_MIN__=(-__WCHAR_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__WINT_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__WINT_MIN__=0U"/>
-									<listOptionValue builtIn="false" value="__PTRDIFF_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__SIZE_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTMAX_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INTMAX_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINTMAX_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINTMAX_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__SIG_ATOMIC_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="&quot;__SIG_ATOMIC_MIN__=(-__SIG_ATOMIC_MAX__ - 1)&quot;"/>
-									<listOptionValue builtIn="false" value="__INT8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="__UINT64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST16_MAX__=32767"/>
-									<listOptionValue builtIn="false" value="__INT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST32_MAX__=2147483647"/>
-									<listOptionValue builtIn="false" value="__INT32_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__INT_LEAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="&quot;__INT64_C(c)=c ## L&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT8_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST16_MAX__=65535"/>
-									<listOptionValue builtIn="false" value="__UINT16_C(c)=c"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST32_MAX__=4294967295U"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT32_C(c)=c ## U&quot;"/>
-									<listOptionValue builtIn="false" value="__UINT_LEAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="&quot;__UINT64_C(c)=c ## UL&quot;"/>
-									<listOptionValue builtIn="false" value="__INT_FAST8_MAX__=127"/>
-									<listOptionValue builtIn="false" value="__INT_FAST16_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST32_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__INT_FAST64_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST8_MAX__=255"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST16_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST32_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__UINT_FAST64_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__INTPTR_MAX__=9223372036854775807L"/>
-									<listOptionValue builtIn="false" value="__UINTPTR_MAX__=18446744073709551615UL"/>
-									<listOptionValue builtIn="false" value="__FLT_EVAL_METHOD__="/>
-									<listOptionValue builtIn="false" value="__DEC_EVAL_METHOD__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_RADIX__=2"/>
-									<listOptionValue builtIn="false" value="__FLT_MANT_DIG__=24"/>
-									<listOptionValue builtIn="false" value="__FLT_DIG__=6"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_EXP__=(-125)"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN_10_EXP__=(-37)"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_EXP__=128"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX_10_EXP__=38"/>
-									<listOptionValue builtIn="false" value="__FLT_DECIMAL_DIG__=9"/>
-									<listOptionValue builtIn="false" value="__FLT_MAX__=3.40282346638528859812e+38F"/>
-									<listOptionValue builtIn="false" value="__FLT_MIN__=1.17549435082228750797e-38F"/>
-									<listOptionValue builtIn="false" value="__FLT_EPSILON__=1.19209289550781250000e-7F"/>
-									<listOptionValue builtIn="false" value="__FLT_DENORM_MIN__=1.40129846432481707092e-45F"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__FLT_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_MANT_DIG__=53"/>
-									<listOptionValue builtIn="false" value="__DBL_DIG__=15"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_EXP__=(-1021)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN_10_EXP__=(-307)"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_EXP__=1024"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX_10_EXP__=308"/>
-									<listOptionValue builtIn="false" value="__DBL_DECIMAL_DIG__=17"/>
-									<listOptionValue builtIn="false" value="__DBL_MAX__=((double)1.79769313486231570815e+308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_MIN__=((double)2.22507385850720138309e-308L)"/>
-									<listOptionValue builtIn="false" value="__DBL_EPSILON__=((double)2.22044604925031308085e-16L)"/>
-									<listOptionValue builtIn="false" value="__DBL_DENORM_MIN__=((double)4.94065645841246544177e-324L)"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__DBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_MANT_DIG__=64"/>
-									<listOptionValue builtIn="false" value="__LDBL_DIG__=18"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_EXP__=(-16381)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN_10_EXP__=(-4931)"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_EXP__=16384"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX_10_EXP__=4932"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_DIG__=21"/>
-									<listOptionValue builtIn="false" value="__LDBL_MAX__=1.18973149535723176502e+4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_MIN__=3.36210314311209350626e-4932L"/>
-									<listOptionValue builtIn="false" value="__LDBL_EPSILON__=1.08420217248550443401e-19L"/>
-									<listOptionValue builtIn="false" value="__LDBL_DENORM_MIN__=3.64519953188247460253e-4951L"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_DENORM__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_INFINITY__=1"/>
-									<listOptionValue builtIn="false" value="__LDBL_HAS_QUIET_NAN__=1"/>
-									<listOptionValue builtIn="false" value="__DEC32_MANT_DIG__=7"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN_EXP__=(-94)"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX_EXP__=97"/>
-									<listOptionValue builtIn="false" value="__DEC32_MIN__=1E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_MAX__=9.999999E96DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_EPSILON__=1E-6DF"/>
-									<listOptionValue builtIn="false" value="__DEC32_SUBNORMAL_MIN__=0.000001E-95DF"/>
-									<listOptionValue builtIn="false" value="__DEC64_MANT_DIG__=16"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN_EXP__=(-382)"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX_EXP__=385"/>
-									<listOptionValue builtIn="false" value="__DEC64_MIN__=1E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_MAX__=9.999999999999999E384DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_EPSILON__=1E-15DD"/>
-									<listOptionValue builtIn="false" value="__DEC64_SUBNORMAL_MIN__=0.000000000000001E-383DD"/>
-									<listOptionValue builtIn="false" value="__DEC128_MANT_DIG__=34"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN_EXP__=(-6142)"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX_EXP__=6145"/>
-									<listOptionValue builtIn="false" value="__DEC128_MIN__=1E-6143DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_MAX__=9.999999999999999999999999999999999E6144DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_EPSILON__=1E-33DL"/>
-									<listOptionValue builtIn="false" value="__DEC128_SUBNORMAL_MIN__=0.000000000000000000000000000000001E-6143DL"/>
-									<listOptionValue builtIn="false" value="__REGISTER_PREFIX__="/>
-									<listOptionValue builtIn="false" value="__USER_LABEL_PREFIX__="/>
-									<listOptionValue builtIn="false" value="_FORTIFY_SOURCE=2"/>
-									<listOptionValue builtIn="false" value="__GNUC_GNU_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__NO_INLINE__=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8=1"/>
-									<listOptionValue builtIn="false" value="__GCC_HAVE_DWARF2_CFI_ASM=1"/>
-									<listOptionValue builtIn="false" value="__PRAGMA_REDEFINE_EXTNAME=1"/>
-									<listOptionValue builtIn="false" value="__SSP__=1"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_INT128__=16"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WCHAR_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_WINT_T__=4"/>
-									<listOptionValue builtIn="false" value="__SIZEOF_PTRDIFF_T__=8"/>
-									<listOptionValue builtIn="false" value="__amd64=1"/>
-									<listOptionValue builtIn="false" value="__amd64__=1"/>
-									<listOptionValue builtIn="false" value="__x86_64=1"/>
-									<listOptionValue builtIn="false" value="__x86_64__=1"/>
-									<listOptionValue builtIn="false" value="__k8=1"/>
-									<listOptionValue builtIn="false" value="__k8__=1"/>
-									<listOptionValue builtIn="false" value="__MMX__=1"/>
-									<listOptionValue builtIn="false" value="__SSE__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2__=1"/>
-									<listOptionValue builtIn="false" value="__SSE_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__SSE2_MATH__=1"/>
-									<listOptionValue builtIn="false" value="__gnu_linux__=1"/>
-									<listOptionValue builtIn="false" value="__linux=1"/>
-									<listOptionValue builtIn="false" value="__linux__=1"/>
-									<listOptionValue builtIn="false" value="linux=1"/>
-									<listOptionValue builtIn="false" value="__unix=1"/>
-									<listOptionValue builtIn="false" value="__unix__=1"/>
-									<listOptionValue builtIn="false" value="unix=1"/>
-									<listOptionValue builtIn="false" value="__ELF__=1"/>
-									<listOptionValue builtIn="false" value="__DECIMAL_BID_FORMAT__=1"/>
-									<listOptionValue builtIn="false" value="__cplusplus=1"/>
-									<listOptionValue builtIn="false" value="__GNUG__=4"/>
-									<listOptionValue builtIn="false" value="__GXX_WEAK__=1"/>
-									<listOptionValue builtIn="false" value="__DEPRECATED=1"/>
-									<listOptionValue builtIn="false" value="__GXX_RTTI=1"/>
-									<listOptionValue builtIn="false" value="__EXCEPTIONS=1"/>
-									<listOptionValue builtIn="false" value="_GNU_SOURCE=1"/>
-								</option>
-								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1503806742" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" name="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
-							</tool>
-						</toolChain>
-					</folderInfo>
-				</configuration>
-			</storageModule>
-		</cconfiguration>
-	</storageModule>
-	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="position_tracker-RelWithDebInfo@position_tracker.null.2097791813" name="position_tracker-RelWithDebInfo@position_tracker"/>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.pathentry">
-		<pathentry excluding="**/CMakeFiles/" kind="out" path=""/>
-		<pathentry kind="mac" name="BOOST_CB_DISABLE_DEBUG" path="" value=""/>
-		<pathentry kind="mac" name="__STDC__" path="" value="1"/>
-		<pathentry kind="mac" name="__STDC_HOSTED__" path="" value="1"/>
-		<pathentry kind="mac" name="__GNUC__" path="" value="4"/>
-		<pathentry kind="mac" name="__GNUC_MINOR__" path="" value="6"/>
-		<pathentry kind="mac" name="__GNUC_PATCHLEVEL__" path="" value="3"/>
-		<pathentry kind="mac" name="__VERSION__" path="" value="&quot;4.6.3&quot;"/>
-		<pathentry kind="mac" name="__FINITE_MATH_ONLY__" path="" value=" "/>
-		<pathentry kind="mac" name="_LP64" path="" value="1"/>
-		<pathentry kind="mac" name="__LP64__" path="" value="1"/>
-		<pathentry kind="mac" name="__SIZEOF_INT__" path="" value="4"/>
-		<pathentry kind="mac" name="__SIZEOF_LONG__" path="" value="8"/>
-		<pathentry kind="mac" name="__SIZEOF_LONG_LONG__" path="" value="8"/>
-		<pathentry kind="mac" name="__SIZEOF_SHORT__" path="" value="2"/>
-		<pathentry kind="mac" name="__SIZEOF_FLOAT__" path="" value="4"/>
-		<pathentry kind="mac" name="__SIZEOF_DOUBLE__" path="" value="8"/>
-		<pathentry kind="mac" name="__SIZEOF_LONG_DOUBLE__" path="" value="16"/>
-		<pathentry kind="mac" name="__SIZEOF_SIZE_T__" path="" value="8"/>
-		<pathentry kind="mac" name="__CHAR_BIT__" path="" value="8"/>
-		<pathentry kind="mac" name="__BIGGEST_ALIGNMENT__" path="" value="16"/>
-		<pathentry kind="mac" name="__ORDER_LITTLE_ENDIAN__" path="" value="1234"/>
-		<pathentry kind="mac" name="__ORDER_BIG_ENDIAN__" path="" value="4321"/>
-		<pathentry kind="mac" name="__ORDER_PDP_ENDIAN__" path="" value="3412"/>
-		<pathentry kind="mac" name="__BYTE_ORDER__" path="" value="__ORDER_LITTLE_ENDIAN__"/>
-		<pathentry kind="mac" name="__FLOAT_WORD_ORDER__" path="" value="__ORDER_LITTLE_ENDIAN__"/>
-		<pathentry kind="mac" name="__SIZEOF_POINTER__" path="" value="8"/>
-		<pathentry kind="mac" name="__SIZE_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__PTRDIFF_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__WCHAR_TYPE__" path="" value="int"/>
-		<pathentry kind="mac" name="__WINT_TYPE__" path="" value="unsigned int"/>
-		<pathentry kind="mac" name="__INTMAX_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__UINTMAX_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__CHAR16_TYPE__" path="" value="short unsigned int"/>
-		<pathentry kind="mac" name="__CHAR32_TYPE__" path="" value="unsigned int"/>
-		<pathentry kind="mac" name="__SIG_ATOMIC_TYPE__" path="" value="int"/>
-		<pathentry kind="mac" name="__INT8_TYPE__" path="" value="signed char"/>
-		<pathentry kind="mac" name="__INT16_TYPE__" path="" value="short int"/>
-		<pathentry kind="mac" name="__INT32_TYPE__" path="" value="int"/>
-		<pathentry kind="mac" name="__INT64_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__UINT8_TYPE__" path="" value="unsigned char"/>
-		<pathentry kind="mac" name="__UINT16_TYPE__" path="" value="short unsigned int"/>
-		<pathentry kind="mac" name="__UINT32_TYPE__" path="" value="unsigned int"/>
-		<pathentry kind="mac" name="__UINT64_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__INT_LEAST8_TYPE__" path="" value="signed char"/>
-		<pathentry kind="mac" name="__INT_LEAST16_TYPE__" path="" value="short int"/>
-		<pathentry kind="mac" name="__INT_LEAST32_TYPE__" path="" value="int"/>
-		<pathentry kind="mac" name="__INT_LEAST64_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__UINT_LEAST8_TYPE__" path="" value="unsigned char"/>
-		<pathentry kind="mac" name="__UINT_LEAST16_TYPE__" path="" value="short unsigned int"/>
-		<pathentry kind="mac" name="__UINT_LEAST32_TYPE__" path="" value="unsigned int"/>
-		<pathentry kind="mac" name="__UINT_LEAST64_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__INT_FAST8_TYPE__" path="" value="signed char"/>
-		<pathentry kind="mac" name="__INT_FAST16_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__INT_FAST32_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__INT_FAST64_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__UINT_FAST8_TYPE__" path="" value="unsigned char"/>
-		<pathentry kind="mac" name="__UINT_FAST16_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__UINT_FAST32_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__UINT_FAST64_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__INTPTR_TYPE__" path="" value="long int"/>
-		<pathentry kind="mac" name="__UINTPTR_TYPE__" path="" value="long unsigned int"/>
-		<pathentry kind="mac" name="__GXX_ABI_VERSION" path="" value="1002"/>
-		<pathentry kind="mac" name="__SCHAR_MAX__" path="" value="127"/>
-		<pathentry kind="mac" name="__SHRT_MAX__" path="" value="32767"/>
-		<pathentry kind="mac" name="__INT_MAX__" path="" value="2147483647"/>
-		<pathentry kind="mac" name="__LONG_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__LONG_LONG_MAX__" path="" value="9223372036854775807LL"/>
-		<pathentry kind="mac" name="__WCHAR_MAX__" path="" value="2147483647"/>
-		<pathentry kind="mac" name="__WCHAR_MIN__" path="" value="(-__WCHAR_MAX__ - 1)"/>
-		<pathentry kind="mac" name="__WINT_MAX__" path="" value="4294967295U"/>
-		<pathentry kind="mac" name="__WINT_MIN__" path="" value="0U"/>
-		<pathentry kind="mac" name="__PTRDIFF_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__SIZE_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__INTMAX_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__INTMAX_C(c)" path="" value="c ## L"/>
-		<pathentry kind="mac" name="__UINTMAX_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__UINTMAX_C(c)" path="" value="c ## UL"/>
-		<pathentry kind="mac" name="__SIG_ATOMIC_MAX__" path="" value="2147483647"/>
-		<pathentry kind="mac" name="__SIG_ATOMIC_MIN__" path="" value="(-__SIG_ATOMIC_MAX__ - 1)"/>
-		<pathentry kind="mac" name="__INT8_MAX__" path="" value="127"/>
-		<pathentry kind="mac" name="__INT16_MAX__" path="" value="32767"/>
-		<pathentry kind="mac" name="__INT32_MAX__" path="" value="2147483647"/>
-		<pathentry kind="mac" name="__INT64_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__UINT8_MAX__" path="" value="255"/>
-		<pathentry kind="mac" name="__UINT16_MAX__" path="" value="65535"/>
-		<pathentry kind="mac" name="__UINT32_MAX__" path="" value="4294967295U"/>
-		<pathentry kind="mac" name="__UINT64_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__INT_LEAST8_MAX__" path="" value="127"/>
-		<pathentry kind="mac" name="__INT8_C(c)" path="" value="c"/>
-		<pathentry kind="mac" name="__INT_LEAST16_MAX__" path="" value="32767"/>
-		<pathentry kind="mac" name="__INT16_C(c)" path="" value="c"/>
-		<pathentry kind="mac" name="__INT_LEAST32_MAX__" path="" value="2147483647"/>
-		<pathentry kind="mac" name="__INT32_C(c)" path="" value="c"/>
-		<pathentry kind="mac" name="__INT_LEAST64_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__INT64_C(c)" path="" value="c ## L"/>
-		<pathentry kind="mac" name="__UINT_LEAST8_MAX__" path="" value="255"/>
-		<pathentry kind="mac" name="__UINT8_C(c)" path="" value="c"/>
-		<pathentry kind="mac" name="__UINT_LEAST16_MAX__" path="" value="65535"/>
-		<pathentry kind="mac" name="__UINT16_C(c)" path="" value="c"/>
-		<pathentry kind="mac" name="__UINT_LEAST32_MAX__" path="" value="4294967295U"/>
-		<pathentry kind="mac" name="__UINT32_C(c)" path="" value="c ## U"/>
-		<pathentry kind="mac" name="__UINT_LEAST64_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__UINT64_C(c)" path="" value="c ## UL"/>
-		<pathentry kind="mac" name="__INT_FAST8_MAX__" path="" value="127"/>
-		<pathentry kind="mac" name="__INT_FAST16_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__INT_FAST32_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__INT_FAST64_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__UINT_FAST8_MAX__" path="" value="255"/>
-		<pathentry kind="mac" name="__UINT_FAST16_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__UINT_FAST32_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__UINT_FAST64_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__INTPTR_MAX__" path="" value="9223372036854775807L"/>
-		<pathentry kind="mac" name="__UINTPTR_MAX__" path="" value="18446744073709551615UL"/>
-		<pathentry kind="mac" name="__FLT_EVAL_METHOD__" path="" value=" "/>
-		<pathentry kind="mac" name="__DEC_EVAL_METHOD__" path="" value="2"/>
-		<pathentry kind="mac" name="__FLT_RADIX__" path="" value="2"/>
-		<pathentry kind="mac" name="__FLT_MANT_DIG__" path="" value="24"/>
-		<pathentry kind="mac" name="__FLT_DIG__" path="" value="6"/>
-		<pathentry kind="mac" name="__FLT_MIN_EXP__" path="" value="(-125)"/>
-		<pathentry kind="mac" name="__FLT_MIN_10_EXP__" path="" value="(-37)"/>
-		<pathentry kind="mac" name="__FLT_MAX_EXP__" path="" value="128"/>
-		<pathentry kind="mac" name="__FLT_MAX_10_EXP__" path="" value="38"/>
-		<pathentry kind="mac" name="__FLT_DECIMAL_DIG__" path="" value="9"/>
-		<pathentry kind="mac" name="__FLT_MAX__" path="" value="3.40282346638528859812e+38F"/>
-		<pathentry kind="mac" name="__FLT_MIN__" path="" value="1.17549435082228750797e-38F"/>
-		<pathentry kind="mac" name="__FLT_EPSILON__" path="" value="1.19209289550781250000e-7F"/>
-		<pathentry kind="mac" name="__FLT_DENORM_MIN__" path="" value="1.40129846432481707092e-45F"/>
-		<pathentry kind="mac" name="__FLT_HAS_DENORM__" path="" value="1"/>
-		<pathentry kind="mac" name="__FLT_HAS_INFINITY__" path="" value="1"/>
-		<pathentry kind="mac" name="__FLT_HAS_QUIET_NAN__" path="" value="1"/>
-		<pathentry kind="mac" name="__DBL_MANT_DIG__" path="" value="53"/>
-		<pathentry kind="mac" name="__DBL_DIG__" path="" value="15"/>
-		<pathentry kind="mac" name="__DBL_MIN_EXP__" path="" value="(-1021)"/>
-		<pathentry kind="mac" name="__DBL_MIN_10_EXP__" path="" value="(-307)"/>
-		<pathentry kind="mac" name="__DBL_MAX_EXP__" path="" value="1024"/>
-		<pathentry kind="mac" name="__DBL_MAX_10_EXP__" path="" value="308"/>
-		<pathentry kind="mac" name="__DBL_DECIMAL_DIG__" path="" value="17"/>
-		<pathentry kind="mac" name="__DBL_MAX__" path="" value="((double)1.79769313486231570815e+308L)"/>
-		<pathentry kind="mac" name="__DBL_MIN__" path="" value="((double)2.22507385850720138309e-308L)"/>
-		<pathentry kind="mac" name="__DBL_EPSILON__" path="" value="((double)2.22044604925031308085e-16L)"/>
-		<pathentry kind="mac" name="__DBL_DENORM_MIN__" path="" value="((double)4.94065645841246544177e-324L)"/>
-		<pathentry kind="mac" name="__DBL_HAS_DENORM__" path="" value="1"/>
-		<pathentry kind="mac" name="__DBL_HAS_INFINITY__" path="" value="1"/>
-		<pathentry kind="mac" name="__DBL_HAS_QUIET_NAN__" path="" value="1"/>
-		<pathentry kind="mac" name="__LDBL_MANT_DIG__" path="" value="64"/>
-		<pathentry kind="mac" name="__LDBL_DIG__" path="" value="18"/>
-		<pathentry kind="mac" name="__LDBL_MIN_EXP__" path="" value="(-16381)"/>
-		<pathentry kind="mac" name="__LDBL_MIN_10_EXP__" path="" value="(-4931)"/>
-		<pathentry kind="mac" name="__LDBL_MAX_EXP__" path="" value="16384"/>
-		<pathentry kind="mac" name="__LDBL_MAX_10_EXP__" path="" value="4932"/>
-		<pathentry kind="mac" name="__DECIMAL_DIG__" path="" value="21"/>
-		<pathentry kind="mac" name="__LDBL_MAX__" path="" value="1.18973149535723176502e+4932L"/>
-		<pathentry kind="mac" name="__LDBL_MIN__" path="" value="3.36210314311209350626e-4932L"/>
-		<pathentry kind="mac" name="__LDBL_EPSILON__" path="" value="1.08420217248550443401e-19L"/>
-		<pathentry kind="mac" name="__LDBL_DENORM_MIN__" path="" value="3.64519953188247460253e-4951L"/>
-		<pathentry kind="mac" name="__LDBL_HAS_DENORM__" path="" value="1"/>
-		<pathentry kind="mac" name="__LDBL_HAS_INFINITY__" path="" value="1"/>
-		<pathentry kind="mac" name="__LDBL_HAS_QUIET_NAN__" path="" value="1"/>
-		<pathentry kind="mac" name="__DEC32_MANT_DIG__" path="" value="7"/>
-		<pathentry kind="mac" name="__DEC32_MIN_EXP__" path="" value="(-94)"/>
-		<pathentry kind="mac" name="__DEC32_MAX_EXP__" path="" value="97"/>
-		<pathentry kind="mac" name="__DEC32_MIN__" path="" value="1E-95DF"/>
-		<pathentry kind="mac" name="__DEC32_MAX__" path="" value="9.999999E96DF"/>
-		<pathentry kind="mac" name="__DEC32_EPSILON__" path="" value="1E-6DF"/>
-		<pathentry kind="mac" name="__DEC32_SUBNORMAL_MIN__" path="" value="0.000001E-95DF"/>
-		<pathentry kind="mac" name="__DEC64_MANT_DIG__" path="" value="16"/>
-		<pathentry kind="mac" name="__DEC64_MIN_EXP__" path="" value="(-382)"/>
-		<pathentry kind="mac" name="__DEC64_MAX_EXP__" path="" value="385"/>
-		<pathentry kind="mac" name="__DEC64_MIN__" path="" value="1E-383DD"/>
-		<pathentry kind="mac" name="__DEC64_MAX__" path="" value="9.999999999999999E384DD"/>
-		<pathentry kind="mac" name="__DEC64_EPSILON__" path="" value="1E-15DD"/>
-		<pathentry kind="mac" name="__DEC64_SUBNORMAL_MIN__" path="" value="0.000000000000001E-383DD"/>
-		<pathentry kind="mac" name="__DEC128_MANT_DIG__" path="" value="34"/>
-		<pathentry kind="mac" name="__DEC128_MIN_EXP__" path="" value="(-6142)"/>
-		<pathentry kind="mac" name="__DEC128_MAX_EXP__" path="" value="6145"/>
-		<pathentry kind="mac" name="__DEC128_MIN__" path="" value="1E-6143DL"/>
-		<pathentry kind="mac" name="__DEC128_MAX__" path="" value="9.999999999999999999999999999999999E6144DL"/>
-		<pathentry kind="mac" name="__DEC128_EPSILON__" path="" value="1E-33DL"/>
-		<pathentry kind="mac" name="__DEC128_SUBNORMAL_MIN__" path="" value="0.000000000000000000000000000000001E-6143DL"/>
-		<pathentry kind="mac" name="__REGISTER_PREFIX__" path="" value=" "/>
-		<pathentry kind="mac" name="__USER_LABEL_PREFIX__" path="" value=" "/>
-		<pathentry kind="mac" name="_FORTIFY_SOURCE" path="" value="2"/>
-		<pathentry kind="mac" name="__GNUC_GNU_INLINE__" path="" value="1"/>
-		<pathentry kind="mac" name="__NO_INLINE__" path="" value="1"/>
-		<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1" path="" value="1"/>
-		<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2" path="" value="1"/>
-		<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4" path="" value="1"/>
-		<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8" path="" value="1"/>
-		<pathentry kind="mac" name="__GCC_HAVE_DWARF2_CFI_ASM" path="" value="1"/>
-		<pathentry kind="mac" name="__PRAGMA_REDEFINE_EXTNAME" path="" value="1"/>
-		<pathentry kind="mac" name="__SSP__" path="" value="1"/>
-		<pathentry kind="mac" name="__SIZEOF_INT128__" path="" value="16"/>
-		<pathentry kind="mac" name="__SIZEOF_WCHAR_T__" path="" value="4"/>
-		<pathentry kind="mac" name="__SIZEOF_WINT_T__" path="" value="4"/>
-		<pathentry kind="mac" name="__SIZEOF_PTRDIFF_T__" path="" value="8"/>
-		<pathentry kind="mac" name="__amd64" path="" value="1"/>
-		<pathentry kind="mac" name="__amd64__" path="" value="1"/>
-		<pathentry kind="mac" name="__x86_64" path="" value="1"/>
-		<pathentry kind="mac" name="__x86_64__" path="" value="1"/>
-		<pathentry kind="mac" name="__k8" path="" value="1"/>
-		<pathentry kind="mac" name="__k8__" path="" value="1"/>
-		<pathentry kind="mac" name="__MMX__" path="" value="1"/>
-		<pathentry kind="mac" name="__SSE__" path="" value="1"/>
-		<pathentry kind="mac" name="__SSE2__" path="" value="1"/>
-		<pathentry kind="mac" name="__SSE_MATH__" path="" value="1"/>
-		<pathentry kind="mac" name="__SSE2_MATH__" path="" value="1"/>
-		<pathentry kind="mac" name="__gnu_linux__" path="" value="1"/>
-		<pathentry kind="mac" name="__linux" path="" value="1"/>
-		<pathentry kind="mac" name="__linux__" path="" value="1"/>
-		<pathentry kind="mac" name="linux" path="" value="1"/>
-		<pathentry kind="mac" name="__unix" path="" value="1"/>
-		<pathentry kind="mac" name="__unix__" path="" value="1"/>
-		<pathentry kind="mac" name="unix" path="" value="1"/>
-		<pathentry kind="mac" name="__ELF__" path="" value="1"/>
-		<pathentry kind="mac" name="__DECIMAL_BID_FORMAT__" path="" value="1"/>
-		<pathentry kind="mac" name="__cplusplus" path="" value="1"/>
-		<pathentry kind="mac" name="__GNUG__" path="" value="4"/>
-		<pathentry kind="mac" name="__GXX_WEAK__" path="" value="1"/>
-		<pathentry kind="mac" name="__DEPRECATED" path="" value="1"/>
-		<pathentry kind="mac" name="__GXX_RTTI" path="" value="1"/>
-		<pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
-		<pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/include" kind="inc" path="" system="true"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/kalman/src" kind="inc" path="" system="true"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg/cpp" kind="inc" path="" system="true"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/include" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/include/opencv" kind="inc" path="" system="true"/>
-		<pathentry include="/opt/ros/groovy/include/pcl-1.6" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/eigen3" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/vtk-5.8" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/qhull" kind="inc" path="" system="true"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/msg_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/srv_gen/cpp/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/src/gtest/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/src/gtest" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/x86_64-linux-gnu" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6/x86_64-linux-gnu" kind="inc" path="" system="true"/>
-		<pathentry include="/usr/include/c++/4.6/backward" kind="inc" path="" system="true"/>
-	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
-		<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
-			<buildOutputProvider>
-				<openAction enabled="true" filePath=""/>
-				<parser enabled="true"/>
-			</buildOutputProvider>
-			<scannerInfoProvider id="specsFile">
-				<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="/home/jlurz/bin/gcc" useDefault="true"/>
-				<parser enabled="true"/>
-			</scannerInfoProvider>
-		</profile>
-		<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile">
-			<buildOutputProvider>
-				<openAction enabled="true" filePath=""/>
-				<parser enabled="true"/>
-			</buildOutputProvider>
-			<scannerInfoProvider id="makefileGenerator">
-				<runAction arguments="-f ${project_name}_scd.mk" command="/usr/bin/make" useDefault="true"/>
-				<parser enabled="true"/>
-			</scannerInfoProvider>
-		</profile>
-		<scannerConfigBuildInfo instanceId="org.eclipse.cdt.core.default.config.1">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-		<buildTargets>
-			<target name="Build" path="[Targets]/[lib] gtest" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>gtest</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[lib] gtest" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker/gtest" "/usr/bin/cmake" -P "CMakeFiles/gtest.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] position_velocity_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>position_velocity_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] position_velocity_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/position_velocity_measurer.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] multi_object_detector" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>multi_object_detector</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] multi_object_detector" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/multi_object_detector.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] fps_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>fps_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] fps_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/fps_measurer.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[lib] gtest" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>gtest</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[lib] gtest/fast" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>gtest/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[lib] gtest_main" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>gtest_main</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[lib] gtest_main/fast" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>gtest_main/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": all" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>all</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": clean" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>clean</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/gtest-all.cc.o" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest-all.cc.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/gtest-all.cc.i" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest-all.cc.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/gtest-all.cc.s" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest-all.cc.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/gtest_main.cc.o" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest_main.cc.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/gtest_main.cc.i" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest_main.cc.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/gtest_main.cc.s" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/gtest_main.cc.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] total_force_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>total_force_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] total_force_measurer" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/total_force_measurer.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] dynamic_object_detector" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>dynamic_object_detector</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] dynamic_object_detector" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/dynamic_object_detector.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[lib] gtest_main" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>gtest_main</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[lib] gtest_main" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker/gtest" "/usr/bin/cmake" -P "CMakeFiles/gtest_main.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] find_range" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>find_range</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] find_range" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/find_range.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] display_track" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>display_track</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] display_track" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/display_track.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_genaction_msgs" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_genaction_msgs</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_genmsg_cpp" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_genmsg_cpp</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_genmsg_lisp" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_genmsg_lisp</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_genmsg_py" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_genmsg_py</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_gensrv_cpp" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_gensrv_cpp</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_gensrv_lisp" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_gensrv_lisp</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": ROSBUILD_gensrv_py" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>ROSBUILD_gensrv_py</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": _catkin_empty_exported_target" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>_catkin_empty_exported_target</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": clean_test_results" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>clean_test_results</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] display_track" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>display_track</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] display_track/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>display_track/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": doxygen" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>doxygen</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] dynamic_object_detector" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>dynamic_object_detector</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] dynamic_object_detector/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>dynamic_object_detector/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] find_range" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>find_range</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] find_range/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>find_range/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] find_track_server" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>find_track_server</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] find_track_server/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>find_track_server/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] fps_measurer" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>fps_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] fps_measurer/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>fps_measurer/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": install" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>install</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": install/local" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>install/local</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": install/strip" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>install/strip</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": list_install_components" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>list_install_components</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] multi_object_detector" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>multi_object_detector</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] multi_object_detector/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>multi_object_detector/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] position_velocity_measurer" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>position_velocity_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] position_velocity_measurer/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>position_velocity_measurer/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rebuild_cache" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rebuild_cache</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rosbuild_clean-test-results" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rosbuild_clean-test-results</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rosbuild_precompile" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rosbuild_precompile</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rosbuild_premsgsrvgen" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rosbuild_premsgsrvgen</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rospack_genmsg" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rospack_genmsg</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rospack_genmsg_all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rospack_genmsg_all</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rospack_genmsg_libexe" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rospack_genmsg_libexe</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rospack_gensrv" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rospack_gensrv</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": rospack_gensrv_all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>rospack_gensrv_all</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": run_tests" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>run_tests</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": test" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>test</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": test-future" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>test-future</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": test-results" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>test-results</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": test-results-run" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>test-results-run</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": tests" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>tests</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] total_force_measurer" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>total_force_measurer</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[exe] total_force_measurer/fast" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>total_force_measurer/fast</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>all</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name=": clean" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>clean</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/display_track.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/display_track.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/display_track.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/display_track.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/display_track.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/display_track.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/dynamic_object_detector.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/dynamic_object_detector.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/dynamic_object_detector.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/dynamic_object_detector.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/dynamic_object_detector.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/dynamic_object_detector.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/find_range.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_range.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/find_range.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_range.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/find_range.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_range.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/find_track_impl.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_impl.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/find_track_impl.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_impl.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/find_track_impl.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_impl.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/find_track_server.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_server.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/find_track_server.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_server.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/find_track_server.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/find_track_server.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/fps_measurer.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/fps_measurer.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/fps_measurer.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/fps_measurer.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/fps_measurer.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/fps_measurer.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/kalman_simple.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/kalman_simple.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/kalman_simple.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/kalman_simple.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/kalman_simple.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/kalman_simple.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/multi_object_detector.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/multi_object_detector.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/multi_object_detector.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/multi_object_detector.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/multi_object_detector.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/multi_object_detector.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/position_velocity_measurer.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/position_velocity_measurer.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/position_velocity_measurer.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/position_velocity_measurer.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/position_velocity_measurer.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/position_velocity_measurer.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/pv_filter.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/pv_filter.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/pv_filter.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/pv_filter.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/pv_filter.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/pv_filter.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[obj] src/total_force_measurer.cpp.o" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/total_force_measurer.cpp.o</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[pre] src/total_force_measurer.cpp.i" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/total_force_measurer.cpp.i</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="[to asm] src/total_force_measurer.cpp.s" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-j8</buildArguments>
-				<buildTarget>src/total_force_measurer.cpp.s</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Build" path="[Targets]/[exe] find_track_server" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/make</buildCommand>
-				<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
-				<buildTarget>find_track_server</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-			<target name="Clean" path="[Targets]/[exe] find_track_server" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>/usr/bin/cmake</buildCommand>
-				<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/find_track_server.dir/cmake_clean.cmake"</buildArguments>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-		</buildTargets>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+<storageModule moduleId="org.eclipse.cdt.core.settings">
+<cconfiguration id="org.eclipse.cdt.core.default.config.1">
+<storageModule buildSystemId="org.eclipse.cdt.core.defaultConfigDataProvider" id="org.eclipse.cdt.core.default.config.1" moduleId="org.eclipse.cdt.core.settings" name="Configuration">
+<externalSettings/>
+<extensions>
+<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser">
+<attribute key="addr2line" value="addr2line"/>
+<attribute key="c++filt" value="c++filt"/>
+</extension>
+</extensions>
+</storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
+<project-mappings/>
+</storageModule>
+<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+<storageModule moduleId="org.eclipse.cdt.core.pathentry">
+<pathentry excluding="**/CMakeFiles/" kind="out" path=""/>
+<pathentry kind="mac" name="BOOST_CB_DISABLE_DEBUG" path="" value=""/>
+<pathentry kind="mac" name="__STDC__" path="" value="1"/>
+<pathentry kind="mac" name="__STDC_HOSTED__" path="" value="1"/>
+<pathentry kind="mac" name="__GNUC__" path="" value="4"/>
+<pathentry kind="mac" name="__GNUC_MINOR__" path="" value="6"/>
+<pathentry kind="mac" name="__GNUC_PATCHLEVEL__" path="" value="3"/>
+<pathentry kind="mac" name="__VERSION__" path="" value="&quot;4.6.3&quot;"/>
+<pathentry kind="mac" name="__FINITE_MATH_ONLY__" path="" value=" "/>
+<pathentry kind="mac" name="_LP64" path="" value="1"/>
+<pathentry kind="mac" name="__LP64__" path="" value="1"/>
+<pathentry kind="mac" name="__SIZEOF_INT__" path="" value="4"/>
+<pathentry kind="mac" name="__SIZEOF_LONG__" path="" value="8"/>
+<pathentry kind="mac" name="__SIZEOF_LONG_LONG__" path="" value="8"/>
+<pathentry kind="mac" name="__SIZEOF_SHORT__" path="" value="2"/>
+<pathentry kind="mac" name="__SIZEOF_FLOAT__" path="" value="4"/>
+<pathentry kind="mac" name="__SIZEOF_DOUBLE__" path="" value="8"/>
+<pathentry kind="mac" name="__SIZEOF_LONG_DOUBLE__" path="" value="16"/>
+<pathentry kind="mac" name="__SIZEOF_SIZE_T__" path="" value="8"/>
+<pathentry kind="mac" name="__CHAR_BIT__" path="" value="8"/>
+<pathentry kind="mac" name="__BIGGEST_ALIGNMENT__" path="" value="16"/>
+<pathentry kind="mac" name="__ORDER_LITTLE_ENDIAN__" path="" value="1234"/>
+<pathentry kind="mac" name="__ORDER_BIG_ENDIAN__" path="" value="4321"/>
+<pathentry kind="mac" name="__ORDER_PDP_ENDIAN__" path="" value="3412"/>
+<pathentry kind="mac" name="__BYTE_ORDER__" path="" value="__ORDER_LITTLE_ENDIAN__"/>
+<pathentry kind="mac" name="__FLOAT_WORD_ORDER__" path="" value="__ORDER_LITTLE_ENDIAN__"/>
+<pathentry kind="mac" name="__SIZEOF_POINTER__" path="" value="8"/>
+<pathentry kind="mac" name="__SIZE_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__PTRDIFF_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__WCHAR_TYPE__" path="" value="int"/>
+<pathentry kind="mac" name="__WINT_TYPE__" path="" value="unsigned int"/>
+<pathentry kind="mac" name="__INTMAX_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__UINTMAX_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__CHAR16_TYPE__" path="" value="short unsigned int"/>
+<pathentry kind="mac" name="__CHAR32_TYPE__" path="" value="unsigned int"/>
+<pathentry kind="mac" name="__SIG_ATOMIC_TYPE__" path="" value="int"/>
+<pathentry kind="mac" name="__INT8_TYPE__" path="" value="signed char"/>
+<pathentry kind="mac" name="__INT16_TYPE__" path="" value="short int"/>
+<pathentry kind="mac" name="__INT32_TYPE__" path="" value="int"/>
+<pathentry kind="mac" name="__INT64_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__UINT8_TYPE__" path="" value="unsigned char"/>
+<pathentry kind="mac" name="__UINT16_TYPE__" path="" value="short unsigned int"/>
+<pathentry kind="mac" name="__UINT32_TYPE__" path="" value="unsigned int"/>
+<pathentry kind="mac" name="__UINT64_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__INT_LEAST8_TYPE__" path="" value="signed char"/>
+<pathentry kind="mac" name="__INT_LEAST16_TYPE__" path="" value="short int"/>
+<pathentry kind="mac" name="__INT_LEAST32_TYPE__" path="" value="int"/>
+<pathentry kind="mac" name="__INT_LEAST64_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__UINT_LEAST8_TYPE__" path="" value="unsigned char"/>
+<pathentry kind="mac" name="__UINT_LEAST16_TYPE__" path="" value="short unsigned int"/>
+<pathentry kind="mac" name="__UINT_LEAST32_TYPE__" path="" value="unsigned int"/>
+<pathentry kind="mac" name="__UINT_LEAST64_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__INT_FAST8_TYPE__" path="" value="signed char"/>
+<pathentry kind="mac" name="__INT_FAST16_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__INT_FAST32_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__INT_FAST64_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__UINT_FAST8_TYPE__" path="" value="unsigned char"/>
+<pathentry kind="mac" name="__UINT_FAST16_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__UINT_FAST32_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__UINT_FAST64_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__INTPTR_TYPE__" path="" value="long int"/>
+<pathentry kind="mac" name="__UINTPTR_TYPE__" path="" value="long unsigned int"/>
+<pathentry kind="mac" name="__GXX_ABI_VERSION" path="" value="1002"/>
+<pathentry kind="mac" name="__SCHAR_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__SHRT_MAX__" path="" value="32767"/>
+<pathentry kind="mac" name="__INT_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__LONG_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__LONG_LONG_MAX__" path="" value="9223372036854775807LL"/>
+<pathentry kind="mac" name="__WCHAR_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__WCHAR_MIN__" path="" value="(-__WCHAR_MAX__ - 1)"/>
+<pathentry kind="mac" name="__WINT_MAX__" path="" value="4294967295U"/>
+<pathentry kind="mac" name="__WINT_MIN__" path="" value="0U"/>
+<pathentry kind="mac" name="__PTRDIFF_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__SIZE_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INTMAX_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INTMAX_C(c)" path="" value="c ## L"/>
+<pathentry kind="mac" name="__UINTMAX_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINTMAX_C(c)" path="" value="c ## UL"/>
+<pathentry kind="mac" name="__SIG_ATOMIC_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__SIG_ATOMIC_MIN__" path="" value="(-__SIG_ATOMIC_MAX__ - 1)"/>
+<pathentry kind="mac" name="__INT8_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__INT16_MAX__" path="" value="32767"/>
+<pathentry kind="mac" name="__INT32_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__INT64_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINT8_MAX__" path="" value="255"/>
+<pathentry kind="mac" name="__UINT16_MAX__" path="" value="65535"/>
+<pathentry kind="mac" name="__UINT32_MAX__" path="" value="4294967295U"/>
+<pathentry kind="mac" name="__UINT64_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INT_LEAST8_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__INT8_C(c)" path="" value="c"/>
+<pathentry kind="mac" name="__INT_LEAST16_MAX__" path="" value="32767"/>
+<pathentry kind="mac" name="__INT16_C(c)" path="" value="c"/>
+<pathentry kind="mac" name="__INT_LEAST32_MAX__" path="" value="2147483647"/>
+<pathentry kind="mac" name="__INT32_C(c)" path="" value="c"/>
+<pathentry kind="mac" name="__INT_LEAST64_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INT64_C(c)" path="" value="c ## L"/>
+<pathentry kind="mac" name="__UINT_LEAST8_MAX__" path="" value="255"/>
+<pathentry kind="mac" name="__UINT8_C(c)" path="" value="c"/>
+<pathentry kind="mac" name="__UINT_LEAST16_MAX__" path="" value="65535"/>
+<pathentry kind="mac" name="__UINT16_C(c)" path="" value="c"/>
+<pathentry kind="mac" name="__UINT_LEAST32_MAX__" path="" value="4294967295U"/>
+<pathentry kind="mac" name="__UINT32_C(c)" path="" value="c ## U"/>
+<pathentry kind="mac" name="__UINT_LEAST64_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINT64_C(c)" path="" value="c ## UL"/>
+<pathentry kind="mac" name="__INT_FAST8_MAX__" path="" value="127"/>
+<pathentry kind="mac" name="__INT_FAST16_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INT_FAST32_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__INT_FAST64_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINT_FAST8_MAX__" path="" value="255"/>
+<pathentry kind="mac" name="__UINT_FAST16_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINT_FAST32_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__UINT_FAST64_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__INTPTR_MAX__" path="" value="9223372036854775807L"/>
+<pathentry kind="mac" name="__UINTPTR_MAX__" path="" value="18446744073709551615UL"/>
+<pathentry kind="mac" name="__FLT_EVAL_METHOD__" path="" value=" "/>
+<pathentry kind="mac" name="__DEC_EVAL_METHOD__" path="" value="2"/>
+<pathentry kind="mac" name="__FLT_RADIX__" path="" value="2"/>
+<pathentry kind="mac" name="__FLT_MANT_DIG__" path="" value="24"/>
+<pathentry kind="mac" name="__FLT_DIG__" path="" value="6"/>
+<pathentry kind="mac" name="__FLT_MIN_EXP__" path="" value="(-125)"/>
+<pathentry kind="mac" name="__FLT_MIN_10_EXP__" path="" value="(-37)"/>
+<pathentry kind="mac" name="__FLT_MAX_EXP__" path="" value="128"/>
+<pathentry kind="mac" name="__FLT_MAX_10_EXP__" path="" value="38"/>
+<pathentry kind="mac" name="__FLT_DECIMAL_DIG__" path="" value="9"/>
+<pathentry kind="mac" name="__FLT_MAX__" path="" value="3.40282346638528859812e+38F"/>
+<pathentry kind="mac" name="__FLT_MIN__" path="" value="1.17549435082228750797e-38F"/>
+<pathentry kind="mac" name="__FLT_EPSILON__" path="" value="1.19209289550781250000e-7F"/>
+<pathentry kind="mac" name="__FLT_DENORM_MIN__" path="" value="1.40129846432481707092e-45F"/>
+<pathentry kind="mac" name="__FLT_HAS_DENORM__" path="" value="1"/>
+<pathentry kind="mac" name="__FLT_HAS_INFINITY__" path="" value="1"/>
+<pathentry kind="mac" name="__FLT_HAS_QUIET_NAN__" path="" value="1"/>
+<pathentry kind="mac" name="__DBL_MANT_DIG__" path="" value="53"/>
+<pathentry kind="mac" name="__DBL_DIG__" path="" value="15"/>
+<pathentry kind="mac" name="__DBL_MIN_EXP__" path="" value="(-1021)"/>
+<pathentry kind="mac" name="__DBL_MIN_10_EXP__" path="" value="(-307)"/>
+<pathentry kind="mac" name="__DBL_MAX_EXP__" path="" value="1024"/>
+<pathentry kind="mac" name="__DBL_MAX_10_EXP__" path="" value="308"/>
+<pathentry kind="mac" name="__DBL_DECIMAL_DIG__" path="" value="17"/>
+<pathentry kind="mac" name="__DBL_MAX__" path="" value="((double)1.79769313486231570815e+308L)"/>
+<pathentry kind="mac" name="__DBL_MIN__" path="" value="((double)2.22507385850720138309e-308L)"/>
+<pathentry kind="mac" name="__DBL_EPSILON__" path="" value="((double)2.22044604925031308085e-16L)"/>
+<pathentry kind="mac" name="__DBL_DENORM_MIN__" path="" value="((double)4.94065645841246544177e-324L)"/>
+<pathentry kind="mac" name="__DBL_HAS_DENORM__" path="" value="1"/>
+<pathentry kind="mac" name="__DBL_HAS_INFINITY__" path="" value="1"/>
+<pathentry kind="mac" name="__DBL_HAS_QUIET_NAN__" path="" value="1"/>
+<pathentry kind="mac" name="__LDBL_MANT_DIG__" path="" value="64"/>
+<pathentry kind="mac" name="__LDBL_DIG__" path="" value="18"/>
+<pathentry kind="mac" name="__LDBL_MIN_EXP__" path="" value="(-16381)"/>
+<pathentry kind="mac" name="__LDBL_MIN_10_EXP__" path="" value="(-4931)"/>
+<pathentry kind="mac" name="__LDBL_MAX_EXP__" path="" value="16384"/>
+<pathentry kind="mac" name="__LDBL_MAX_10_EXP__" path="" value="4932"/>
+<pathentry kind="mac" name="__DECIMAL_DIG__" path="" value="21"/>
+<pathentry kind="mac" name="__LDBL_MAX__" path="" value="1.18973149535723176502e+4932L"/>
+<pathentry kind="mac" name="__LDBL_MIN__" path="" value="3.36210314311209350626e-4932L"/>
+<pathentry kind="mac" name="__LDBL_EPSILON__" path="" value="1.08420217248550443401e-19L"/>
+<pathentry kind="mac" name="__LDBL_DENORM_MIN__" path="" value="3.64519953188247460253e-4951L"/>
+<pathentry kind="mac" name="__LDBL_HAS_DENORM__" path="" value="1"/>
+<pathentry kind="mac" name="__LDBL_HAS_INFINITY__" path="" value="1"/>
+<pathentry kind="mac" name="__LDBL_HAS_QUIET_NAN__" path="" value="1"/>
+<pathentry kind="mac" name="__DEC32_MANT_DIG__" path="" value="7"/>
+<pathentry kind="mac" name="__DEC32_MIN_EXP__" path="" value="(-94)"/>
+<pathentry kind="mac" name="__DEC32_MAX_EXP__" path="" value="97"/>
+<pathentry kind="mac" name="__DEC32_MIN__" path="" value="1E-95DF"/>
+<pathentry kind="mac" name="__DEC32_MAX__" path="" value="9.999999E96DF"/>
+<pathentry kind="mac" name="__DEC32_EPSILON__" path="" value="1E-6DF"/>
+<pathentry kind="mac" name="__DEC32_SUBNORMAL_MIN__" path="" value="0.000001E-95DF"/>
+<pathentry kind="mac" name="__DEC64_MANT_DIG__" path="" value="16"/>
+<pathentry kind="mac" name="__DEC64_MIN_EXP__" path="" value="(-382)"/>
+<pathentry kind="mac" name="__DEC64_MAX_EXP__" path="" value="385"/>
+<pathentry kind="mac" name="__DEC64_MIN__" path="" value="1E-383DD"/>
+<pathentry kind="mac" name="__DEC64_MAX__" path="" value="9.999999999999999E384DD"/>
+<pathentry kind="mac" name="__DEC64_EPSILON__" path="" value="1E-15DD"/>
+<pathentry kind="mac" name="__DEC64_SUBNORMAL_MIN__" path="" value="0.000000000000001E-383DD"/>
+<pathentry kind="mac" name="__DEC128_MANT_DIG__" path="" value="34"/>
+<pathentry kind="mac" name="__DEC128_MIN_EXP__" path="" value="(-6142)"/>
+<pathentry kind="mac" name="__DEC128_MAX_EXP__" path="" value="6145"/>
+<pathentry kind="mac" name="__DEC128_MIN__" path="" value="1E-6143DL"/>
+<pathentry kind="mac" name="__DEC128_MAX__" path="" value="9.999999999999999999999999999999999E6144DL"/>
+<pathentry kind="mac" name="__DEC128_EPSILON__" path="" value="1E-33DL"/>
+<pathentry kind="mac" name="__DEC128_SUBNORMAL_MIN__" path="" value="0.000000000000000000000000000000001E-6143DL"/>
+<pathentry kind="mac" name="__REGISTER_PREFIX__" path="" value=" "/>
+<pathentry kind="mac" name="__USER_LABEL_PREFIX__" path="" value=" "/>
+<pathentry kind="mac" name="_FORTIFY_SOURCE" path="" value="2"/>
+<pathentry kind="mac" name="__GNUC_GNU_INLINE__" path="" value="1"/>
+<pathentry kind="mac" name="__NO_INLINE__" path="" value="1"/>
+<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_1" path="" value="1"/>
+<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_2" path="" value="1"/>
+<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4" path="" value="1"/>
+<pathentry kind="mac" name="__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8" path="" value="1"/>
+<pathentry kind="mac" name="__GCC_HAVE_DWARF2_CFI_ASM" path="" value="1"/>
+<pathentry kind="mac" name="__PRAGMA_REDEFINE_EXTNAME" path="" value="1"/>
+<pathentry kind="mac" name="__SSP__" path="" value="1"/>
+<pathentry kind="mac" name="__SIZEOF_INT128__" path="" value="16"/>
+<pathentry kind="mac" name="__SIZEOF_WCHAR_T__" path="" value="4"/>
+<pathentry kind="mac" name="__SIZEOF_WINT_T__" path="" value="4"/>
+<pathentry kind="mac" name="__SIZEOF_PTRDIFF_T__" path="" value="8"/>
+<pathentry kind="mac" name="__amd64" path="" value="1"/>
+<pathentry kind="mac" name="__amd64__" path="" value="1"/>
+<pathentry kind="mac" name="__x86_64" path="" value="1"/>
+<pathentry kind="mac" name="__x86_64__" path="" value="1"/>
+<pathentry kind="mac" name="__k8" path="" value="1"/>
+<pathentry kind="mac" name="__k8__" path="" value="1"/>
+<pathentry kind="mac" name="__MMX__" path="" value="1"/>
+<pathentry kind="mac" name="__SSE__" path="" value="1"/>
+<pathentry kind="mac" name="__SSE2__" path="" value="1"/>
+<pathentry kind="mac" name="__SSE_MATH__" path="" value="1"/>
+<pathentry kind="mac" name="__SSE2_MATH__" path="" value="1"/>
+<pathentry kind="mac" name="__gnu_linux__" path="" value="1"/>
+<pathentry kind="mac" name="__linux" path="" value="1"/>
+<pathentry kind="mac" name="__linux__" path="" value="1"/>
+<pathentry kind="mac" name="linux" path="" value="1"/>
+<pathentry kind="mac" name="__unix" path="" value="1"/>
+<pathentry kind="mac" name="__unix__" path="" value="1"/>
+<pathentry kind="mac" name="unix" path="" value="1"/>
+<pathentry kind="mac" name="__ELF__" path="" value="1"/>
+<pathentry kind="mac" name="__DECIMAL_BID_FORMAT__" path="" value="1"/>
+<pathentry kind="mac" name="__cplusplus" path="" value="1"/>
+<pathentry kind="mac" name="__GNUG__" path="" value="4"/>
+<pathentry kind="mac" name="__GXX_WEAK__" path="" value="1"/>
+<pathentry kind="mac" name="__DEPRECATED" path="" value="1"/>
+<pathentry kind="mac" name="__GXX_RTTI" path="" value="1"/>
+<pathentry kind="mac" name="__EXCEPTIONS" path="" value="1"/>
+<pathentry kind="mac" name="_GNU_SOURCE" path="" value="1"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/include" kind="inc" path="" system="true"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/kalman/src" kind="inc" path="" system="true"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg/cpp" kind="inc" path="" system="true"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/cmvision/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/arm_navigation/arm_navigation_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/pr2_controllers/pr2_controllers_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/stacks/simulator_gazebo/gazebo_msgs/srv_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/include" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/include/opencv" kind="inc" path="" system="true"/>
+<pathentry include="/opt/ros/groovy/include/pcl-1.6" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/eigen3" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/vtk-5.8" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/qhull" kind="inc" path="" system="true"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/msg_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/home/jlurz/ros_workspace/litterbox_project/position_tracker/srv_gen/cpp/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/src/gtest/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/src/gtest" kind="inc" path="" system="true"/>
+<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/local/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/lib/gcc/x86_64-linux-gnu/4.6/include-fixed" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/x86_64-linux-gnu" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.6" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.6/x86_64-linux-gnu" kind="inc" path="" system="true"/>
+<pathentry include="/usr/include/c++/4.6/backward" kind="inc" path="" system="true"/>
+</storageModule>
+<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+<buildTargets>
+<target name=": ROSBUILD_genaction_msgs" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_genaction_msgs</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_genmsg_cpp" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_genmsg_cpp</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_genmsg_lisp" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_genmsg_lisp</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_genmsg_py" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_genmsg_py</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_gensrv_cpp" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_gensrv_cpp</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_gensrv_lisp" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_gensrv_lisp</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": ROSBUILD_gensrv_py" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>ROSBUILD_gensrv_py</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": _catkin_empty_exported_target" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>_catkin_empty_exported_target</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean_test_results" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>clean_test_results</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] display_track" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>display_track</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] display_track/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>display_track/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] display_track" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>display_track</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] display_track" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/display_track.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": doxygen" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>doxygen</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] dynamic_object_detector" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>dynamic_object_detector</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] dynamic_object_detector/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>dynamic_object_detector/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] dynamic_object_detector" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>dynamic_object_detector</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] dynamic_object_detector" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/dynamic_object_detector.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] find_range" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>find_range</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] find_range/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>find_range/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] find_range" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>find_range</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] find_range" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/find_range.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] find_track_server" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>find_track_server</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] find_track_server/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>find_track_server/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] find_track_server" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>find_track_server</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] find_track_server" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/find_track_server.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] fps_measurer" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>fps_measurer</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] fps_measurer/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>fps_measurer/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] fps_measurer" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>fps_measurer</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] fps_measurer" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/fps_measurer.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": install" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>install</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": install/local" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>install/local</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": install/strip" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>install/strip</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": list_install_components" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>list_install_components</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] multi_object_detector" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>multi_object_detector</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] multi_object_detector/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>multi_object_detector/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] multi_object_detector" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>multi_object_detector</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] multi_object_detector" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/multi_object_detector.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] position_velocity_measurer" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>position_velocity_measurer</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[exe] position_velocity_measurer/fast" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>position_velocity_measurer/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[exe] position_velocity_measurer" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>position_velocity_measurer</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[exe] position_velocity_measurer" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker" "/usr/bin/cmake" -P "CMakeFiles/position_velocity_measurer.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rebuild_cache" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rebuild_cache</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rosbuild_clean-test-results" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rosbuild_clean-test-results</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rosbuild_precompile" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rosbuild_precompile</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rosbuild_premsgsrvgen" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rosbuild_premsgsrvgen</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rospack_genmsg" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rospack_genmsg</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rospack_genmsg_all" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rospack_genmsg_all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rospack_genmsg_libexe" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rospack_genmsg_libexe</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rospack_gensrv" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rospack_gensrv</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": rospack_gensrv_all" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>rospack_gensrv_all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": run_tests" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>run_tests</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": test" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>test</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": test-future" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>test-future</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": test-results" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>test-results</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": test-results-run" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>test-results-run</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": tests" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>tests</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/display_track.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/display_track.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/display_track.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/display_track.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/display_track.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/display_track.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/dynamic_object_detector.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/dynamic_object_detector.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/dynamic_object_detector.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/dynamic_object_detector.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/dynamic_object_detector.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/dynamic_object_detector.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/find_range.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_range.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/find_range.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_range.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/find_range.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_range.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/find_track_impl.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_impl.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/find_track_impl.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_impl.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/find_track_impl.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_impl.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/find_track_server.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_server.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/find_track_server.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_server.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/find_track_server.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/find_track_server.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/fps_measurer.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/fps_measurer.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/fps_measurer.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/fps_measurer.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/fps_measurer.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/fps_measurer.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/kalman_simple.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/kalman_simple.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/kalman_simple.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/kalman_simple.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/kalman_simple.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/kalman_simple.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/multi_object_detector.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/multi_object_detector.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/multi_object_detector.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/multi_object_detector.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/multi_object_detector.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/multi_object_detector.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/position_velocity_measurer.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/position_velocity_measurer.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/position_velocity_measurer.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/position_velocity_measurer.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/position_velocity_measurer.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/position_velocity_measurer.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/pv_filter.cpp.o" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/pv_filter.cpp.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/pv_filter.cpp.i" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/pv_filter.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/pv_filter.cpp.s" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/pv_filter.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] gtest" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>gtest</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] gtest/fast" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>gtest/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[lib] gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>gtest</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[lib] gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker/gtest" "/usr/bin/cmake" -P "CMakeFiles/gtest.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] gtest_main" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>gtest_main</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] gtest_main/fast" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>gtest_main/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Build" path="[Targets]/[lib] gtest_main" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-C "/home/jlurz/ros_workspace/litterbox_project/position_tracker" -j8</buildArguments>
+<buildTarget>gtest_main</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="Clean" path="[Targets]/[lib] gtest_main" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/cmake</buildCommand>
+<buildArguments>-E chdir "/home/jlurz/ros_workspace/litterbox_project/position_tracker/gtest" "/usr/bin/cmake" -P "CMakeFiles/gtest_main.dir/cmake_clean.cmake"</buildArguments>
+<buildTarget></buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/gtest-all.cc.o" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest-all.cc.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/gtest-all.cc.i" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest-all.cc.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/gtest-all.cc.s" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest-all.cc.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] src/gtest_main.cc.o" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest_main.cc.o</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] src/gtest_main.cc.i" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest_main.cc.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] src/gtest_main.cc.s" path="gtest" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>/usr/bin/make</buildCommand>
+<buildArguments>-j8</buildArguments>
+<buildTarget>src/gtest_main.cc.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+</buildTargets>
+</storageModule>
+<storageModule moduleId="scannerConfiguration">
+<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
+<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
+<buildOutputProvider>
+<openAction enabled="true" filePath=""/>
+<parser enabled="true"/>
+</buildOutputProvider>
+<scannerInfoProvider id="specsFile">
+<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="/home/jlurz/bin/gcc" useDefault="true"/>
+<parser enabled="true"/>
+</scannerInfoProvider>
+</profile>
+<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerFileProfile">
+<buildOutputProvider>
+<openAction enabled="true" filePath=""/>
+<parser enabled="true"/>
+</buildOutputProvider>
+<scannerInfoProvider id="makefileGenerator">
+<runAction arguments="-f ${project_name}_scd.mk" command="/usr/bin/make" useDefault="true"/>
+<parser enabled="true"/>
+</scannerInfoProvider>
+</profile>
+</storageModule>
+</cconfiguration>
+</storageModule>
+<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+<project id="position_tracker.null.1" name="position_tracker"/>
+</storageModule>
 </cproject>
