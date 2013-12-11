@@ -103,7 +103,7 @@ class MultiObjectDetector {
       
       // Listen for the depth messages
       if(depthPointsSub.get() == NULL){
-        depthPointsSub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh, "/wide_stereo/left/points", 3));
+        depthPointsSub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh, "/points", 3));
       }
       else {
         depthPointsSub->subscribe();
@@ -130,7 +130,8 @@ class MultiObjectDetector {
         publish(objects);
         return;
       }
-      
+
+      assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
       PointCloudXYZ depthCloud;
       fromROSMsg(*depthPointsMsg, depthCloud);
 
@@ -143,9 +144,9 @@ class MultiObjectDetector {
         return;
       }
 
-      // Iterate over each detected blob and determine it's centroid.
-      if(!tf.waitForTransform("/base_footprint", "/wide_stereo_optical_frame", depthPointsMsg->header.stamp, ros::Duration(5.0))){
-        ROS_WARN("Transform from wide_stereo_optical_frame to base_footprint is not yet available");
+      // Iterate over each detected blob and determine its centroid.
+      if(!tf.waitForTransform("/base_footprint", blobsMsg->header.frame_id, depthPointsMsg->header.stamp, ros::Duration(5.0))){
+        ROS_WARN("Transform from %s to base_footprint is not yet available", blobsMsg->header.frame_id.c_str());
         return;
       }
 
@@ -155,7 +156,7 @@ class MultiObjectDetector {
 
         // Convert the centroid to a point stamped
         geometry_msgs::PointStamped resultPoint;
-        resultPoint.header.frame_id = "wide_stereo_optical_frame";
+        resultPoint.header.frame_id = blobsMsg->header.frame_id;
         resultPoint.header.stamp = depthPointsMsg->header.stamp;
 
         // Convert the centroid to a geometry msg point
@@ -210,6 +211,7 @@ class MultiObjectDetector {
    }
 
    const vector<PointIndices> splitBlobs(const PointCloudXYZ depthCloud, const cmvision::BlobsConstPtr blobsMsg, PointCloudXYZPtr& allBlobsOut){
+
        // Iterate over all the blobs and create a single cloud of all points.
        // We will subdivide this blob again later.
        PointCloudXYZPtr allBlobs(new PointCloudXYZ);
@@ -222,8 +224,14 @@ class MultiObjectDetector {
 
           for(unsigned int i = blob.left; i <= blob.right; ++i){
             for(unsigned int j = blob.top; j <= blob.bottom; ++j){
-              PointXYZ point = depthCloud.points.at(j * blobsMsg->image_width + i);
-              allBlobs->points.push_back(point);
+                unsigned int index = j * blobsMsg->image_width + i;
+                if(index >= depthCloud.points.size()){
+                    ROS_WARN("Depth cloud does not contain point for index %u", index);
+                }
+                else {
+                    PointXYZ point = depthCloud.points.at(index);
+                    allBlobs->points.push_back(point);
+                }
             }
           }
       }
