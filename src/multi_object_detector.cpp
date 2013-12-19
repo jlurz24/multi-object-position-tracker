@@ -131,6 +131,8 @@ class MultiObjectDetector {
         return;
       }
 
+      ROS_DEBUG("Depth points frame is %s and blobsMsg frame is %s",
+              depthPointsMsg->header.frame_id.c_str(), blobsMsg->header.frame_id.c_str());
       assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
       PointCloudXYZ depthCloud;
       fromROSMsg(*depthPointsMsg, depthCloud);
@@ -188,7 +190,7 @@ class MultiObjectDetector {
      for(unsigned int i = 0; i < objects->positions.size(); ++i){
        visualization_msgs::Marker marker;
        marker.id = i;
-       marker.ns = "multi_object_detector";
+       marker.ns = "multi_object_detector/" + nh.resolveName("/blobs");
        marker.action = visualization_msgs::Marker::ADD;
        marker.type = visualization_msgs::Marker::SPHERE;
        marker.header = objects->positions[i].header;
@@ -254,8 +256,10 @@ class MultiObjectDetector {
       pcl::removeNaNFromPointCloud(*allBlobs, *allBlobs, removedIndices);
       if(allBlobs->size() == 0){
           ROS_INFO("No remaining blob points after removing NaNs");
-          std::vector<PointIndices>();
+          return std::vector<PointIndices>();
       }
+      ROS_INFO("Points available for blob position. Extracting clusters.");
+
       // Creating the KdTree object for the search method of the extraction
       std::vector<PointIndices> clusterIndices;
       EuclideanClusterExtraction<PointXYZ> ec;
