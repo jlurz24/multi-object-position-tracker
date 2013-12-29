@@ -260,7 +260,7 @@ class MultiObjectDetector {
       }
       ROS_INFO("Points available for blob position. Extracting clusters.");
 
-      // Creating the KdTree object for the search method of the extraction
+      // Creating the KdTree was much slower than direct cluster extraction.
       std::vector<PointIndices> clusterIndices;
       EuclideanClusterExtraction<PointXYZ> ec;
       ec.setClusterTolerance(clusterDistanceTolerance);
