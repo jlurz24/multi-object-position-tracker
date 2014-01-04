@@ -240,7 +240,6 @@ class MultiObjectDetector {
                 }
                 else {
                     PointXYZ point = depthCloud.points.at(index);
-                    ROS_INFO("Extracted point x %f y %f z %f at index %u", point.x, point.y, point.z, index);
                     allBlobs->points.push_back(point);
                 }
             }
