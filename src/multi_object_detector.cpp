@@ -147,8 +147,10 @@ class MultiObjectDetector {
       }
 
       // Iterate over each detected blob and determine its centroid.
-      if(!tf.waitForTransform("/base_footprint", blobsMsg->header.frame_id, depthPointsMsg->header.stamp, ros::Duration(5.0))){
-        ROS_WARN("Transform from %s to base_footprint is not yet available", blobsMsg->header.frame_id.c_str());
+      const string& depthPointsFrame = depthPointsMsg->header.frame_id;
+
+      if(!tf.waitForTransform("/base_footprint", depthPointsFrame, depthPointsMsg->header.stamp, ros::Duration(5.0))){
+        ROS_WARN("Transform from %s to base_footprint is not yet available", depthPointsFrame.c_str());
         return;
       }
 
@@ -158,10 +160,12 @@ class MultiObjectDetector {
 
         // Convert the centroid to a point stamped
         geometry_msgs::PointStamped resultPoint;
-        resultPoint.header.frame_id = blobsMsg->header.frame_id;
+        resultPoint.header.frame_id = depthPointsFrame;
         resultPoint.header.stamp = depthPointsMsg->header.stamp;
 
         // Convert the centroid to a geometry msg point
+        ROS_DEBUG("Computed centroid in frame %s with coordinates %f, %f, %f", depthPointsMsg->header.frame_id.c_str(), centroid[0], centroid[1], centroid[2]);
+
         resultPoint.point.x = centroid[0];
         resultPoint.point.y = centroid[1];
         resultPoint.point.z = centroid[2];
@@ -170,6 +174,7 @@ class MultiObjectDetector {
         resultPointMap.header.frame_id = "/base_footprint";
         resultPointMap.header.stamp = depthPointsMsg->header.stamp;
         tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
+        ROS_DEBUG("Transformed centroid to frame %s with coordinates %f %f %f", resultPointMap.header.frame_id.c_str(), resultPointMap.point.x, resultPointMap.point.y, resultPointMap.point.z);
         objects->positions.push_back(resultPointMap);
      }
      publish(objects);
@@ -217,21 +222,25 @@ class MultiObjectDetector {
        // Iterate over all the blobs and create a single cloud of all points.
        // We will subdivide this blob again later.
        PointCloudXYZPtr allBlobs(new PointCloudXYZ);
-       
+       ROS_DEBUG("Blobs message has %lu blobs", blobsMsg->blobs.size());
        for(unsigned int k = 0; k < blobsMsg->blobs.size(); ++k){
           const cmvision::Blob blob = blobsMsg->blobs[k];
           if(objectName.size() > 0 && objectName != blob.colorName){
+            ROS_DEBUG("Skipping blob named %s as it does not match", objectName.c_str());
             continue;
           }
 
-          for(unsigned int i = blob.left; i <= blob.right; ++i){
-            for(unsigned int j = blob.top; j <= blob.bottom; ++j){
+          ROS_DEBUG("Blob image dimensions. Left %u right %u top %u bottom %u width %u height %u", blob.left, blob.right, blob.top, blob.bottom, blobsMsg->image_width, blobsMsg->image_height);
+          assert(depthCloud.points.size() == blobsMsg->image_width * blobsMsg->image_height);
+          for(unsigned int j = blob.top; j <= blob.bottom; ++j){
+            for(unsigned int i = blob.left; i <= blob.right; ++i){
                 unsigned int index = j * blobsMsg->image_width + i;
                 if(index >= depthCloud.points.size()){
                     ROS_WARN("Depth cloud does not contain point for index %u", index);
                 }
                 else {
                     PointXYZ point = depthCloud.points.at(index);
+                    ROS_INFO("Extracted point x %f y %f z %f at index %u", point.x, point.y, point.z, index);
                     allBlobs->points.push_back(point);
                 }
             }
@@ -258,7 +267,7 @@ class MultiObjectDetector {
           ROS_INFO("No remaining blob points after removing NaNs");
           return std::vector<PointIndices>();
       }
-      ROS_INFO("Points available for blob position. Extracting clusters.");
+      ROS_DEBUG("Points available for blob position. Extracting clusters.");
 
       // Creating the KdTree was much slower than direct cluster extraction.
       std::vector<PointIndices> clusterIndices;
@@ -268,6 +277,7 @@ class MultiObjectDetector {
       ec.setMaxClusterSize(maxClusterSize);
       ec.setInputCloud(allBlobs);
       ec.extract(clusterIndices);
+      ROS_DEBUG("Extracted %lu clusters from blobs", clusterIndices.size());
       allBlobsOut = allBlobs;
       return clusterIndices;
     }
