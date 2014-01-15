@@ -23,8 +23,12 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_check_for_sse()
 
-#Eigen required    
+# find_library(PROFILER_LIBRARY NAMES profiler PATHS /usr/lib)
+#Eigen required
 find_package(Eigen REQUIRED)
+set(Gperftools_DIR .)
+find_package(Gperftools REQUIRED)
+
 include_directories(${EIGEN_INCLUDE_DIRS})
 
 #uncomment if you have defined messages
@@ -33,11 +37,11 @@ rosbuild_genmsg()
 rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
 rosbuild_add_boost_directories()
 rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp src/kalman_simple.cpp src/pv_filter.cpp)
 rosbuild_add_executable(multi_object_detector src/multi_object_detector.cpp)
+target_link_libraries(multi_object_detector ${GPERFTOOLS_TCMALLOC_AND_PROFILER})
+
 rosbuild_add_executable(position_velocity_measurer src/position_velocity_measurer.cpp)
 rosbuild_add_executable(fps_measurer src/fps_measurer.cpp)
 rosbuild_add_executable(display_track src/display_track.cpp src/find_track_impl.cpp)
@@ -49,4 +53,3 @@ rosbuild_link_boost(dynamic_object_detector signals)
 rosbuild_link_boost(position_velocity_measurer signals)
 rosbuild_link_boost(fps_measurer signals)
 rosbuild_link_boost(find_track_server signals)
-#target_link_libraries(example ${PROJECT_NAME})

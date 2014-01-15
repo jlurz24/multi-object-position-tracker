@@ -22,6 +22,9 @@
 #include <tf2/LinearMath/btVector3.h>
 #include <geometry_msgs/Vector3Stamped.h>
 #include <limits>
+#include <google/profiler.h>
+
+#define ENABLE_PROFILING 0
 
 using namespace std;
 using namespace pcl;
@@ -124,7 +127,7 @@ private:
 
         if (blobsSub.get() == NULL) {
             // Listen for message from cm vision when it sees an object.
-            blobsSub.reset(new message_filters::Subscriber<cmvision::Blobs>(nh, "/blobs", 1));
+            blobsSub.reset(new message_filters::Subscriber<cmvision::Blobs>(nh, "/blobs", 10));
         }
         else {
             blobsSub->subscribe();
@@ -153,7 +156,7 @@ private:
             if (cameraInfoSub.get() == NULL) {
                 cameraInfoSub.reset(
                         new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh,
-                                "/camera_info_in", 3));
+                                "/camera_info_in", 10));
             }
             else {
                 cameraInfoSub->subscribe();
@@ -201,71 +204,63 @@ private:
         cameraModel.fromCameraInfo(*cameraInfo);
 
         // Lookup the translation from the ground to the camera
-        //tf.waitForTransform()
-
-        // Calculate the ground normal
-        geometry_msgs::Vector3Stamped groundNormalInBaseFrame;
-        groundNormalInBaseFrame.header.frame_id = "/base_footprint";
-        groundNormalInBaseFrame.header.stamp = cameraModel.stamp();
-        groundNormalInBaseFrame.vector.x = 0;
-        groundNormalInBaseFrame.vector.y = 0;
-        groundNormalInBaseFrame.vector.z = 1.0;
-
-        geometry_msgs::Vector3Stamped groundNormal;
-        if (!tf.waitForTransform(cameraModel.tfFrame(), groundNormalInBaseFrame.header.frame_id,
-                cameraModel.stamp(), ros::Duration(5))) {
-            ROS_WARN("Failed to get transform");
-            return;
+        tf.waitForTransform(cameraInfo->header.frame_id, "/base_footprint", blobsMsg->header.stamp, ros::Duration(5.0));
+        tf::StampedTransform cameraOrigin;
+        try {
+          tf.lookupTransform("/base_footprint", cameraInfo->header.frame_id, cameraInfo->header.stamp, cameraOrigin);
+        }
+        catch(tf::TransformException& e){
+          ROS_WARN("Failed to lookup transform: %s", e.what());
+          return;
         }
 
-        tf.transformVector(cameraModel.tfFrame(), groundNormalInBaseFrame, groundNormal);
-
-        // Calculate the center point
-        geometry_msgs::PointStamped groundOriginInBaseFrame;
-        groundOriginInBaseFrame.header.frame_id = "/base_footprint";
-        groundOriginInBaseFrame.header.stamp = cameraModel.stamp();
-        groundOriginInBaseFrame.point.z = dogHeight / 2.0;
-        geometry_msgs::PointStamped groundOrigin;
-        tf.transformPoint(cameraModel.tfFrame(), groundOriginInBaseFrame, groundOrigin);
-
-        btVector3 groundOriginV(groundOrigin.point.x, groundOrigin.point.y, groundOrigin.point.z);
-        btVector3 groundNormalV(groundNormal.vector.x, groundNormal.vector.y,
-                groundNormal.vector.z);
-
-        cv::Point3d cameraOriginCV = cameraModel.projectPixelTo3dRay(
-                cv::Point2d(cameraModel.cx(), cameraModel.cy()));
-
-        btVector3 cameraOrigin(cameraOriginCV.x, cameraOriginCV.y, 0);
-
+        ROS_DEBUG("Camera origin in base frame is: %f, %f, %f", cameraOrigin.getOrigin().x(), cameraOrigin.getOrigin().y(), cameraOrigin.getOrigin().z());
+        
         ResolverFunction func = boost::bind(&MultiObjectDetector::resolveFromCameraInfo, this, _1,
-                _2, _3, _4, cameraModel, groundNormalV, groundOriginV, cameraOrigin);
-        finalBlobCallbackHelper(blobsMsg, cameraInfo->header, func);
+                _2, _3, _4, cameraModel, cameraOrigin);
+
+        // The result is already transformed
+        std_msgs::Header resultHeader;
+        resultHeader.frame_id = "/base_footprint";
+        resultHeader.stamp = blobsMsg->header.stamp;
+        finalBlobCallbackHelper(blobsMsg, resultHeader, func, 1 /* stride */);
     }
 
     void finalBlobCallback(const cmvision::BlobsConstPtr& blobsMsg,
             const sensor_msgs::PointCloud2ConstPtr& depthPointsMsg) {
+
         ROS_DEBUG("Received blobs and depth cloud messages @ %f", ros::Time::now().toSec());
 
         PointCloudXYZ depthCloud;
         fromROSMsg(*depthPointsMsg, depthCloud);
         assert(depthCloud.points.size() == blobsMsg->image_width * blobsMsg->image_height);
+        assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
 
         ResolverFunction func = boost::bind(&MultiObjectDetector::resolveFromDepthMessage, this, _1,
                 _2, _3, _4, depthCloud);
-        finalBlobCallbackHelper(blobsMsg, depthPointsMsg->header, func);
+        finalBlobCallbackHelper(blobsMsg, depthPointsMsg->header, func, 1 /* stride */);
     }
 
     PointXYZ resolveFromCameraInfo(const unsigned int u, const unsigned int v,
             const unsigned int imageWidth, const unsigned int imageHeight,
-            const image_geometry::PinholeCameraModel& cameraModel, const btVector3& groundNormalV,
-            const btVector3& groundOriginV, const btVector3& cameraOrigin) {
+            const image_geometry::PinholeCameraModel& cameraModel,
+            const tf::StampedTransform& cameraToBaseFootprint) {
 
         cv::Point3d p = cameraModel.projectPixelTo3dRay(cv::Point2d(u, v));
-        btVector3 pVector(p.x, p.y, p.z);
+        tf::Vector3 pVector(p.x, p.y, p.z);
 
-        btVector3 zeroHVector = intersection(groundNormalV, groundOriginV, pVector.normalized(),
-                cameraOrigin);
-        return PointXYZ(zeroHVector.x(), zeroHVector.y(), zeroHVector.z());
+        tf::Vector3 cameraOrigin = cameraToBaseFootprint.getOrigin();
+
+        // Transform to base_footprint. We already waited for this transform previously.
+        tf::Vector3 pInBase = cameraToBaseFootprint * pVector;
+        
+        // Now push out the z to the dog height
+        const tf::Vector3 originToP = (pInBase - cameraOrigin).normalized();
+        const tfScalar angle = originToP.angle(tf::Vector3(0, 0, -1));
+        const tfScalar length = tfScalar(1) / tfCos(angle) * (cameraOrigin.z() - dogHeight);
+
+        const tf::Vector3 adjusted = cameraOrigin + length * originToP;
+        return PointXYZ(adjusted.x(), adjusted.y(), adjusted.z());
     }
 
     PointXYZ resolveFromDepthMessage(const unsigned int u, const unsigned int v,
@@ -281,7 +276,8 @@ private:
     }
 
     void finalBlobCallbackHelper(const cmvision::BlobsConstPtr& blobsMsg,
-            const std_msgs::Header& header, const ResolverFunction& resolver) {
+            const std_msgs::Header& header, const ResolverFunction& resolver,
+            const unsigned int stride) {
 
         // Initialize the result message
         position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
@@ -295,10 +291,9 @@ private:
 
         ROS_DEBUG("Depth or camera points frame is %s and blobsMsg frame is %s",
                 header.frame_id.c_str(), blobsMsg->header.frame_id.c_str());
-        assert(header.frame_id == blobsMsg->header.frame_id);
 
         PointCloudXYZPtr allBlobs;
-        const vector<PointIndices> blobClouds = splitBlobs(resolver, blobsMsg, allBlobs);
+        const vector<PointIndices> blobClouds = splitBlobs(resolver, blobsMsg, allBlobs, stride);
 
         if (blobClouds.size() == 0) {
             ROS_DEBUG("No blobs to use for centroid detection");
@@ -381,7 +376,8 @@ private:
     }
 
     const vector<PointIndices> splitBlobs(const ResolverFunction& resolver,
-            const cmvision::BlobsConstPtr blobsMsg, PointCloudXYZPtr& allBlobsOut) {
+            const cmvision::BlobsConstPtr blobsMsg, PointCloudXYZPtr& allBlobsOut,
+            const unsigned int stride) {
 
         // Iterate over all the blobs and create a single cloud of all points.
         // We will subdivide this blob again later.
@@ -397,8 +393,8 @@ private:
             ROS_DEBUG("Blob image dimensions. Left %u right %u top %u bottom %u width %u height %u",
                     blob.left, blob.right, blob.top, blob.bottom, blobsMsg->image_width,
                     blobsMsg->image_height);
-            for (unsigned int j = blob.top; j <= blob.bottom; ++j) {
-                for (unsigned int i = blob.left; i <= blob.right; ++i) {
+            for (unsigned int j = blob.top; j <= blob.bottom; j += stride) {
+                for (unsigned int i = blob.left; i <= blob.right; i += stride) {
                     PointXYZ point = resolver(j, i, blobsMsg->image_width, blobsMsg->image_height);
                     allBlobs->points.push_back(point);
                 }
@@ -427,12 +423,16 @@ private:
         }
         ROS_DEBUG("Points available for blob position. Extracting clusters.");
 
-        // Creating the KdTree was much slower than direct cluster extraction.
+        // Creating the KdTree object for the search method of the extraction
+        pcl::search::KdTree<PointXYZ>::Ptr tree(new pcl::search::KdTree<PointXYZ>);
+        tree->setInputCloud(allBlobs);
+
         std::vector<PointIndices> clusterIndices;
         EuclideanClusterExtraction<PointXYZ> ec;
         ec.setClusterTolerance(clusterDistanceTolerance);
         ec.setMinClusterSize(minClusterSize);
         ec.setMaxClusterSize(maxClusterSize);
+        ec.setSearchMethod(tree);
         ec.setInputCloud(allBlobs);
         ec.extract(clusterIndices);
         ROS_DEBUG("Extracted %lu clusters from blobs", clusterIndices.size());
@@ -444,8 +444,15 @@ private:
 }
 int main(int argc, char **argv) {
     ros::init(argc, argv, "multi_object_detector");
+#if ENABLE_PROFILING == 1
+    ProfilerStart(("/tmp/" + ros::this_node::getName() +".prof").c_str());
+#endif
     MultiObjectDetector mobd;
     ros::spin();
+#if ENABLE_PROFILING == 1
+    ProfilerStop();
+    ProfilerFlush();
+#endif
     return 0;
 }
 
