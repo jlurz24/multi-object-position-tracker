@@ -1,12 +1,15 @@
 #include "pv_filter.h"
 #include <iostream>
 
+namespace {
 using namespace std;
 
 static unsigned int uniqueId = 0;
 
 static inline double square(const double x) {
     return x * x;
+}
+
 }
 
 PVFilter::PVFilter(const double aObservationNoise, const double aVelocityNoise) :
@@ -78,3 +81,4 @@ void PVFilter::getX(vector<double>& positions, vector<double>& velocities) const
     velocities[1] = x(5);
     velocities[2] = x(6);
 }
+

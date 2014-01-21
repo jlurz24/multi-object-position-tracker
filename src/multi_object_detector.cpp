@@ -24,12 +24,14 @@
 #include <limits>
 #include <google/profiler.h>
 
+namespace {
+
 #define ENABLE_PROFILING 0
 
 using namespace std;
 using namespace pcl;
 
-namespace {
+
 typedef boost::function<PointXYZ(const unsigned int, const unsigned int, unsigned int, unsigned int)> ResolverFunction;
 
 inline Eigen::Vector3f operator-(const PointXYZ& p1, const PointXYZ& p2) {
@@ -198,7 +200,7 @@ private:
 
     void finalBlobCameraInfoCallback(const cmvision::BlobsConstPtr& blobsMsg,
             const sensor_msgs::CameraInfoConstPtr& cameraInfo) {
-        ROS_DEBUG("Received a blobs and camerainfo messages @ %f", ros::Time::now().toSec());
+        ROS_DEBUG("Received a blobs containing %u blobs and camerainfo messages @ %f", blobsMsg->blobs.size(), ros::Time::now().toSec());
 
         image_geometry::PinholeCameraModel cameraModel;
         cameraModel.fromCameraInfo(*cameraInfo);

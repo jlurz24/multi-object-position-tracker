@@ -10,7 +10,11 @@
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <pcl/common/geometry.h>
+#include <google/profiler.h>
 
+#define ENABLE_PROFILING 0
+
+namespace {
 using namespace std;
 using namespace pcl;
 
@@ -151,7 +155,7 @@ private:
 
         if (objects->positions.size() > pvFilters.size()) {
             ROS_DEBUG(
-                    "Received %lu measurements and only have %lu filters", objects->positions.size(), pvFilters.size());
+                    "Received %lu measurements in frame and only have %lu filters", objects->positions.size(), objects->header.frame_id.c_str(), pvFilters.size());
         }
 
         // Confirm frames are correct.
@@ -332,6 +336,11 @@ private:
                 i < measuredPositions->points.size(); ++i) {
             predictedPositionsWithNulls->points.push_back(nullPoint);
             ROS_DEBUG("Adding a null predicted point");
+        }
+
+        if(measuredPositions->points.size() == 0){
+            ROS_DEBUG("No measured positions. Returning unaligned cloud.");
+            return measuredPositionsWithNulls;
         }
 
         /*
@@ -519,11 +528,19 @@ private:
         predictedPub.publish(predictedMarkers);
     }
 };
+}
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "dynamic_object_detector");
+#if ENABLE_PROFILING == 1
+    ProfilerStart(("/tmp/" + ros::this_node::getName() +".prof").c_str());
+#endif
     DynamicObjectDetector dobd;
     ros::spin();
+#if ENABLE_PROFILING == 1
+    ProfilerStop();
+    ProfilerFlush();
+#endif
     return 0;
 }
 

@@ -39,6 +39,8 @@ rosbuild_gensrv()
 #common commands for building c++ executables and libraries
 rosbuild_add_boost_directories()
 rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp src/kalman_simple.cpp src/pv_filter.cpp)
+target_link_libraries(dynamic_object_detector ${GPERFTOOLS_TCMALLOC_AND_PROFILER})
+
 rosbuild_add_executable(multi_object_detector src/multi_object_detector.cpp)
 target_link_libraries(multi_object_detector ${GPERFTOOLS_TCMALLOC_AND_PROFILER})
 

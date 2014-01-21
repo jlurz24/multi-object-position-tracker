@@ -9,6 +9,7 @@
 #include <pcl_ros/point_cloud.h>
 #include <tf/transform_listener.h>
 
+namespace {
 using namespace cv;
 using namespace position_tracker;
 
@@ -113,6 +114,7 @@ class FindTrackServer {
      string pointsTopic;
      bool debug;
 };
+}
 
 int main(int argc, char** argv){
   ros::init(argc, argv, "find_track_server");

@@ -15,6 +15,7 @@
 #include <cmath>
 #include <boost/math/constants/constants.hpp>
 
+namespace {
 using namespace std;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
@@ -216,6 +217,7 @@ class ObjectDetector {
         return depthCloudFiltered;
     }
 };
+}
 
 int main(int argc, char **argv){
   ros::init(argc, argv, "object_detector");

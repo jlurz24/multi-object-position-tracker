@@ -2,6 +2,7 @@
 #include <math.h>
 #include <iostream>
 
+namespace {
 using namespace std;
 
 inline double square(double x){
@@ -17,6 +18,7 @@ inline double quad(double x){
 }
 
 const double EPSILON = 0.0001; // Regularization constant
+}
 
 KalmanSimple::KalmanSimple(double aObservationNoise, const double aAccDist): observationNoise(aObservationNoise), accDist(aAccDist) 
 {

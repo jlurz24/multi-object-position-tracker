@@ -2,6 +2,7 @@
 #include <message_filters/subscriber.h>
 #include <position_tracker/DetectedDynamicObjects.h>
 
+namespace {
 using namespace std;
 
 class FPSMeasurer {
@@ -37,6 +38,7 @@ class FPSMeasurer {
       ROS_INFO("Iterations %u, Duration: %f, F/s: %f", iterations, duration, iterations / duration);
    }
 };
+}
 
 int main(int argc, char **argv){
   ros::init(argc, argv, "fps_measurer");

@@ -7,6 +7,8 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <position_tracker/StartMeasurement.h>
 #include <position_tracker/StopMeasurement.h>
+
+namespace {
 using namespace std;
 
 inline double square(const double a) {
@@ -202,6 +204,7 @@ private:
         totalVelocityDeviation += currVelocityDeviation;
     }
 };
+}
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "position_velocity_measurer");
