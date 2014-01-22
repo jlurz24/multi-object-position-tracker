@@ -7,22 +7,11 @@ Panels:
         - /Global Options1
         - /Visualization Markers1
         - /RobotModel1
-        - /Dog Position1
-        - /Move Goal1
-        - /Walk Goal1
-        - /Robot Move Start1
-        - /Hand Start Viz1
-        - /Planned Move Viz1
-        - /DogGoal1
         - /Ball Markers1
-        - /Markers1
         - /Identities1
         - /Predicted Markers1
-        - /Camera1
-        - /PointCloud21
-        - /Dog Observations1
       Splitter Ratio: 0.5
-    Tree Height: 232
+    Tree Height: 673
   - Class: rviz/Tool Properties
     Expanded:
       - /2D Nav Goal1
@@ -715,174 +704,28 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: false
       Value: false
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: /dog_position_detector/dog_position_viz_perm
-      Name: Dog Position
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/Marker
-      Enabled: false
-      Marker Topic: /move_robot_action/move_goal_viz
-      Name: Move Goal
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: /path/walk_goal_viz_perm
-      Name: Walk Goal
-      Namespaces:
-        dogsim: true
-      Queue Size: 100
-      Value: true
-    - Class: rviz/Marker
-      Enabled: false
-      Marker Topic: /adjust_dog_position_action/start_viz
-      Name: Robot Move Start
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/Marker
-      Enabled: false
-      Marker Topic: /adjust_dog_position_action/hand_start_viz
-      Name: Hand Start Viz
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/Marker
-      Enabled: false
-      Marker Topic: /move_robot_action/planned_move_viz
-      Name: Planned Move Viz
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
-    - Class: rviz/Marker
-      Enabled: false
-      Marker Topic: /dogsim/dog_goal_viz
-      Name: DogGoal
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: false
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /object_tracks/balls/markers
       Name: Ball Markers
       Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /object_tracks/dog/markers
-      Name: Markers
-      Namespaces:
         dod_pv_arrows: true
-        multi_object_detector//r_forearm_cam/blobs: true
-        multi_object_detector//wide_stereo/blobs: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /object_tracks/dogs/identities
+      Marker Topic: /object_tracks/balls/identities
       Name: Identities
       Namespaces:
-        {}
+        dod_ids: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /object_tracks/dog/predicted_markers
+      Marker Topic: /object_tracks/balls/predicted_markers
       Name: Predicted Markers
       Namespaces:
         dod_predicted: true
-      Queue Size: 100
-      Value: true
-    - Class: rviz/Camera
-      Enabled: true
-      Image Rendering: background and overlay
-      Image Topic: /r_forearm_cam/image_rect_color
-      Name: Camera
-      Overlay Alpha: 0.5
-      Queue Size: 2
-      Transport Hint: raw
-      Value: true
-      Visibility:
-        AMCL Cloud: true
-        Ball Markers: true
-        Current Goal: true
-        Dog Observations: true
-        Dog Position: true
-        DogGoal: true
-        Floor Scan: true
-        Global Plan: true
-        Grid: true
-        Ground Filtered Tilt Scan: true
-        Hand Start Viz: true
-        Head Scan: true
-        Identities: true
-        Inflated Obstacles: true
-        Local Plan: true
-        Map: true
-        Markers: true
-        Move Goal: true
-        Obstacles: true
-        Origin Axes: true
-        Planned Move Viz: true
-        Planner Plan: true
-        PointCloud2: true
-        Predicted Markers: true
-        Robot Footprint: true
-        Robot Move Start: true
-        RobotModel: true
-        Tilt Scan Shadow Filtered: true
-        Transforms: true
-        Value: true
-        Visualization Markers: true
-        Walk Goal: true
-      Zoom Factor: 1
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/PointCloud2
-      Color: 255; 255; 255
-      Color Transformer: Intensity
-      Decay Time: 0
-      Enabled: false
-      Max Color: 255; 255; 255
-      Max Intensity: 4096
-      Min Color: 0; 0; 0
-      Min Intensity: 0
-      Name: PointCloud2
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.01
-      Style: Flat Squares
-      Topic: /r_forearm_cam/points2
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /object_locations/markers
-      Name: Dog Observations
-      Namespaces:
-        multi_object_detector//r_forearm_cam/blobs: true
-        multi_object_detector//wide_stereo/blobs: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -903,29 +746,27 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.77342
+      Distance: 1.88219
       Focal Point:
-        X: 3.67815
-        Y: -1.96936
-        Z: 0.757735
+        X: 3.7605
+        Y: -1.64952
+        Z: 0.921067
       Name: Current View
       Near Clip Distance: 0.01
       Pitch: 0.374798
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.82038
+      Yaw: 5.83538
     Saved: ~
 Window Geometry:
-  Camera:
-    collapsed: false
   Displays:
     collapsed: false
   Height: 808
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd000000020000000000000198000002e2fc0200000002fb000000100044006900730070006c006100790073010000002800000129000000dd00fffffffb0000000c00430061006d0065007200610100000157000001b30000001600ffffff000000010000010000000593fc0200000001fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730000000041000005930000006400ffffff00000296000002e200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000020000000000000198000002e2fc0200000003fb000000100044006900730070006c0061007900730100000028000002e2000000dd00fffffffb0000000c00430061006d0065007200610000000146000001c40000000000000000fb0000002000520069006700680074002000410072006d002000430061006d00650072006101000002f4000000160000000000000000000000010000010000000593fc0200000001fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730000000041000005930000006400ffffff00000296000002e200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Tool Properties:
     collapsed: false
   Width: 1076
-  X: 65
-  Y: 24
+  X: 430
+  Y: 30

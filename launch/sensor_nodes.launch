@@ -16,9 +16,29 @@
     <param name="voxel_leaf_size" value="0.0" />
     <param name="min_cluster_size" value="75" />
     <param name="max_cluster_size" value="25000" />
+    <remap from="blobs" to="/wide_stereo/blobs"/>
+    <remap from="points" to="/wide_stereo/left/points"/>
   </node>
 
-   <param name="cmvision/color_file" type="string" value="$(find position_tracker)/colors.txt"/>
-  <param name="cmvision/debug_on" type="bool" value="false"/>
-  <include file="$(find cmvision)/cmvision.launch"/>
+  <!-- cmvision global parameters -->
+  <param name="cmvision/debug_on" type="bool" value="true"/>
+
+  <!-- Turn color calibration on or off -->
+  <param name="cmvision/color_cal_on" type="bool" value="false"/>
+
+  <!-- Enable Mean shift filtering -->
+  <param name="cmvision/mean_shift_on" type="bool" value="false"/>
+
+  <!-- Spatial bandwidth: Bigger = smoother image -->
+  <param name="cmvision/spatial_radius_pix" type="double" value="2.0"/>
+
+  <!-- Color bandwidth: Bigger = smoother image-->
+  <param name="cmvision/color_radius_pix" type="double" value="40.0"/>
+
+  <param name="cmvision/color_file" type="string" value="$(find position_tracker)/colors.txt"/>
+
+  <node name="wide_stereo_cmvision" pkg="cmvision" type="cmvision">
+    <remap from="image" to="wide_stereo/left/image_rect_color" />
+    <remap from="blobs" to="wide_stereo/blobs"/>
+  </node>
 </launch>

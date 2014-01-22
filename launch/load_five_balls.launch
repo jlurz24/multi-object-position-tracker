@@ -1,14 +1,20 @@
 <launch>
  <!-- send urdf to param server -->
- <param name="ball" textfile="$(find position_tracker)/objects/ball.model" />
+ <param name="ball1" textfile="$(find position_tracker)/objects/ball1.model" />
+ <param name="ball2" textfile="$(find position_tracker)/objects/ball2.model" />
+ <param name="ball3" textfile="$(find position_tracker)/objects/ball3.model" />
+ <param name="ball4" textfile="$(find position_tracker)/objects/ball4.model" />
+ <param name="ball5" textfile="$(find position_tracker)/objects/ball5.model" />
+
+
  <!-- push urdf to factory and spawn robot in gazebo -->
- <node name="spawn_ball1" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball1 -x 1.5 -y 0.25 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball1" pkg="gazebo" type="spawn_model" args="-param ball1 -gazebo -model ball1 -x 1.5 -y 0.25 -z 0.1" respawn="false" output="screen" />
 
- <node name="spawn_ball2" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball2 -x 1.5 -y 0.75 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball2" pkg="gazebo" type="spawn_model" args="-param ball2 -gazebo -model ball2 -x 1.5 -y 0.75 -z 0.1" respawn="false" output="screen" />
 
- <node name="spawn_ball3" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball3 -x 1.5 -y 0 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball3" pkg="gazebo" type="spawn_model" args="-param ball3 -gazebo -model ball3 -x 1.5 -y 0 -z 0.1" respawn="false" output="screen" />
 
- <node name="spawn_ball4" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball4 -x 2 -y 0 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball4" pkg="gazebo" type="spawn_model" args="-param ball4 -gazebo -model ball4 -x 2 -y 0 -z 0.1" respawn="false" output="screen" />
 
- <node name="spawn_ball5" pkg="gazebo" type="spawn_model" args="-param ball -gazebo -model ball5 -x 2 -y 0.75 -z 1" respawn="false" output="screen" />
+ <node name="spawn_ball5" pkg="gazebo" type="spawn_model" args="-param ball5 -gazebo -model ball5 -x 2 -y 0.75 -z 0.1" respawn="false" output="screen" />
 </launch>
