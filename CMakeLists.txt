@@ -38,7 +38,7 @@ rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
 rosbuild_add_boost_directories()
-rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp src/kalman_simple.cpp src/pv_filter.cpp)
+rosbuild_add_executable(dynamic_object_detector src/dynamic_object_detector.cpp src/pv_filter.cpp)
 target_link_libraries(dynamic_object_detector ${GPERFTOOLS_TCMALLOC_AND_PROFILER})
 
 rosbuild_add_executable(multi_object_detector src/multi_object_detector.cpp)
@@ -49,7 +49,7 @@ rosbuild_add_executable(fps_measurer src/fps_measurer.cpp)
 rosbuild_add_executable(display_track src/display_track.cpp src/find_track_impl.cpp)
 rosbuild_add_executable(find_range src/find_range.cpp)
 rosbuild_add_executable(find_track_server src/find_track_server.cpp src/find_track_impl.cpp)
-
+rosbuild_add_executable(measurement_controller src/measurement_controller.cpp)
 rosbuild_link_boost(multi_object_detector signals)
 rosbuild_link_boost(dynamic_object_detector signals)
 rosbuild_link_boost(position_velocity_measurer signals)

@@ -1,10 +1,13 @@
 #ifndef PV_FILTER_H
 #define PV_FILTER_H
 
-#include "kalman_simple.h"
 #include <vector>
 #include <utility>
 #include <ros/ros.h>
+
+namespace cv {
+    class KalmanFilter;
+}
 
 class PVFilter {
 
@@ -22,8 +25,12 @@ public:
         return id;
     }
 private:
-    std::auto_ptr<KalmanSimple> filter;
+    std::auto_ptr<cv::KalmanFilter> filter;
     ros::Time updateTime;
+    double mVelocityNoise;
+    double mObservationNoise;
     unsigned int id;
+
+    void updateTransitionMatrix(double dt);
 };
 #endif

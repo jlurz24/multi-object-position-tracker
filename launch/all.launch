@@ -3,4 +3,7 @@
   <include file="$(find position_tracker)/launch/sensor_nodes.launch" />
   <include file="$(find position_tracker)/launch/position_body.launch" />
   <include file="$(find position_tracker)/launch/load_walls.launch"/>
+  <node pkg="position_tracker" type="position_velocity_measurer" name="position_velocity_measurer" output="screen">
+  </node>
+  
 </launch>

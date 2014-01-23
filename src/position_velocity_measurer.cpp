@@ -46,7 +46,7 @@ public:
         m2PositionDeviation(0), m2VelocityDeviation(0),
         n(0),
         startMeasuringSub(nh, "start_measuring", 1),
-        stopMeasuringSub(nh, "stop_measuring", 1) {
+        stopMeasuringSub(nh, "stop_measuring", 1){
 
         pnh.param<string>("model_prefix", modelPrefix, "ball");
         pnh.param<string>("group_name", groupName, "balls");
@@ -69,15 +69,16 @@ private:
     }
 
     void stopMeasuring(const position_tracker::StopMeasurementConstPtr msg){
+
         objectSub->unsubscribe();
         ROS_INFO(
                   "Measurement ended. Total Position Deviation: %f, Total Velocity Deviation: %f, Duration: %f",
                   totalPositionDeviation, totalVelocityDeviation, msg->header.stamp.toSec() - startTime.toSec());
 
-        double totalTime = msg->header.stamp.toSec() - startTime.toSec();
+        ros::Duration totalTime = msg->header.stamp - startTime;
         ROS_INFO("Total Known Time: %f, Total Unknown Time: %f, Total Time: %f, Percent Known: %f, Percent Unknown: %f",
-                  knownTime.toSec(), unknownTime.toSec(), totalTime, knownTime.toSec() / totalTime * 100,
-                  unknownTime.toSec() / totalTime * 100);
+                  knownTime.toSec(), unknownTime.toSec(), totalTime.toSec(), knownTime.toSec() / totalTime.toSec() * 100,
+                  unknownTime.toSec() / totalTime.toSec() * 100);
 
         double positionDeviationVariance = m2PositionDeviation / (n - 1);
         double velocityDeviationVariance = m2VelocityDeviation / (n - 1);
@@ -139,7 +140,7 @@ private:
         }
 
         if (knownPositions.size() == 0) {
-            ROS_INFO("No known positions");
+            ROS_DEBUG("No known positions");
             return;
         }
 
@@ -160,7 +161,7 @@ private:
             double velocityDeviation = 0;
             for (unsigned int i = 0; i < currentOrder.size(); ++i) {
                 if (i >= objects->objects.size()) {
-                    ROS_INFO("More known objects than estimated");
+                    ROS_DEBUG("More known objects than estimated");
                     continue;
                 }
 
