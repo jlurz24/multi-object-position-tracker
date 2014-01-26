@@ -56,7 +56,7 @@ void PVFilter::measure(const vector<double>& positions, const ros::Time& time) {
     updateTime = time;
 }
 
-void PVFilter::predict(vector<double>& positions, const ros::Time& time) {
+void PVFilter::predict(vector<double>& positions, vector<double>& velocities, const ros::Time& time) {
     updateTransitionMatrix(time.toSec() - updateTime.toSec());
 
     Mat prediction = filter->predict();
@@ -64,18 +64,11 @@ void PVFilter::predict(vector<double>& positions, const ros::Time& time) {
     positions[0] = prediction.at<float>(0);
     positions[1] = prediction.at<float>(1);
     positions[2] = prediction.at<float>(2);
-}
-
-void PVFilter::getX(vector<double>& positions, vector<double>& velocities) const {
-    Mat output = filter->statePost;
-    positions.resize(3);
-    positions[0] = output.at<float>(0);
-    positions[1] = output.at<float>(1);
-    positions[2] = output.at<float>(2);
 
     velocities.resize(3);
-    velocities[0] = output.at<float>(3);
-    velocities[1] = output.at<float>(4);
-    velocities[2] = output.at<float>(5);
+    velocities[0] = prediction.at<float>(3);
+    velocities[1] = prediction.at<float>(4);
+    velocities[2] = prediction.at<float>(5);
 }
+
 

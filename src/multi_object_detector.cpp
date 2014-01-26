@@ -55,6 +55,7 @@ private:
     ros::NodeHandle privateHandle;
     tf::TransformListener tf;
     std::string objectName;
+    std::string outputFrame;
 
     auto_ptr<message_filters::Subscriber<cmvision::Blobs> > blobsSub;
     auto_ptr<message_filters::Subscriber<sensor_msgs::PointCloud2> > depthPointsSub;
@@ -89,6 +90,7 @@ public:
         privateHandle.param<int>("min_cluster_size", minClusterSize, 75);
         privateHandle.param<int>("max_cluster_size", maxClusterSize, 25000);
         privateHandle.param<bool>("stereo_camera_mode", stereoCameraMode, true);
+        privateHandle.param<string>("output_frame", outputFrame, "/base_footprint");
         nh.param("dog_height", dogHeight, DOG_HEIGHT_DEFAULT);
 
         // Publish the object location
@@ -200,7 +202,7 @@ private:
 
     void finalBlobCameraInfoCallback(const cmvision::BlobsConstPtr& blobsMsg,
             const sensor_msgs::CameraInfoConstPtr& cameraInfo) {
-        ROS_DEBUG("Received a blobs containing %u blobs and camerainfo messages @ %f", blobsMsg->blobs.size(), ros::Time::now().toSec());
+        ROS_DEBUG("Received a blobs containing %lu blobs and camerainfo messages @ %f", blobsMsg->blobs.size(), ros::Time::now().toSec());
 
         image_geometry::PinholeCameraModel cameraModel;
         cameraModel.fromCameraInfo(*cameraInfo);
@@ -283,7 +285,8 @@ private:
 
         // Initialize the result message
         position_tracker::DetectedObjectsPtr objects(new position_tracker::DetectedObjects);
-        objects->header = header;
+        objects->header.frame_id = outputFrame;
+        objects->header.stamp = header.stamp;
         // Check if there are detected blobs.
         if (blobsMsg->blobs.size() == 0) {
             ROS_DEBUG("No blobs detected");
@@ -304,15 +307,16 @@ private:
         }
 
         // Iterate over each detected blob and determine its centroid.
-        if (!tf.waitForTransform("/base_footprint", header.frame_id, header.stamp,
+        if (!tf.waitForTransform(outputFrame, header.frame_id, header.stamp,
                 ros::Duration(5.0))) {
-            ROS_WARN("Transform from %s to base_footprint is not yet available",
-                    header.frame_id.c_str());
+            ROS_WARN("Transform from %s to %s is not yet available",
+                    header.frame_id.c_str(), outputFrame.c_str());
             return;
         }
 
         for (unsigned int i = 0; i < blobClouds.size(); ++i) {
             Eigen::Vector4f centroid;
+            ROS_DEBUG("Computing centroid for blob with %lu indices", blobClouds[i].indices.size());
             compute3DCentroid(*allBlobs, blobClouds[i].indices, centroid);
 
             // Convert the centroid to a point stamped
@@ -329,7 +333,7 @@ private:
             resultPoint.point.z = centroid[2];
 
             geometry_msgs::PointStamped resultPointMap;
-            resultPointMap.header.frame_id = "/base_footprint";
+            resultPointMap.header.frame_id = outputFrame;
             resultPointMap.header.stamp = header.stamp;
             tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
             ROS_DEBUG("Transformed centroid to frame %s with coordinates %f %f %f",
@@ -337,6 +341,8 @@ private:
                     resultPointMap.point.y, resultPointMap.point.z);
             objects->positions.push_back(resultPointMap);
         }
+
+        ROS_DEBUG("Publishing %lu detected objects", objects->positions.size());
         publish(objects);
     }
 

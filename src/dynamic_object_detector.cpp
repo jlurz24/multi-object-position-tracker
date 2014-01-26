@@ -82,6 +82,7 @@ public:
     DynamicObjectDetector() :
             privateHandle("~"), kalmanObservationNoise(0.0), kalmanAccelerationDist(0.0), subscribed(false) {
         privateHandle.param<string>("object_name", objectName, "dog");
+        // TODO: Consider switching to /map
         privateHandle.param<string>("frame", frame, "/base_footprint");
         privateHandle.param<double>("initial_velocity", initialVelocity, 0.0);
 
@@ -139,7 +140,7 @@ private:
         if (objectsSub.get() == NULL) {
             objectsSub.reset(
                     new message_filters::Subscriber<position_tracker::DetectedObjects>(nh,
-                            "/object_locations/" + objectName, 5));
+                            "/object_locations/" + objectName, 1));
             objectsSub->registerCallback(
                     boost::bind(&DynamicObjectDetector::detectedObjectsCallback, this, _1));
         }
@@ -153,13 +154,14 @@ private:
 
         ROS_DEBUG("Received detected objects message with %lu objects. Currently %lu known objects", objects->positions.size(), pvFilters.size());
 
-        if (objects->positions.size() > pvFilters.size()) {
+        if (objects->positions.size() != pvFilters.size()) {
             ROS_DEBUG(
-                    "Received %lu measurements in frame and only have %lu filters", objects->positions.size(), objects->header.frame_id.c_str(), pvFilters.size());
+                    "Received %lu measurements in frame %s (dynamic object detector frame is: %s) and %lu have filters", objects->positions.size(), objects->header.frame_id.c_str(), frame.c_str(), pvFilters.size());
         }
 
         // Confirm frames are correct.
         for (unsigned int i = 0; i < objects->positions.size(); ++i) {
+            ROS_DEBUG("Message %u is in frame %s (dynamic object detector frame is: %s)", i, objects->positions[i].header.frame_id.c_str(), frame.c_str());
             if (objects->positions[i].header.frame_id != frame) {
                 ROS_ERROR(
                         "Frame does not match: %s", objects->positions[i].header.frame_id.c_str());
@@ -170,18 +172,19 @@ private:
         // Step 1: Predict the new positions
         ros::Time measurementTime = objects->header.stamp;
         PointCloudXYZPtr predictedPositions(new PointCloudXYZ);
+        PointCloudXYZPtr predictedVelocities(new PointCloudXYZ);
+
         for (unsigned int i = 0; i < pvFilters.size(); ++i) {
             vector<double> positions;
             vector<double> velocities;
 
-            try {
-                pvFilters.at(i)->predict(positions, measurementTime);
-            }
-            catch (std::exception& e) {
-                ROS_ERROR("Failed to predict measurement %u %s", i, e.what());
-            }
+            pvFilters.at(i)->predict(positions, velocities, measurementTime);
+            ROS_DEBUG("Position %u predicted @ %f %f %f with velocities %f %f %f", i, positions[0], positions[1], positions[2], velocities[0], velocities[1], velocities[2]);
             predictedPositions->points.push_back(
                     PointXYZ(positions[0], positions[1], positions[2]));
+            predictedVelocities->points.push_back(
+                    PointXYZ(velocities[0], velocities[1], velocities[2]));
+
         }
 
         // Step 2: Create a point cloud from the detected object centers.
@@ -208,15 +211,8 @@ private:
                 point[0] = final->points[i].x;
                 point[1] = final->points[i].y;
                 point[2] = final->points[i].z;
-                try {
-                    pvFilters.at(i)->measure(point, measurementTime);
-                }
-                catch (std::exception& e) {
-                    ROS_ERROR("Failed to measure %u %s", i, e.what());
-                }
-            }
-            else {
-                ROS_DEBUG("Ignoring a null measurement");
+                ROS_DEBUG("Applying measurement to point %u with values %f %f %f", i, point[0], point[1], point[2]);
+                pvFilters.at(i)->measure(point, measurementTime);
             }
         }
 
@@ -233,26 +229,17 @@ private:
         trackedObjects->header.stamp = measurementTime;
 
         for (unsigned int i = 0; i < pvFilters.size(); ++i) {
-            vector<double> positions;
-            vector<double> velocities;
-            try {
-                pvFilters.at(i)->getX(positions, velocities);
-            }
-            catch (std::exception& e) {
-                ROS_ERROR("Failed to get X for index %u %s", i, e.what());
-            }
             geometry_msgs::PointStamped position;
-            position.point.x = positions[0];
-            position.point.y = positions[1];
-            position.point.z = positions[2];
-
+            position.point.x = predictedPositions->points[i].x;
+            position.point.y = predictedPositions->points[i].y;
+            position.point.z = predictedPositions->points[i].z;
             position.header.frame_id = frame;
             position.header.stamp = measurementTime;
 
             geometry_msgs::TwistStamped velocity;
-            velocity.twist.linear.x = velocities[0];
-            velocity.twist.linear.y = velocities[1];
-            velocity.twist.linear.z = velocities[2];
+            velocity.twist.linear.x = predictedVelocities->points[i].x;
+            velocity.twist.linear.y = predictedVelocities->points[i].y;
+            velocity.twist.linear.z = predictedVelocities->points[i].z;
             velocity.header.frame_id = frame;
             velocity.header.stamp = measurementTime;
 
@@ -267,7 +254,6 @@ private:
         // Step 6: Initialize filters with any remaining positions and default
         //         velocities
         for (unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i) {
-            ROS_DEBUG("Initializing Kalman filter for measurement %i", i);
             boost::shared_ptr<PVFilter> filter(
                     new PVFilter(kalmanObservationNoise, kalmanAccelerationDist));
 
@@ -281,6 +267,8 @@ private:
             velocities[0] = initialVelocity;
             velocities[1] = initialVelocity;
             velocities[2] = initialVelocity;
+
+            ROS_INFO("Initializing Kalman filter for measurement %i with position %f %f %f", i, positions[0], positions[1], positions[2]);
 
             filter->init(positions, velocities, measurementTime);
             pvFilters.push_back(filter);
@@ -326,7 +314,6 @@ private:
         for (unsigned int i = measuredPositions->points.size();
                 i < predictedPositions->points.size(); ++i) {
             measuredPositionsWithNulls->points.push_back(nullPoint);
-            ROS_DEBUG("Adding a null measured point");
         }
 
         // If the reverse is true, create null predictions.
@@ -335,7 +322,6 @@ private:
         for (unsigned int i = predictedPositions->points.size();
                 i < measuredPositions->points.size(); ++i) {
             predictedPositionsWithNulls->points.push_back(nullPoint);
-            ROS_DEBUG("Adding a null predicted point");
         }
 
         if(measuredPositions->points.size() == 0){
@@ -368,7 +354,6 @@ private:
                 // Check if this is a null point and add lambda.
                 if (measuredPositionsWithNulls->points[currentOrder[i]] == nullPoint
                         || predictedPositionsWithNulls->points[i] == nullPoint) {
-                    ROS_DEBUG("Found a null point. Adding LAMBDA.");
                     distanceSum += LAMBDA;
                     nullsFound++;
                 }
@@ -426,6 +411,7 @@ private:
                     unalignedMeasurements->points.push_back(currMeasurement);
                 }
                 else {
+                    ROS_DEBUG("Adding aligned measurement %u", i);
                     alignedPositions->points.push_back(currMeasurement);
                 }
             }

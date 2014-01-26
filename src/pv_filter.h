@@ -16,8 +16,7 @@ public:
     void init(const std::vector<double>& positions, const std::vector<double>& velocities,
             const ros::Time time);
     void measure(const std::vector<double>& positions, const ros::Time& time);
-    void predict(std::vector<double>& positions, const ros::Time& time);
-    void getX(std::vector<double>& positions, std::vector<double>& velocities) const;
+    void predict(std::vector<double>& positions, std::vector<double>& velocities, const ros::Time& time);
     const ros::Time& getLastUpdate() const {
         return updateTime;
     }
