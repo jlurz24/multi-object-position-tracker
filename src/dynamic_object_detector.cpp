@@ -313,7 +313,7 @@ private:
             const PointCloudXYZConstPtr measuredPositions,
             const PointCloudXYZPtr unalignedMeasurements) const {
 
-        ROS_DEBUG(
+        ROS_INFO(
                 "Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
 
         if (predictedPositions->points.size() == 0) {
@@ -356,15 +356,18 @@ private:
             currentOrder.push_back(i);
         }
 
+        ROS_INFO("Initializing correlation. Size of current order vector is: %lu", currentOrder.size());
+
         // Set the initial order as the best.
         vector<unsigned int> closestOrder = currentOrder;
         double lowestDistance = numeric_limits<double>::max();
         unsigned int nullsFoundForLowestDistance = 0;
 
         const double LAMBDA = 1e6;
-
+        unsigned int iterations = 0;
         // Now search all permutations.
         do {
+            ROS_DEBUG("Checking next iteration number: %u", iterations);
             // Sum the distances.
             double distanceSum = 0;
             unsigned int nullsFound = 0;
@@ -399,6 +402,7 @@ private:
                     break;
                 }
             }
+            ++iterations;
         } while (next_permutation(currentOrder.begin(), currentOrder.end()));
 
         // Remove the lambda distances from the score.
