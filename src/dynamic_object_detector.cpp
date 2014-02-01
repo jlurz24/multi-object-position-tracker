@@ -54,6 +54,12 @@ struct EraseStale {
     }
 };
 
+struct LastUpdateSorter {
+    bool operator()(const boost::shared_ptr<PVFilter>& a, const boost::shared_ptr<PVFilter>& b) const {
+        return a->getLastUpdate() > b->getLastUpdate();
+    }
+};
+
 class DynamicObjectDetector {
 private:
     ros::NodeHandle nh;
@@ -71,7 +77,7 @@ private:
     double associationMaxSuccessScore;
     ros::Duration filterStaleThreshold;
     double maxCorrelationDistance;
-
+    int maxFilters;
     ros::Publisher pub;
     ros::Publisher markerPub;
     ros::Publisher predictedPub;
@@ -96,6 +102,7 @@ public:
         privateHandle.param<double>("filter_stale_threshold", filterStaleThresholdD, 1.0);
         filterStaleThreshold = ros::Duration(filterStaleThresholdD);
         privateHandle.param<double>("max_correlation_distance", maxCorrelationDistance, 5.0);
+        privateHandle.param<int>("max_filters", maxFilters, 3);
 
         ROS_DEBUG("Tracking objects with object name %s", objectName.c_str());
 
@@ -251,7 +258,18 @@ private:
             trackedObjects->objects.push_back(obj);
         }
 
-        // Step 6: Initialize filters with any remaining positions and default
+        // Step 6: Prune filters to reduce the number of filters to at most
+        // max - new filters.
+        int filtersToKeep = std::max(maxFilters - static_cast<int>(unalignedMeasurements->points.size()), 0);
+        if(filtersToKeep < static_cast<int>(pvFilters.size())){
+            // Sort pvFilters by last updated.
+            ROS_INFO("Currently %lu filters. Keeping %u filters for %lu new measurements", pvFilters.size(), filtersToKeep, unalignedMeasurements->points.size());
+            sort(pvFilters.begin(), pvFilters.end(), LastUpdateSorter());
+            pvFilters.erase(pvFilters.begin() + filtersToKeep, pvFilters.end());
+            ROS_INFO("After removal %lu filters", pvFilters.size());
+        }
+
+        // Step 7: Initialize filters with any remaining positions and default
         //         velocities
         for (unsigned int i = 0; i < unalignedMeasurements->points.size(); ++i) {
             boost::shared_ptr<PVFilter> filter(
