@@ -202,6 +202,15 @@ private:
             measuredPositions->points.push_back(point);
         }
 
+        // Limit the number of objects to track due to the n! behavior
+        // of the algorithm.
+        if(measuredPositions->points.size() > static_cast<unsigned int>(maxFilters)){
+            ROS_WARN("Received %lu points which is greater than the maximum number of filters %u. Trimming vector.",
+                    measuredPositions->points.size(), maxFilters);
+            measuredPositions->points.erase(measuredPositions->points.begin() + 3, measuredPositions->points.end());
+            ROS_INFO("After trimming vector %lu points remain", measuredPositions->points.size());
+        }
+
         // Step 3: Associate the predicted points with the measurements.
         const PointCloudXYZPtr unalignedMeasurements(new PointCloudXYZ);
         const PointCloudXYZConstPtr final = alignClouds(predictedPositions, measuredPositions,
@@ -365,6 +374,9 @@ private:
 
         const double LAMBDA = 1e6;
         unsigned int iterations = 0;
+        // Next permutation require pre-sorting.
+        sort(currentOrder.begin(), currentOrder.end());
+
         // Now search all permutations.
         do {
             ROS_DEBUG("Checking next iteration number: %u", iterations);
