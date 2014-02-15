@@ -75,6 +75,7 @@ private:
     double kalmanAccelerationDist;
     double associationEpsilon;
     double associationMaxSuccessScore;
+    ros::Duration dt;
     ros::Duration filterStaleThreshold;
     double maxCorrelationDistance;
     int maxFilters;
@@ -98,6 +99,11 @@ public:
         privateHandle.param<double>("association_epsilon", associationEpsilon, 1e-6);
         privateHandle.param<double>("association_max_success_score", associationMaxSuccessScore,
                 2.0);
+
+        double dtD;
+        privateHandle.param<double>("dt", dtD, 0.01);
+        dt = ros::Duration(dtD);
+
         double filterStaleThresholdD;
         privateHandle.param<double>("filter_stale_threshold", filterStaleThresholdD, 1.0);
         filterStaleThreshold = ros::Duration(filterStaleThresholdD);
@@ -297,7 +303,7 @@ private:
 
             ROS_INFO("Initializing Kalman filter for measurement %i with position %f %f %f", i, positions[0], positions[1], positions[2]);
 
-            filter->init(positions, velocities, measurementTime);
+            filter->init(positions, velocities, measurementTime, dt);
             pvFilters.push_back(filter);
         }
 
@@ -322,7 +328,7 @@ private:
             const PointCloudXYZConstPtr measuredPositions,
             const PointCloudXYZPtr unalignedMeasurements) const {
 
-        ROS_INFO(
+        ROS_DEBUG(
                 "Aligning %lu points to %lu points", measuredPositions->points.size(), predictedPositions->points.size());
 
         if (predictedPositions->points.size() == 0) {
@@ -365,7 +371,7 @@ private:
             currentOrder.push_back(i);
         }
 
-        ROS_INFO("Initializing correlation. Size of current order vector is: %lu", currentOrder.size());
+        ROS_DEBUG("Initializing correlation. Size of current order vector is: %lu", currentOrder.size());
 
         // Set the initial order as the best.
         vector<unsigned int> closestOrder = currentOrder;
@@ -462,7 +468,7 @@ private:
 
     void publishPVArrows(const position_tracker::DetectedDynamicObjectsConstPtr objects) const {
 
-        double DT_FOR_VIZ = 2;
+        double DT_FOR_VIZ = 0.1;
 
         visualization_msgs::MarkerArrayPtr markers(new visualization_msgs::MarkerArray);
         for (unsigned int i = 0; i < objects->objects.size(); ++i) {

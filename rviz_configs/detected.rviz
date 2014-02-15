@@ -709,7 +709,7 @@ Visualization Manager:
       Marker Topic: /object_tracks/balls/markers
       Name: Ball Markers
       Namespaces:
-        dod_pv_arrows: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -717,7 +717,7 @@ Visualization Manager:
       Marker Topic: /object_tracks/balls/identities
       Name: Identities
       Namespaces:
-        dod_ids: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -725,7 +725,7 @@ Visualization Manager:
       Marker Topic: /object_tracks/balls/predicted_markers
       Name: Predicted Markers
       Namespaces:
-        dod_predicted: true
+        {}
       Queue Size: 100
       Value: true
   Enabled: true
@@ -768,5 +768,5 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Width: 1076
-  X: 430
-  Y: 30
+  X: 362
+  Y: 26
