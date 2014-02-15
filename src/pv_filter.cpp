@@ -63,21 +63,18 @@ void PVFilter::predict(vector<double>& positions, vector<double>& velocities, co
     ros::Duration delta = time - predictTime;
     ROS_DEBUG("Predicting results between %f and %f with dt %f", predictTime.toSec(), time.toSec(), dt.toSec());
 
-    // TODO: Optimize to avoid copy
-    Mat prediction;
-    for(ros::Duration t(0.0); t < delta; t += dt){
-        prediction = filter->predict();
-    }
-
     positions.resize(3);
-    positions[0] = prediction.at<float>(0);
-    positions[1] = prediction.at<float>(1);
-    positions[2] = prediction.at<float>(2);
-
     velocities.resize(3);
-    velocities[0] = prediction.at<float>(3);
-    velocities[1] = prediction.at<float>(4);
-    velocities[2] = prediction.at<float>(5);
+
+    for(ros::Duration t(0.0); t < delta; t += dt){
+        const Mat& prediction = filter->predict();
+        positions[0] = prediction.at<float>(0);
+        positions[1] = prediction.at<float>(1);
+        positions[2] = prediction.at<float>(2);
+        velocities[0] = prediction.at<float>(3);
+        velocities[1] = prediction.at<float>(4);
+        velocities[2] = prediction.at<float>(5);
+    }
     predictTime =  time;
 }
 
