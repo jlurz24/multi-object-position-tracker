@@ -8,14 +8,13 @@
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/position_tracker</url>
+  <rosdep name="pcl" />
   <depend package="roscpp"/>
   <depend package="kalman"/>
   <depend package="geometry_msgs"/>
   <depend package="tf"/>
-  <depend package="pcl"/>
   <depend package="cmvision"/>
   <depend package="pcl_ros"/>
-  <depend package="arm_navigation_msgs"/>
   <depend package="actionlib"/>
   <depend package="actionlib_msgs"/>
   <depend package="rospy"/>
@@ -25,6 +24,7 @@
   <depend package="gazebo_msgs" />
   <depend package="image_geometry" />
   <depend package="opencv2"/>
+  <depend package="cv_bridge"/>
 </package>
 
 
