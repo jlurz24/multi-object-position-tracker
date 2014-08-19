@@ -239,7 +239,9 @@ private:
         PointCloudXYZ depthCloud;
         fromROSMsg(*depthPointsMsg, depthCloud);
         assert(depthCloud.points.size() == blobsMsg->image_width * blobsMsg->image_height);
-        assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
+        ROS_DEBUG("Depth point msg frame: %s and blobs frame: %s", depthPointsMsg->header.frame_id.c_str(), blobsMsg->header.frame_id.c_str());
+	// Blobs message does not set frame_id correctly
+	// assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
 
         ResolverFunction func = boost::bind(&MultiObjectDetector::resolveFromDepthMessage, this, _1,
                 _2, _3, _4, depthCloud);
