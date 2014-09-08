@@ -20,7 +20,7 @@
 #include <pcl/common/geometry.h>
 #include <sensor_msgs/CameraInfo.h>
 #include <image_geometry/pinhole_camera_model.h>
-#include <tf2/LinearMath/Vector3.h>
+#include <tf2/LinearMath/btVector3.h>
 #include <geometry_msgs/Vector3Stamped.h>
 #include <limits>
 #include <google/profiler.h>
@@ -179,22 +179,22 @@ private:
         ROS_DEBUG("Registration for blob events complete.");
     }
 
-    tf2::Vector3 intersection(const tf2::Vector3& n, const tf2::Vector3& p0, const tf2::Vector3& l,
-            const tf2::Vector3& l0) {
+    btVector3 intersection(const btVector3& n, const btVector3& p0, const btVector3& l,
+            const btVector3& l0) {
         // Make sure everything is normalized
         assert(n.length() - 1 < 1e-6);
         assert(l.length() - 1 < 1e-6);
 
-        tfScalar denom = n.dot(l);
+        btScalar denom = n.dot(l);
         if (fabs(denom) < 1e-6) {
-            return tf2::Vector3(numeric_limits<double>::quiet_NaN(),
+            return btVector3(numeric_limits<double>::quiet_NaN(),
                     numeric_limits<double>::quiet_NaN(), numeric_limits<double>::quiet_NaN());
         }
 
-        tfScalar t = n.dot(p0 - l0) / denom;
+        btScalar t = n.dot(p0 - l0) / denom;
         if (t < 0) {
             // Intersection behind the camera
-            return tf2::Vector3(numeric_limits<double>::quiet_NaN(),
+            return btVector3(numeric_limits<double>::quiet_NaN(),
                     numeric_limits<double>::quiet_NaN(), numeric_limits<double>::quiet_NaN());
         }
         // Now project the vector l to the plane.
@@ -239,9 +239,7 @@ private:
         PointCloudXYZ depthCloud;
         fromROSMsg(*depthPointsMsg, depthCloud);
         assert(depthCloud.points.size() == blobsMsg->image_width * blobsMsg->image_height);
-        ROS_DEBUG("Depth point msg frame: %s and blobs frame: %s", depthPointsMsg->header.frame_id.c_str(), blobsMsg->header.frame_id.c_str());
-	// Blobs message does not set frame_id correctly
-	// assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
+        assert(depthPointsMsg->header.frame_id == blobsMsg->header.frame_id);
 
         ResolverFunction func = boost::bind(&MultiObjectDetector::resolveFromDepthMessage, this, _1,
                 _2, _3, _4, depthCloud);
@@ -396,11 +394,10 @@ private:
         ROS_DEBUG("Blobs message has %lu blobs", blobsMsg->blobs.size());
         for (unsigned int k = 0; k < blobsMsg->blobs.size(); ++k) {
             const cmvision::Blob blob = blobsMsg->blobs[k];
-            // TODO: Add support to library
-            // if (objectName.size() > 0 && objectName != blob.colorName) {
-            //    ROS_DEBUG("Skipping blob named %s as it does not match", objectName.c_str());
-            //    continue;
-            //}
+            if (objectName.size() > 0 && objectName != blob.colorName) {
+                ROS_DEBUG("Skipping blob named %s as it does not match", objectName.c_str());
+                continue;
+            }
 
             ROS_DEBUG("Blob image dimensions. Left %u right %u top %u bottom %u width %u height %u",
                     blob.left, blob.right, blob.top, blob.bottom, blobsMsg->image_width,
