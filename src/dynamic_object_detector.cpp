@@ -278,10 +278,10 @@ private:
         int filtersToKeep = std::max(maxFilters - static_cast<int>(unalignedMeasurements->points.size()), 0);
         if(filtersToKeep < static_cast<int>(pvFilters.size())){
             // Sort pvFilters by last updated.
-            ROS_INFO("Currently %lu filters. Keeping %u filters for %lu new measurements", pvFilters.size(), filtersToKeep, unalignedMeasurements->points.size());
+            ROS_DEBUG("Currently %lu filters. Keeping %u filters for %lu new measurements", pvFilters.size(), filtersToKeep, unalignedMeasurements->points.size());
             sort(pvFilters.begin(), pvFilters.end(), LastUpdateSorter());
             pvFilters.erase(pvFilters.begin() + filtersToKeep, pvFilters.end());
-            ROS_INFO("After removal %lu filters", pvFilters.size());
+            ROS_DEBUG("After removal %lu filters", pvFilters.size());
         }
 
         // Step 7: Initialize filters with any remaining positions and default
