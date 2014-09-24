@@ -333,14 +333,17 @@ private:
             resultPoint.point.y = centroid[1];
             resultPoint.point.z = centroid[2];
 
-            geometry_msgs::PointStamped resultPointMap;
-            resultPointMap.header.frame_id = outputFrame;
-            resultPointMap.header.stamp = header.stamp;
-            tf.transformPoint(resultPointMap.header.frame_id, resultPoint, resultPointMap);
+            geometry_msgs::PointStamped resultPointOutput;
+            resultPointOutput.header.frame_id = outputFrame;
+            resultPointOutput.header.stamp = header.stamp;
+            tf.transformPoint(resultPointOutput.header.frame_id, resultPoint, resultPointOutput);
             ROS_DEBUG("Transformed centroid to frame %s with coordinates %f %f %f",
-                    resultPointMap.header.frame_id.c_str(), resultPointMap.point.x,
-                    resultPointMap.point.y, resultPointMap.point.z);
-            objects->positions.push_back(resultPointMap);
+                    resultPointOutput.header.frame_id.c_str(), resultPointOutput.point.x,
+                    resultPointOutput.point.y, resultPointOutput.point.z);
+            objects->positions.push_back(resultPointOutput);
+
+            // Calculate the number of pixels
+            objects->pixels.push_back(blobClouds[i].indices.size());
         }
 
         ROS_DEBUG("Publishing %lu detected objects", objects->positions.size());

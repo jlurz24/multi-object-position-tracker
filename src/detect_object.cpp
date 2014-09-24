@@ -119,11 +119,11 @@ class ObjectDetector {
       normalInImageFrame.vector.x = coefficients.values[0];
       normalInImageFrame.vector.y = coefficients.values[1];
       normalInImageFrame.vector.z = coefficients.values[2];
-      normalInImageFrame.header.frame_id = "wide_stereo_optical_frame";
+      normalInImageFrame.header.frame_id = "/wide_stereo_optical_frame";
       normalInImageFrame.header.stamp = depthPointsMsg->header.stamp;
 
       // Calculate the yaw in the base footprint frame to ensure the z axis remains vertical in the yaw calculation step.
-      tf.waitForTransform("wide_stereo_optical_frame", "/base_footprint", depthPointsMsg->header.stamp, ros::Duration(10.0));
+      tf.waitForTransform("/wide_stereo_optical_frame", "/base_footprint", depthPointsMsg->header.stamp, ros::Duration(10.0));
 
       geometry_msgs::Vector3Stamped normalStamped;
       tf.transformVector("/base_footprint", normalInImageFrame, normalStamped);
@@ -138,19 +138,15 @@ class ObjectDetector {
         yaw -= boost::math::constants::pi<double>();
       }
 
+      // Calculate the orientation in the /base_footprint frame
       geometry_msgs::QuaternionStamped qInBaseFootprint;
-      qInBaseFootprint.header.frame_id = "base_footprint";
+      qInBaseFootprint.header.frame_id = "/base_footprint";
       qInBaseFootprint.header.stamp = depthPointsMsg->header.stamp;
       qInBaseFootprint.quaternion = tf::createQuaternionMsgFromRollPitchYaw(0, 0, yaw);
 
-      // Convert orientation to map frame.
-      tf.waitForTransform(qInBaseFootprint.header.frame_id, "map", qInBaseFootprint.header.stamp, ros::Duration(10));
-      geometry_msgs::QuaternionStamped q;
-      tf.transformQuaternion("map", qInBaseFootprint, q);
-
       // Convert the centroid and quaternion to a PoseStamped
       geometry_msgs::PoseStamped resultPose;
-      resultPose.header.frame_id = "wide_stereo_optical_frame";
+      resultPose.header.frame_id = "/wide_stereo_optical_frame";
       resultPose.header.stamp = depthPointsMsg->header.stamp;
 
       // Convert the centroid to a geometry msg point
@@ -159,14 +155,14 @@ class ObjectDetector {
       resultPose.pose.position.z = centroid[2];
       tf::quaternionTFToMsg(tf::Quaternion::getIdentity(), resultPose.pose.orientation);
 
-      geometry_msgs::PoseStamped resultPoseMap;
-      resultPoseMap.header.frame_id = "/map";
-      resultPoseMap.header.stamp = depthPointsMsg->header.stamp;
-      tf.transformPose("/map", resultPose, resultPoseMap);
-      resultPoseMap.pose.orientation = q.quaternion;
+      geometry_msgs::PoseStamped resultPoseBase;
+      resultPoseBase.header.frame_id = "/base_footprint";
+      resultPoseBase.header.stamp = depthPointsMsg->header.stamp;
+      tf.transformPose("/base_footprint", resultPose, resultPoseBase);
+      resultPoseBase.pose.orientation = qInBaseFootprint.quaternion;
 
       // Broadcast the result
-      pub.publish(resultPoseMap);
+      pub.publish(resultPoseBase);
     }
 
     const PointCloudPtr detectPlane(const pcl::PointCloud<pcl::PointXYZ>& depthCloud, const cmvision::BlobsConstPtr& blobsMsg, pcl::PointIndices& inliers, pcl::ModelCoefficients& coefficients){

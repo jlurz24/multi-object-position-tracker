@@ -89,7 +89,6 @@ public:
     DynamicObjectDetector() :
             privateHandle("~"), kalmanObservationNoise(0.0), kalmanAccelerationDist(0.0), subscribed(false) {
         privateHandle.param<string>("object_name", objectName, "dog");
-        // TODO: Consider switching to /map
         privateHandle.param<string>("frame", frame, "/base_footprint");
         privateHandle.param<double>("initial_velocity", initialVelocity, 0.0);
 
@@ -268,6 +267,7 @@ private:
             position_tracker::DetectedDynamicObject obj;
             obj.position = position;
             obj.velocity = velocity;
+            obj.pixels = pvFilters.at(i)->getPixels();
             obj.measuredTime = pvFilters.at(i)->getLastUpdate();
             obj.id = pvFilters.at(i)->getId();
             trackedObjects->objects.push_back(obj);

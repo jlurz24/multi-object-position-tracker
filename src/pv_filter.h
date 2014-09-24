@@ -23,6 +23,12 @@ public:
     unsigned int getId() const {
         return id;
     }
+    unsigned int getPixels() const {
+        return pixels;
+    }
+    void setPixels(const unsigned int aPixels){
+        this->pixels = aPixels;
+    }
 private:
     std::auto_ptr<cv::KalmanFilter> filter;
     ros::Time updateTime;
@@ -31,6 +37,7 @@ private:
     double mVelocityNoise;
     double mObservationNoise;
     unsigned int id;
+    unsigned int pixels;
 
     void setTransitionMatrix();
 };
