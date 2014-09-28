@@ -61,12 +61,18 @@ void PVFilter::measure(const vector<double>& positions, const ros::Time& time) {
 
 void PVFilter::predict(vector<double>& positions, vector<double>& velocities, const ros::Time& time) {
     ros::Duration delta = time - predictTime;
+
+    // TODO: We should not predict here
+    if(delta < ros::Duration(0.0)){
+        ROS_INFO("Negative delta in prediction");
+        delta = ros::Duration(0.0);
+    }
     ROS_DEBUG("Predicting results between %f and %f with dt %f", predictTime.toSec(), time.toSec(), dt.toSec());
 
     positions.resize(3);
     velocities.resize(3);
 
-    for(ros::Duration t(0.0); t < delta; t += dt){
+    for(ros::Duration t(0.0); t <= delta; t += dt){
         const Mat& prediction = filter->predict();
         positions[0] = prediction.at<float>(0);
         positions[1] = prediction.at<float>(1);

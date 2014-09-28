@@ -10,9 +10,10 @@
 #include <boost/lexical_cast.hpp>
 #include <algorithm>
 #include <pcl/common/geometry.h>
-#include <google/profiler.h>
 
-#define ENABLE_PROFILING 0
+#ifdef ENABLE_PROFILING
+#include <google/profiler.h>
+#endif
 
 namespace {
 using namespace std;

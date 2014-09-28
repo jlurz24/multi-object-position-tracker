@@ -23,11 +23,11 @@
 #include <tf2/LinearMath/btVector3.h>
 #include <geometry_msgs/Vector3Stamped.h>
 #include <limits>
+#ifdef ENABLE_PROFILING
 #include <google/profiler.h>
+#endif
 
 namespace {
-
-#define ENABLE_PROFILING 0
 
 using namespace std;
 using namespace pcl;
