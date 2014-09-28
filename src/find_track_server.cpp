@@ -20,7 +20,7 @@ class FindTrackServer {
       privateNh.param<int>("max-attempts", maxAttempts, 5);
       privateNh.param<int>("image-aquire-timeout", imageAquireTimeout, 30);
       privateNh.param<string>("image-topic", imageTopic, "/wide_stereo/left/image_rect_color");
-      privateNh.param<string>("points-topic", pointsTopic, "/wide_stereo/left/points");
+      privateNh.param<string>("points-topic", pointsTopic, "/wide_stereo/points2");
       
       service = nh.advertiseService("find_track", &FindTrackServer::findTrack, this);
     }

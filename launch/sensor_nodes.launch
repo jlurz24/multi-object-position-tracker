@@ -18,7 +18,7 @@
     <param name="min_cluster_size" value="75" />
     <param name="max_cluster_size" value="25000" />
     <remap from="blobs" to="/wide_stereo/blobs"/>
-    <remap from="points" to="/wide_stereo/left/points"/>
+    <remap from="points" to="/wide_stereo/points2"/>
   </node>
 
   <!-- cmvision global parameters -->

@@ -77,7 +77,7 @@ class ObjectDetector {
       
       // List for the depth messages
       if(depthPointsSub.get() == NULL){
-        depthPointsSub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh, "/wide_stereo/left/points", 3));
+        depthPointsSub.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh, "/wide_stereo/points2", 3));
       }
       else {
         depthPointsSub->subscribe();
