@@ -27,7 +27,7 @@ rosbuild_check_for_sse()
 #Eigen required
 find_package(Eigen REQUIRED)
 set(Gperftools_DIR .)
-find_package(Gperftools REQUIRED)
+find_package(Gperftools)
 
 include_directories(${EIGEN_INCLUDE_DIRS})
 

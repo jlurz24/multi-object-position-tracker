@@ -183,7 +183,7 @@ private:
         }
 
         // Step 1: Predict the new positions
-        ros::Time measurementTime = objects->header.stamp;
+        ros::Time measurementTime = ros::Time::now();
         PointCloudXYZPtr predictedPositions(new PointCloudXYZ);
         PointCloudXYZPtr predictedVelocities(new PointCloudXYZ);
 

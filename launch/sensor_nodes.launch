@@ -15,7 +15,7 @@
     <param name="object_name" value="balls" />
     <param name="cluster_distance_tolerance" value="0.1" />
     <param name="voxel_leaf_size" value="0.0" />
-    <param name="min_cluster_size" value="75" />
+    <param name="min_cluster_size" value="200" />
     <param name="max_cluster_size" value="25000" />
     <remap from="blobs" to="/wide_stereo/blobs"/>
     <remap from="points" to="/wide_stereo/points2"/>
